@@ -1,7 +1,8 @@
-import { GalleryVerticalEnd } from 'lucide-react';
 import { Navigate, Outlet } from 'react-router';
-import { useAuthStore } from './store/authStore';
+
 import { RoutePath } from '@/shared/constants/routePath';
+import { GalleryVerticalEnd } from 'lucide-react';
+import { useAuthStore } from '../store/authStore';
 
 export const AuthLayout = () => {
   const status = useAuthStore((state) => state.status);
@@ -10,7 +11,7 @@ export const AuthLayout = () => {
   if (status === 'authenticated') {
     return <Navigate to={RoutePath.Home} />;
   }
-  
+
   if (status === 'unconfirmedEmail' && resendCode != null) {
     return <Navigate to={RoutePath.ResendConfirmation} />;
   }
