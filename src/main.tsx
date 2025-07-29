@@ -6,11 +6,13 @@ import { ThemeProvider } from './components/theme/ThemeProvider.tsx';
 
 import './i18n/config.ts';
 import './index.css';
+import { Toaster } from 'sonner';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
       <App />
+      <Toaster />
     </ThemeProvider>
   </StrictMode>
 );
