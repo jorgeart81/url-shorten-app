@@ -8,58 +8,50 @@ import { ErrorAlert } from '@/components/alerts/ErrorAlert';
 import { CustomInput } from '@/components/form/CustomInput';
 import { useLanguage } from '@/components/hooks/useLanguage';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { RoutePath } from '@/shared/constants/routePath';
-import { getClientFingerprint } from '@/utils/getPlatform';
 import { useAuth } from '../../hooks/useAuth';
 import { AuthFormButton } from '../AuthFormButton';
 import {
-  loginSchema,
-  type LoginData,
-  type LoginValidationError,
-} from './loginValidationSchema';
+  signupSchema,
+  type SignupData,
+  type SignupValidationError,
+} from './signupValidation';
 
-export function LoginForm({
+export const SignupForm = ({
   className,
   ...props
-}: React.ComponentProps<'div'>) {
+}: React.ComponentProps<'div'>) => {
   const fromRef = useRef<HTMLFormElement>(null);
-  const { error, login, onSubmit } = useAuth();
+  const { error, signUp, onSubmit } = useAuth();
   const { translate } = useLanguage();
 
   const [stateValidation, formAction, isPending] = useActionState(
     async (_: unknown, queryData: FormData) => {
-      const formData = Object.fromEntries(queryData) as LoginData;
-      const result = loginSchema.safeParse(formData);
+      const formData = Object.fromEntries(queryData) as SignupData;
+      const result = signupSchema.safeParse(formData);
 
       if (!result.success && result.error) {
         const errors = z.treeifyError(result.error)
-          .properties as LoginValidationError;
+          .properties as SignupValidationError;
         return errors;
       }
 
-      const { platform, language, cores } = getClientFingerprint();
-
-      const { isSuccess } = await login({
+      const { isSuccess } = await signUp({
         email: formData.email,
         password: formData.password,
-        deviceName: `${platform}/${language}/${cores}`,
-        clientType: 'web',
-        keepLoggedIn: formData.keepLoggedIn == 'on',
       });
 
       if (isSuccess) fromRef.current?.reset();
     },
     null
   );
-
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card className='relative'>
         <CardHeader className='text-center'>
           <CardTitle className='text-xl'>
-            {translate('loginForm.title')}
+            {translate('registerForm.title')}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -73,7 +65,7 @@ export function LoginForm({
               <div className='grid gap-6'>
                 <div className='grid gap-3'>
                   <Label htmlFor='email'>
-                    {translate('loginForm.input.emailLabel')}
+                    {translate('registerForm.input.emailLabel')}
                   </Label>
                   <CustomInput
                     id='email'
@@ -86,19 +78,9 @@ export function LoginForm({
                   />
                 </div>
                 <div className='grid gap-3'>
-                  <div className='flex items-center'>
-                    <Label htmlFor='password'>
-                      {translate('loginForm.input.passwordLabel')}
-                    </Label>
-                    <NavLink
-                      to={'#'}
-                      viewTransition
-                      className='ml-auto text-sm underline-offset-4 hover:underline'
-                    >
-                      {translate('loginForm.forgotPassword')}
-                    </NavLink>
-                  </div>
-
+                  <Label htmlFor='password'>
+                    {translate('registerForm.input.passwordLabel')}
+                  </Label>
                   <CustomInput
                     id='password'
                     name='password'
@@ -108,31 +90,20 @@ export function LoginForm({
                     disabled={isPending}
                   />
                 </div>
-                <div className='flex items-start gap-3'>
-                  <Checkbox
-                    id='keepLoggedIn'
-                    name='keepLoggedIn'
-                    disabled={isPending}
-                  />
-                  <div className='grid gap-2'>
-                    <Label htmlFor='keepLoggedIn'>
-                      {translate('loginForm.rememberMe')}
-                    </Label>
-                  </div>
-                </div>
+
                 <AuthFormButton
-                  label={translate('loginForm.login')}
+                  label={translate('registerForm.create')}
                   isPending={isPending}
                 />
               </div>
               <div className='text-center text-sm'>
-                {translate('loginForm.dontHaveAccount')}
+                {translate('registerForm.haveAccount')}
                 <NavLink
-                  to={RoutePath.Signup}
+                  to={RoutePath.Login}
                   viewTransition
                   className='underline underline-offset-4 ml-1'
                 >
-                  {translate('loginForm.signUp')}
+                  {translate('registerForm.login')}
                 </NavLink>
               </div>
             </div>
@@ -148,4 +119,4 @@ export function LoginForm({
       </div>
     </div>
   );
-}
+};
