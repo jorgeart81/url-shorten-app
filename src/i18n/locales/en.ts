@@ -4,7 +4,16 @@ export const en: Translation = {
   // Basic translations
   welcome: 'Hello world!',
   clickMe: 'Click me',
-  title: 'URL Shortener',
+  appTitle: 'URL Shortener',
+
+  // Common actions
+  exit: 'Exit',
+  continue: 'Continue',
+  cancel: 'Cancel',
+  optional: 'Optional',
+  shortlink: 'Short link',
+  title: 'Title',
+  untitled: 'Untitled',
 
   // Login Form
   'loginForm.title': 'Sign In',
@@ -38,26 +47,104 @@ export const en: Translation = {
     'The time to resend the confirmation code has expired. Please sign in again to generate a new one.',
   'resendEmailSessionExpired.buttonExit': 'Sign Out',
 
-  // Resend Email Confirmation
-  'resendEmailConfirmation.title': 'Verify your email',
-  'resendEmailConfirmation.description':
+  // Email Resend
+  'emailResend.title': 'Verify your email',
+  'emailResend.description':
     'We have sent a verification email to your email address.\nIf you cannot find it, check your spam folder.\nStill not received? Click the button to resend it.',
-  'resendEmailConfirmation.sentSuccessfully':
+  'emailResend.success':
     'We have sent you a new verification email. Please check your inbox.',
-  'resendEmailConfirmation.tooManyRequests':
+  'emailResend.tooMany':
     'You have reached the request limit. Try again in 15 minutes.',
-  'resendEmailConfirmation.buttonResend': 'Resend Code',
-  'resendEmailConfirmation.buttonExit': 'Sign Out',
+  'emailResend.buttonSend': 'Resend Code',
+  'emailResend.buttonExit': 'Sign Out',
 
   // Email Verification
   'emailVerification.successTitle': 'Email verified!',
   'emailVerification.successDescription':
     'Your email address has been successfully verified.',
-  'emailVerification.successActionMessage': 'You can now sign in to your account.',
+  'emailVerification.successActionMessage':
+    'You can now sign in to your account.',
   'emailVerification.successActionButton': 'Go to sign in',
   'emailVerification.errorTitle': 'Invalid or expired code',
   'emailVerification.errorDescription':
     'The verification link is not valid or has already been used.',
-  'emailVerification.errorHelp': "Didn't receive the email or the link expired?",
+  'emailVerification.errorHelp':
+    "Didn't receive the email or the link expired?",
   'emailVerification.errorAction': 'Resend verification',
+
+  // Error Boundary
+  'errorBoundary.title': 'Oops! Something went wrong',
+  'errorBoundary.description':
+    "We couldn't load this section. Try reloading the page.",
+  'errorBoundary.reloadButton': 'Reload',
+
+  // Create Link
+  'createLink.button.create': 'Create link',
+  'createLink.destination.validation':
+    'We\'ll need a valid URL, like "yourbrnd.co/niceurl"',
+  'createLink.form.subtitle':
+    'You can create {{linkCount}} more links this month.',
+  'createLink.form.title': 'Create a link',
+  'createLink.form.label.custom-back-half': 'Custom back-half',
+  'createLink.form.label.destination': 'Destination',
+  'createLink.form.label.domain': 'Domain',
+
+  // Validation messages
+  'validation.string.maxLength':
+    'The field must have {{maxLength}} characters at most.',
+  'validation.string.maxLength.generic':
+    'The field has more characters than allowed.',
+
+  // Links View
+  'linksView.noResults.title': 'No results found',
+  'linksView.noResults.description':
+    'Try adjusting your search, filters, or {{hiddenLink}} instead.',
+  'linksView.noResults.hiddenLink': 'try searching for hidden links',
+
+  // Code Errors
+  'ACCESS_DENIED.description':
+    'You do not have permission to access this resource.',
+  'ACCESS_DENIED.title': 'Access Denied',
+  'AUTH_ERROR.description':
+    'A problem occurred during the authentication process.',
+  'AUTH_ERROR.title': 'Authentication Error',
+  'AUTH_FAILED.description':
+    'Please verify your email address and password and try again.',
+  'AUTH_FAILED.title': 'Authentication Failed',
+  'EMAIL_ALREADY_REGISTERED.description':
+    'An account already exists with this email. Please sign in or use a different email.',
+  'EMAIL_ALREADY_REGISTERED.title': 'Email Already Registered',
+  'EXPIRED_TOKEN.description':
+    'Your session has expired. Please sign in again.',
+  'EXPIRED_TOKEN.title': 'Session Expired',
+  'INVALID_CREDENTIALS.description':
+    'The provided credentials are not correct.',
+  'INVALID_CREDENTIALS.title': 'Invalid Credentials',
+  'INVALID_REQUEST.description':
+    'The sent request is not valid. Please check the data and try again.',
+  'INVALID_REQUEST.title': 'Invalid Request',
+  'INVALID_TOKEN.description':
+    'The provided token is not valid or has expired.',
+  'INVALID_TOKEN.title': 'Invalid Token',
+  'LOGOUT_FAILED.description': 'Could not sign out properly. Please try again.',
+  'LOGOUT_FAILED.title': 'Sign Out Error',
+  'NETWORK_ERROR.description': 'Check your internet connection and try again.',
+  'NETWORK_ERROR.title': 'Network Error',
+  'PAYLOAD_EXPIRED.description':
+    'The sent information has expired. Please try again.',
+  'PAYLOAD_EXPIRED.title': 'Payload Expired',
+  'RESENCODE_EXPIRED.description':
+    'The session has expired. Please sign in again.',
+  'RESENCODE_EXPIRED.title': 'Session Expired',
+  'TOO_MANY_REQUESTS.description':
+    'You have made too many requests in a short time. Please wait a moment before trying again.',
+  'TOO_MANY_REQUESTS.title': 'Too Many Requests',
+  'UNKNOWN.description':
+    'An unexpected error has occurred. Please try again later.',
+  'UNKNOWN.title': 'Unknown Error',
+  'USER_NOT_FOUND.description': 'No user found with the provided information.',
+  'USER_NOT_FOUND.title': 'User Not Found',
+
+  sendingEmail: 'Sending email…',
+  sessionExpirationWarning: 'Your session will expire in 1 minute.',
 };

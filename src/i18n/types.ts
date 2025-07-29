@@ -2,7 +2,16 @@ export interface Translation {
   // Basic translations
   welcome: string;
   clickMe: string;
+  appTitle: string;
+
+  // Common actions
+  exit: string;
+  continue: string;
+  cancel: string;
+  optional: string;
+  shortlink: string;
   title: string;
+  untitled: string;
 
   // Login Form
   'loginForm.title': string;
@@ -34,13 +43,13 @@ export interface Translation {
   'resendEmailSessionExpired.message': string;
   'resendEmailSessionExpired.buttonExit': string;
 
-  // Resend Email Confirmation
-  'resendEmailConfirmation.title': string;
-  'resendEmailConfirmation.description': string;
-  'resendEmailConfirmation.sentSuccessfully': string;
-  'resendEmailConfirmation.tooManyRequests': string;
-  'resendEmailConfirmation.buttonResend': string;
-  'resendEmailConfirmation.buttonExit': string;
+  // Email Resend
+  'emailResend.title': string;
+  'emailResend.description': string;
+  'emailResend.success': string;
+  'emailResend.tooMany': string;
+  'emailResend.buttonSend': string;
+  'emailResend.buttonExit': string;
 
   // Email Verification
   'emailVerification.successTitle': string;
@@ -51,6 +60,64 @@ export interface Translation {
   'emailVerification.errorDescription': string;
   'emailVerification.errorHelp': string;
   'emailVerification.errorAction': string;
+
+  // Error Boundary
+  'errorBoundary.title': string;
+  'errorBoundary.description': string;
+  'errorBoundary.reloadButton': string;
+
+  // Create Link
+  'createLink.button.create': string;
+  'createLink.destination.validation': string;
+  'createLink.form.subtitle': string;
+  'createLink.form.title': string;
+  'createLink.form.label.custom-back-half': string;
+  'createLink.form.label.destination': string;
+  'createLink.form.label.domain': string;
+
+  // Validation messages
+  'validation.string.maxLength': string;
+  'validation.string.maxLength.generic': string;
+
+  // Links View
+  'linksView.noResults.title': string;
+  'linksView.noResults.description': string;
+  'linksView.noResults.hiddenLink': string;
+
+  // Code Errors
+  'ACCESS_DENIED.description': string;
+  'ACCESS_DENIED.title': string;
+  'AUTH_ERROR.description': string;
+  'AUTH_ERROR.title': string;
+  'AUTH_FAILED.description': string;
+  'AUTH_FAILED.title': string;
+  'EMAIL_ALREADY_REGISTERED.description': string;
+  'EMAIL_ALREADY_REGISTERED.title': string;
+  'EXPIRED_TOKEN.description': string;
+  'EXPIRED_TOKEN.title': string;
+  'INVALID_CREDENTIALS.description': string;
+  'INVALID_CREDENTIALS.title': string;
+  'INVALID_REQUEST.description': string;
+  'INVALID_REQUEST.title': string;
+  'INVALID_TOKEN.description': string;
+  'INVALID_TOKEN.title': string;
+  'LOGOUT_FAILED.description': string;
+  'LOGOUT_FAILED.title': string;
+  'NETWORK_ERROR.description': string;
+  'NETWORK_ERROR.title': string;
+  'PAYLOAD_EXPIRED.description': string;
+  'PAYLOAD_EXPIRED.title': string;
+  'RESENCODE_EXPIRED.description': string;
+  'RESENCODE_EXPIRED.title': string;
+  'TOO_MANY_REQUESTS.description': string;
+  'TOO_MANY_REQUESTS.title': string;
+  'UNKNOWN.description': string;
+  'UNKNOWN.title': string;
+  'USER_NOT_FOUND.description': string;
+  'USER_NOT_FOUND.title': string;
+
+  sendingEmail: string;
+  sessionExpirationWarning: string;
 }
 
 export type TranslationKeys = keyof Translation;
