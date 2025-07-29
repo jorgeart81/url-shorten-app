@@ -1,17 +1,18 @@
-import './App.css';
-import { useLanguage } from './components/hooks/useLanguage';
-import { Button } from './components/ui/button';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
+
+import { AuthLayout } from './modules/auth/AuthLayout';
+import { LoginForm } from './modules/auth/components/LoginForm/LoginForm';
 
 function App() {
-  const { translate } = useLanguage();
-
   return (
-    <>
-      <h1 className='text-3xl font-bold underline'>{translate('welcome')}</h1>
-      <div className='flex min-h-svh flex-col items-center justify-center'>
-        <Button>{translate('clickMe')}</Button>
-      </div>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<Navigate to='/auth/login' />} />
+        <Route path='/auth' element={<AuthLayout />}>
+          <Route index path='login' element={<LoginForm />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
