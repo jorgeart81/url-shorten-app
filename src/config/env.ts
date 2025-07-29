@@ -2,10 +2,18 @@ import { z } from 'zod/v4';
 
 // Environment schema definition
 const envSchema = z.object({
-  PUBLIC_API_URL: z.string(),
-  PUBLIC_API_PORT: z.number(),
-  PUBLIC_APP_NAME: z.string().default('URL Shorten'),
-  PUBLIC_DEBUG_MODE: z
+  VITE_API_URL: z.string(),
+  VITE_API_PORT: z
+    .string()
+    .transform((val) => {
+      const num = Number(val);
+      if (isNaN(num)) {
+        throw new Error('VITE_API_PORT must be a number');
+      }
+      return num;
+    }),
+  VITE_APP_NAME: z.string().default('URL Shorten'),
+  VITE_DEBUG_MODE: z
     .string()
     .optional()
     .transform((val) => val === 'true'),
@@ -13,7 +21,6 @@ const envSchema = z.object({
 
 // Validate environment variables
 const envResult = envSchema.safeParse(import.meta.env);
-
 if (!envResult.success) {
   console.error(
     '❌ Invalid environment variables:',
@@ -26,13 +33,13 @@ const validatedEnv = envResult.data;
 
 // Export validated environment
 export const env = {
-  apiUrl: validatedEnv.PUBLIC_API_URL,
-  apiPort: validatedEnv.PUBLIC_API_PORT,
+  apiUrl: validatedEnv.VITE_API_URL,
+  apiPort: validatedEnv.VITE_API_PORT,
   apiBaseUrl: String(
-    `${validatedEnv.PUBLIC_API_URL}:${validatedEnv.PUBLIC_API_PORT}/api`
+    `${validatedEnv.VITE_API_URL}:${validatedEnv.VITE_API_PORT}/api`
   ),
-  appName: validatedEnv.PUBLIC_APP_NAME,
-  debugMode: validatedEnv.PUBLIC_DEBUG_MODE,
+  appName: validatedEnv.VITE_APP_NAME,
+  debugMode: validatedEnv.VITE_DEBUG_MODE,
 } as const;
 
 // Export types for TypeScript
