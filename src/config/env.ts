@@ -12,7 +12,7 @@ const envSchema = z.object({
       }
       return num;
     }),
-  VITE_APP_NAME: z.string().default('URL Shorten'),
+  VITE_APP_NAME: z.string().default('Url Shorten'),
   VITE_DEBUG_MODE: z
     .string()
     .optional()

@@ -6,6 +6,7 @@ import { z } from 'zod/v4';
 
 import { ErrorAlert } from '@/components/alerts/ErrorAlert';
 import { CustomInput } from '@/components/form/CustomInput';
+import { Head } from '@/components/Head';
 import { useLanguage } from '@/components/hooks/useLanguage';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -56,6 +57,8 @@ export function LoginForm({
 
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
+      <Head title={translate('loginForm.title')} />
+      
       <Card className='relative'>
         <CardHeader className='text-center'>
           <CardTitle className='text-xl'>
