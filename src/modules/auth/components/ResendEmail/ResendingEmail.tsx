@@ -22,7 +22,7 @@ export default function ResendingEmail() {
   const { translate } = useLanguage();
   const { toasInfo, toastWarning } = useToast();
   const {
-    sessionElapsedTime,
+    resendRegressiveTime,
     sessionRegressiveTime,
     sessionTimerExecute,
     sessionTimerReset,
@@ -83,7 +83,7 @@ export default function ResendingEmail() {
     if (sessionRegressiveTime === 60) {
       toastWarning(translate('sessionExpirationWarning'));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status, sessionRegressiveTime]);
 
   useEffect(() => {
@@ -97,17 +97,19 @@ export default function ResendingEmail() {
     validateCode(controller, resendCode);
     sessionTimerExecute();
 
-    return () => {
-      controller.abort();
-    };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status, resendCode, endSession]);
+
+  useEffect(() => {
+    if (resendRegressiveTime <= 0) {
+      setCodeError(undefined);
+    }
+  }, [resendRegressiveTime]);
 
   if (!status || !allowedStatus.includes(status)) {
     return <Navigate to={RoutePath.Login} replace />;
   }
 
-  console.log(sessionRegressiveTime, sessionElapsedTime);
   return (
     <>
       {endSession || !resendCode ? (
@@ -115,7 +117,7 @@ export default function ResendingEmail() {
       ) : (
         <div className='w-dvw h-dvh flex flex-col items-center justify-center'>
           <ResendCard
-            disable={endSession || !!codeError}
+            disable={endSession || resendRegressiveTime > 0 || !!codeError}
             resendCode={resendCode}
             onExit={handleExitExpiredSession}
           />

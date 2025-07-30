@@ -3,6 +3,7 @@ import { useEffect, useState, type JSX } from 'react';
 import { CookieKey } from '@/shared/constants/cookieKey';
 import { ElapsedCounter } from '@/utils/elapsedCounter';
 import { ResendEmailContext } from './resendEmailContext';
+import { useAuthStore } from '@/modules/auth/store/authStore';
 
 export const ResendEmailProvider = ({
   children,
@@ -25,6 +26,7 @@ export const ResendEmailProvider = ({
   const [sessionRegressiveTime, setSessionRegressiveTime] = useState(0);
   const [resedElapsedTime, setResendElapsedTime] = useState(0);
   const [resendRegressiveTime, setResendRegressiveTime] = useState(0);
+  const status = useAuthStore((state) => state.status);
 
   const sessionExecute = ({ reload = false }: { reload?: boolean } = {}) => {
     sessionCounter.startTimer({
@@ -54,10 +56,13 @@ export const ResendEmailProvider = ({
     sessionExecute({ reload: true });
     resendExecute({ reload: true });
     return () => {
-      sessionReset();
-      resendCounter.cancelTimer();
+      if (status !== 'unconfirmedEmail') {
+        sessionReset();
+        resendCounter.cancelTimer();
+      }
     };
-  });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <ResendEmailContext

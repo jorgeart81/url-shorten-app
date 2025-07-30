@@ -5,7 +5,10 @@ import { Result } from '@/config/rop/result_T';
 import { RoutePath } from '@/shared/constants/routePath';
 import { urlShortenApi } from '@/services/api/urlShortenApi';
 
-import type { ApiErrorResponse, SuccessResponse } from '@/services/api/genericResponse';
+import type {
+  ApiErrorResponse,
+  SuccessResponse,
+} from '@/services/api/genericResponse';
 import type { LoginRequest } from './dtos/loginRequest';
 import type { LoginResponse } from './dtos/loginResponse';
 import type { RegisterRequest } from './dtos/registerRequest';
@@ -125,7 +128,7 @@ export class AuthService {
   }
 
   private static resendCodeError<T = unknown>(error: unknown) {
-    if (error instanceof AxiosError) {
+    if (error instanceof AxiosError && error.response) {
       const response = error.response;
       const status = response?.status;
       const data = response?.data as ApiErrorResponse;

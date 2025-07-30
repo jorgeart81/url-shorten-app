@@ -28,7 +28,6 @@ export default function ResendCard({ disable, resendCode, onExit }: Props) {
   const { translate } = useLanguage();
   const { toasInfo, toastWarning } = useToast();
 
-
   const handleResend = () => {
     startTransition(async () => {
       const result = await AuthService.resendConfirmationEmail(
@@ -62,7 +61,7 @@ export default function ResendCard({ disable, resendCode, onExit }: Props) {
       />
       <Card className='w-full max-w-sm'>
         <CardHeader>
-          <CardTitle>{translate('emailResend.title')}</CardTitle>a
+          <CardTitle>{translate('emailResend.title')}</CardTitle>
           <CardDescription>
             {translate('emailResend.description')}{' '}
             {resendRegressiveTime <= 0 ? '' : `${resendRegressiveTime}s`}
@@ -78,7 +77,7 @@ export default function ResendCard({ disable, resendCode, onExit }: Props) {
           </Button>
           <Button
             onClick={handleResend}
-            disabled={disable || resendRegressiveTime > 0}
+            disabled={disable}
             className='w-full sm:w-fit'
           >
             {translate('emailResend.buttonSend')}

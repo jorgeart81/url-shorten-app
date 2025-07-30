@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { ResendEmailContext } from '../components/ResendEmail/resendEmailContext';
+import { ResendEmailContext } from '../components/ResendEmail/context/resendEmailContext';
 
 export const useResendEmail = () => {
   const context = useContext(ResendEmailContext);
