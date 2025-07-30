@@ -9,7 +9,7 @@ export const ResendView = () => {
   return (
     <Suspense
       fallback={
-        <div className='relative content-center size-full'>
+        <div className='relative w-screen h-dvh flex justify-center items-center'>
           <Spinner
             loading={true}
             size='md'
