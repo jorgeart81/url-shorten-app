@@ -7,6 +7,7 @@ import { ResendView } from './components/ResendEmail/ResendView.tsx';
 import { SignupForm } from './components/SignupForm/SignupForm';
 import { ErrorBoundary } from '@/components/ErrorBoundary.tsx';
 import { FallbackView } from '@/components/FallbackView.tsx';
+import { EmailConfirmation } from './components/EmailConfirmation.tsx';
 
 export const AuthModule = () => {
   return (
@@ -18,6 +19,7 @@ export const AuthModule = () => {
           <Route path='signup' element={<SignupForm />} />
         </Route>
 
+        <Route path='confirm-Email' element={<EmailConfirmation />} />
         <Route path='resend-confirmation' element={<ResendView />} />
         <Route path='*' element={<NotFoundView />} />
       </Routes>
