@@ -5,23 +5,17 @@ import { ElapsedCounter } from '@/utils/elapsedCounter';
 import { ResendEmailContext } from './resendEmailContext';
 import { useAuthStore } from '@/modules/auth/store/authStore';
 
+const sessionCounter = ElapsedCounter.getInstance(
+  CookieKey.EmailResendSession,
+  600
+);
+const resendCounter = ElapsedCounter.getInstance(CookieKey.EmailResend, 60);
+
 export const ResendEmailProvider = ({
   children,
 }: {
   children: JSX.Element;
 }) => {
-  const sessionCounterMaxSeconds = 600;
-  const resendCounterMaxSeconds = 60;
-
-  const sessionCounter = new ElapsedCounter(
-    CookieKey.EmailResendSession,
-    sessionCounterMaxSeconds
-  );
-  const resendCounter = new ElapsedCounter(
-    CookieKey.EmailResend,
-    resendCounterMaxSeconds
-  );
-
   const [sessionElapsedTime, setSessionElapsedTime] = useState(0);
   const [sessionRegressiveTime, setSessionRegressiveTime] = useState(0);
   const [resedElapsedTime, setResendElapsedTime] = useState(0);
@@ -55,14 +49,16 @@ export const ResendEmailProvider = ({
   useEffect(() => {
     sessionExecute({ reload: true });
     resendExecute({ reload: true });
-    return () => {
-      if (status !== 'unconfirmedEmail') {
-        sessionReset();
-        resendCounter.cancelTimer();
-      }
-    };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // useEffect(() => {
+  //   if (status !== 'unconfirmedEmail') {
+  //     sessionReset();
+  //     resendCounter.cancelTimer();
+  //   }
+
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [status]);
 
   return (
     <ResendEmailContext

@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Navigate, useNavigate, useSearchParams } from 'react-router';
+import { useEffect, useState, useTransition } from 'react';
+import { useNavigate } from 'react-router';
 
 import { useLanguage } from '@/components/hooks/useLanguage';
 import { Button } from '@/components/ui/button';
@@ -10,50 +10,41 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Spinner } from '@/components/ui/spinner';
 import { RoutePath } from '@/shared/constants/routePath';
-import { useAuthStore } from '../store/authStore';
 import { isValidUrlCode } from '@/utils/validateCode';
+import { AuthService } from '../../services/authService';
+import { useAuthStore } from '../../store/authStore';
+import { Spinner } from '@/components/ui/spinner';
 
-export const EmailConfirmation = () => {
-  const controller = new AbortController();
+interface Props {
+  code: string;
+}
 
-  const [searchParams] = useSearchParams();
-  const code = searchParams.get('code');
+export default function EmailConfirmation({ code }: Props) {
   const navigate = useNavigate();
   const { translate } = useLanguage();
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [isSuccess, setIsSuccess] = useState(false);
-
-  const status = useAuthStore((state) => state.status);
-  const confirmEmail = useAuthStore((state) => state.confirmEmail);
   const deleteState = useAuthStore((state) => state.deleteState);
 
-  const handleConfirmation = async (code: string) => {
-    const { isSuccess } = await confirmEmail(code, controller);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
-    if (isSuccess) {
-      deleteState();
-      setIsSuccess(true);
+  useEffect(() => {
+    if (!code || !isValidUrlCode(code, 100)) {
+      return;
     }
-
-    setIsLoading(false);
-  };
+    // Confirm email when the component mounts
+    startTransition(async () => {
+      const { success } = await AuthService.confirmEmail(code);
+      setIsSuccess(success);
+    });
+  }, []);
 
   const goToAuth = () => {
     navigate(RoutePath.Login, { replace: true });
   };
 
-  useEffect(() => {
-    if (code) handleConfirmation(code);
-  }, [code]);
-
-  if (status === 'authenticated' || !isValidUrlCode(code, 100)) {
-    return <Navigate to={RoutePath.Login} replace />;
-  }
-
-  if (isLoading)
+  if (isPending)
     return (
       <div className='relative w-screen h-dvh flex justify-center items-center'>
         <Spinner
@@ -63,6 +54,10 @@ export const EmailConfirmation = () => {
         />
       </div>
     );
+
+  if (isSuccess) {
+    deleteState();
+  }
 
   return (
     <div className='relative  w-screen h-dvh flex justify-center items-center'>
@@ -103,4 +98,4 @@ export const EmailConfirmation = () => {
       )}
     </div>
   );
-};
+}

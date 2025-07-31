@@ -1,20 +1,16 @@
 import { useEffect, useState } from 'react';
-import { Navigate } from 'react-router';
 
 import { useLanguage } from '@/components/hooks/useLanguage';
 import { useToast } from '@/components/hooks/useToast';
 import type { ResultErrorCode } from '@/config/rop/resultErrorCode';
-import { RoutePath } from '@/shared/constants/routePath';
 import { useResendEmail } from '../../hooks/useResendEmail';
 import { AuthService } from '../../services/authService';
 import { useAuthStore } from '../../store/authStore';
-import type { Status } from '../../store/types/status.type';
 import ResendCard from './ResendCard';
 import ResendEmailDialog from './ResendEmailDialog';
 
 export default function ResendingEmail() {
   const controller = new AbortController();
-  const allowedStatus: Status[] = ['sessionExpired', 'unconfirmedEmail'];
 
   const [endSession, setEndSession] = useState(false);
   const [codeError, setCodeError] = useState<ResultErrorCode>();
@@ -27,6 +23,7 @@ export default function ResendingEmail() {
     sessionTimerExecute,
     sessionTimerReset,
     resendTimerExecute,
+    resendTimerReset,
   } = useResendEmail();
 
   const status = useAuthStore((state) => state.status);
@@ -45,6 +42,8 @@ export default function ResendingEmail() {
 
   const handleExitExpiredSession = () => {
     controller.abort();
+    sessionTimerReset();
+    resendTimerReset();
     deleteState();
   };
 
@@ -71,7 +70,7 @@ export default function ResendingEmail() {
 
     toastWarning(translate('UNKNOWN.description'));
   }
-
+  console.log({ sessionRegressiveTime });
   useEffect(() => {
     if (sessionRegressiveTime === 1 && status !== 'sessionExpired') {
       sessionExpired();
@@ -105,10 +104,6 @@ export default function ResendingEmail() {
       setCodeError(undefined);
     }
   }, [resendRegressiveTime]);
-
-  if (!status || !allowedStatus.includes(status)) {
-    return <Navigate to={RoutePath.Login} replace />;
-  }
 
   return (
     <>

@@ -17,7 +17,6 @@ import {
   type SignupData,
   type SignupValidationError,
 } from './signupValidation';
-import { Head } from '@/components/Head';
 
 export const SignupForm = ({
   className,
@@ -49,8 +48,6 @@ export const SignupForm = ({
   );
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
-      <Head title={translate('registerForm.title')} />
-
       <Card className='relative'>
         <CardHeader className='text-center'>
           <CardTitle className='text-xl'>

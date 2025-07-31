@@ -30,6 +30,7 @@ export class AuthService {
 
       return Result.success(undefined, status);
     } catch (error: unknown) {
+      console.log({error})
       return errorHandler(error);
     }
   }
