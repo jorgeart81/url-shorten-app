@@ -2,6 +2,7 @@ import { useEffect, useState, useTransition } from 'react';
 import { useNavigate } from 'react-router';
 
 import { useLanguage } from '@/components/hooks/useLanguage';
+import { PendingSpinner } from '@/components/status-indicators/PendingSpinner';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -14,7 +15,6 @@ import { RoutePath } from '@/shared/constants/routePath';
 import { isValidUrlCode } from '@/utils/validateCode';
 import { AuthService } from '../../services/authService';
 import { useAuthStore } from '../../store/authStore';
-import { Spinner } from '@/components/ui/spinner';
 
 interface Props {
   code: string;
@@ -44,15 +44,9 @@ export default function EmailConfirmation({ code }: Props) {
     navigate(RoutePath.Login, { replace: true });
   };
 
-  if (isPending)
+  if (!isPending)
     return (
-      <div className='relative w-screen h-dvh flex justify-center items-center'>
-        <Spinner
-          loading={true}
-          size='md'
-          className='dark:bg-white bg-black absolute'
-        />
-      </div>
+      <PendingSpinner className='relative w-screen h-dvh flex justify-center items-center' />
     );
 
   if (isSuccess) {

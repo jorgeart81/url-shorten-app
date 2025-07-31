@@ -2,6 +2,7 @@ import { useTransition } from 'react';
 
 import { useLanguage } from '@/components/hooks/useLanguage';
 import { useToast } from '@/components/hooks/useToast';
+import { PendingSpinner } from '@/components/status-indicators/PendingSpinner';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -10,7 +11,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Spinner } from '@/components/ui/spinner';
 import { useResendEmail } from '../../hooks/useResendEmail';
 import { AuthService } from '../../services/authService';
 
@@ -54,11 +54,8 @@ export default function ResendCard({ disable, resendCode, onExit }: Props) {
 
   return (
     <>
-      <Spinner
-        loading={isPending}
-        size='md'
-        className='dark:bg-white bg-black absolute'
-      />
+      <PendingSpinner loading={isPending} />
+
       <Card className='w-full max-w-sm'>
         <CardHeader>
           <CardTitle>{translate('emailResend.title')}</CardTitle>
