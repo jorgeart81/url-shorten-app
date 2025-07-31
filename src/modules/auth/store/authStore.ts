@@ -82,6 +82,15 @@ const storeApi: StateCreator<
   refreshToken: async () => {
     const { success, errorCode } = await AuthService.refreshToken();
 
+    if (!success && errorCode === 'INVALID_CREDENTIALS') {
+      set((prevState) => ({
+        ...prevState,
+        errorCode,
+        status: 'unauthorized',
+      }));
+      return { isSuccess: false };
+    }
+
     if (!success) {
       set((prevState) => ({ ...prevState, errorCode }));
       return { isSuccess: false };

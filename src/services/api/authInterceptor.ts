@@ -9,8 +9,8 @@ export function authInterceptor(config: InternalAxiosRequestConfig) {
   const status = useAuthStore.getState().status;
 
   if (
-    !isAuthRoute &&
     status === 'authenticated' &&
+    !isAuthRoute &&
     !CookieService.authSession
   ) {
     useAuthStore.getState().refreshToken();

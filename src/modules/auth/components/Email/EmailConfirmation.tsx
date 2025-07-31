@@ -44,14 +44,8 @@ export default function EmailConfirmation({ code }: Props) {
     navigate(RoutePath.Login, { replace: true });
   };
 
-  if (!isPending)
-    return (
-      <PendingSpinner className='relative w-screen h-dvh flex justify-center items-center' />
-    );
-
-  if (isSuccess) {
-    deleteState();
-  }
+  if (isPending) return <PendingSpinner fullScreen />;
+  if (isSuccess) deleteState();
 
   return (
     <div className='relative  w-screen h-dvh flex justify-center items-center'>

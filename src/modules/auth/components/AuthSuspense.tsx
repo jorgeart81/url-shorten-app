@@ -10,7 +10,7 @@ export const AuthSuspense: FC<Props> = ({ children = undefined }) => {
   return (
     <Suspense
       fallback={
-        <PendingSpinner className='relative w-screen h-dvh flex justify-center items-center' />
+        <PendingSpinner fullScreen />
       }
     >
       {children}
