@@ -9,9 +9,9 @@ import { useAuthStore } from '../../store/authStore';
 import ResendCard from './ResendCard';
 import ResendEmailDialog from './ResendEmailDialog';
 
-export default function ResendingEmail() {
-  const controller = new AbortController();
+const controller = new AbortController();
 
+export default function ResendingEmail() {
   const [endSession, setEndSession] = useState(false);
   const [codeError, setCodeError] = useState<ResultErrorCode>();
 

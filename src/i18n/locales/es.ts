@@ -140,4 +140,8 @@ export const es: Translation = {
 
   sendingEmail: 'Enviando correo…',
   sessionExpirationWarning: 'Tu sesión finalizará en 1 minuto.',
+
+  // Dashboard
+  home: 'Inicio',
+  links: 'Enlaces',
 };

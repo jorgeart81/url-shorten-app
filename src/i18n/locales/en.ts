@@ -147,4 +147,8 @@ export const en: Translation = {
 
   sendingEmail: 'Sending email…',
   sessionExpirationWarning: 'Your session will expire in 1 minute.',
+
+  // Dashboard
+  home: 'Home',
+  links: 'Links',
 };

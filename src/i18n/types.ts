@@ -118,6 +118,10 @@ export interface Translation {
 
   sendingEmail: string;
   sessionExpirationWarning: string;
+
+  // Dashboard
+  home: string;
+  links: string;
 }
 
 export type TranslationKeys = keyof Translation;

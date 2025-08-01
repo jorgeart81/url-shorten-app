@@ -12,18 +12,27 @@ import {
 import { RoutePath } from '@/shared/constants/routePath';
 import { useAuthStore } from '../../auth/store/authStore';
 import type { Status } from '../../auth/store/types/status.type';
+import { useDashboardStore } from '../store/dashboardStore';
 
 const allowedStatus: Status[] = ['checking', 'authenticated'];
 
 export const DashboardLayout = () => {
   const status = useAuthStore((state) => state.status);
   const refreshToken = useAuthStore((state) => state.refreshToken);
+  const getAccount = useDashboardStore((state) => state.getAccount);
 
-  useEffect(() => {
+  const init = async () => {
     if (status === 'authenticated')
       useAuthStore.setState((state) => ({ ...state, status: 'checking' }));
 
-    if (status == null || allowedStatus.includes(status)) refreshToken();
+    if (status == null || allowedStatus.includes(status)) {
+      const { isSuccess } = await refreshToken();
+      if (isSuccess) await getAccount();
+    }
+  };
+
+  useEffect(() => {
+    init();
   }, []);
 
   if (status == null || !allowedStatus.includes(status)) {
