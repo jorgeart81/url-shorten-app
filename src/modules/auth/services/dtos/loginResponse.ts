@@ -1,7 +1,7 @@
 import type { SuccessResponse } from '@/services/api/genericResponse';
 
 export interface LoginResponseData {
-  resendCode?: string;
+  readonly resendCode?: string;
 }
 
 // LoginResponse is just an alias for SuccessResponse<LoginResponseData>
