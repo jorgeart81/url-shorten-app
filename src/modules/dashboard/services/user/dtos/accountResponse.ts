@@ -1,0 +1,21 @@
+import type { SuccessResponse } from '@/services/api/genericResponse';
+
+export interface AccountData {
+  readonly userName: string;
+  readonly email: string;
+  readonly isActive: boolean;
+  readonly firstName?: string;
+  readonly lastName?: string;
+  readonly devices: DeviceData[];
+}
+
+export interface DeviceData {
+  readonly deviceName: string;
+  readonly isActive: boolean;
+  readonly isCurrentDevice: boolean;
+  readonly keepLoggedIn: boolean;
+  readonly clientType: string;
+  readonly userAgent: string;
+}
+
+export type AccountResponse = SuccessResponse<AccountData>;
