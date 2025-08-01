@@ -13,6 +13,7 @@ import type { LoginRequest } from './dtos/loginRequest';
 import type { LoginResponse } from './dtos/loginResponse';
 import type { RegisterRequest } from './dtos/registerRequest';
 import type { RegisterResponse } from './dtos/registerResponse';
+import { TimeSpan } from '@/utils/timeSpan';
 
 export class AuthService {
   static async confirmEmail(
@@ -30,7 +31,6 @@ export class AuthService {
 
       return Result.success(undefined, status);
     } catch (error: unknown) {
-      console.log({error})
       return errorHandler(error);
     }
   }
@@ -96,7 +96,7 @@ export class AuthService {
       const { status } = await urlShortenApi.post<SuccessResponse<void>>(
         '/auth/validate-resendcode',
         { resendCode },
-        { signal: controller?.signal, timeout: 30000 }
+        { signal: controller?.signal, timeout: TimeSpan.fromSeconds(30) }
       );
 
       if (status == 204) {

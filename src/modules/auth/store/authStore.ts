@@ -7,10 +7,9 @@ import { SotorageKey } from '@/shared/constants/storageKey';
 import { AuthService } from '../services/authService';
 import type { LoginRequest } from '../services/dtos/loginRequest';
 import type { RegisterRequest } from '../services/dtos/registerRequest';
-import type { AuthState, UserStore } from './types/authState';
+import type { AuthState } from './types/authState';
 
 const initialState: AuthState = {
-  user: undefined,
   status: null,
   keepLoggedIn: false,
   error: undefined,
@@ -28,7 +27,6 @@ interface Actions {
   refreshToken: () => Promise<ActionResult>;
   signUp: (request: RegisterRequest) => Promise<ActionResult>;
   deleteState: () => void;
-  setUser: (user: UserStore) => void;
   sessionExpired: () => void;
 }
 
@@ -125,10 +123,6 @@ const storeApi: StateCreator<
   deleteState: async () => {
     set({ ...initialState });
     localStorage.removeItem(SotorageKey.AUTH);
-  },
-
-  setUser: (user: UserStore) => {
-    set({ user });
   },
 
   sessionExpired: async () => {
