@@ -14,13 +14,14 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
+import { ViewContainer } from '../components/ViewContainer';
 
 export const LinkView = () => {
   const { translate: t } = useLanguage();
   const navigate = useNavigate();
 
   return (
-    <>
+    <ViewContainer>
       <Head title={t('links')} />
       <ViewHeader
         title='Links'
@@ -73,6 +74,6 @@ export const LinkView = () => {
           </div>
         </div>
       </section>
-    </>
+    </ViewContainer>
   );
 };

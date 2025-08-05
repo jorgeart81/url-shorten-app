@@ -8,8 +8,24 @@ import {
   LinkSortField,
   SortDirection,
 } from './dtos/getAllRequest';
+import type { CreateLinkRequest } from './dtos/createLinkRequest';
 
 export class LinkService {
+  static async createLink(
+    request: CreateLinkRequest,
+    controller?: AbortController
+  ): Promise<Result<void>> {
+    console.log(request);
+    try {
+      const { status } = await urlShortenApi.post('/links', request, {
+        signal: controller?.signal,
+      });
+      return Result.success(undefined, status);
+    } catch (error: unknown) {
+      return errorHandler(error);
+    }
+  }
+
   static async getAll(
     params: GetAllRequest = {
       page: 1,

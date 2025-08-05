@@ -54,11 +54,8 @@ export const DashboardLayout = () => {
             />
           </div>
         </header>
-        <div className='flex items-center flex-1 flex-col gap-4 p-4 pt-0'>
-          <div className='container min-h-full'>
-            <Outlet />
-          </div>
-        </div>
+
+        <Outlet />
       </SidebarInset>
     </SidebarProvider>
   );
