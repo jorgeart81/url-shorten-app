@@ -7,23 +7,29 @@ import {
   mapAccountDataToUserAccount,
   mapDeviceDataDtoToDevice,
 } from './mappers/accountMapper';
+import type { Link } from './types/link';
+import { LinkService } from '../services/links/linkService';
+import { mapLinkDataToLink } from './mappers/linkMapper';
 
 interface DashboardState {
   user: UserAccount;
   devices: Device[];
+  links: Link[];
 }
 
 interface Actions {
   getAccount: () => Promise<void>;
+  loadLinks: () => Promise<void>;
 }
 
 const initialState: DashboardState = {
   devices: [],
+  links: [],
   user: {
     displayName: '',
     email: '',
     isActive: false,
-  }
+  },
 };
 
 const storeApi: StateCreator<
@@ -45,6 +51,19 @@ const storeApi: StateCreator<
       ...prev,
       user: mapAccountDataToUserAccount(value.data),
       devices: value.data.devices.map(mapDeviceDataDtoToDevice),
+    }));
+  },
+  loadLinks: async () => {
+    const { success, value } = await LinkService.getAll();
+
+    if (!success || !value) {
+      //TODO: handling errors
+      return;
+    }
+
+    set((prev) => ({
+      ...prev,
+      links: value.data.map(mapLinkDataToLink),
     }));
   },
 });

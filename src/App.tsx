@@ -5,6 +5,7 @@ import { NotFoundView } from './components/NotFoundView';
 import { HomeView } from './modules/dashboard/views/HomeView';
 import { DashboardLayout } from './modules/dashboard/components/DashboardLayout';
 import { LinkView } from './modules/dashboard/views/LinkView';
+import { CreateLinkView } from './modules/dashboard/views/CreateLinkView';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route element={<DashboardLayout />}>
           <Route path='/home' element={<HomeView />} />
           <Route path='/links' element={<LinkView />} />
+          <Route path='/links/create' element={<CreateLinkView />} />
         </Route>
       </Routes>
     </BrowserRouter>
