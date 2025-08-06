@@ -10,11 +10,12 @@ import {
 import type { Link } from './types/link';
 import { LinkService } from '../services/links/linkService';
 import { mapLinkDataToLink } from './mappers/linkMapper';
+import type { Pagination } from './types/pagination';
 
 interface DashboardState {
   user: UserAccount;
   devices: Device[];
-  links: Link[];
+  links: Pagination<Link>;
 }
 
 interface Actions {
@@ -24,7 +25,15 @@ interface Actions {
 
 const initialState: DashboardState = {
   devices: [],
-  links: [],
+  links: {
+    data: [],
+    pageNumber: 0,
+    pageSize: 0,
+    totalRecords: 0,
+    totalPages: 0,
+    hasNextPage: false,
+    hasPreviousPage: false,
+  },
   user: {
     displayName: '',
     email: '',
@@ -63,7 +72,15 @@ const storeApi: StateCreator<
 
     set((prev) => ({
       ...prev,
-      links: value.data.map(mapLinkDataToLink),
+      links: {
+        data: value.data.map(mapLinkDataToLink),
+        pageNumber: value.pageNumber,
+        pageSize: value.pageSize,
+        totalRecords: value.totalRecords,
+        totalPages: value.totalPages,
+        hasNextPage: value.hasNextPage,
+        hasPreviousPage: value.hasPreviousPage,
+      },
     }));
   },
 });
