@@ -6,6 +6,7 @@ import { HomeView } from './modules/dashboard/views/HomeView';
 import { DashboardLayout } from './modules/dashboard/components/DashboardLayout';
 import { LinkView } from './modules/dashboard/views/LinkView';
 import { CreateLinkView } from './modules/dashboard/views/CreateLinkView';
+import { LinkDetailsView } from './modules/dashboard/views/LinkDetailsView';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path='/home' element={<HomeView />} />
           <Route path='/links' element={<LinkView />} />
           <Route path='/links/create' element={<CreateLinkView />} />
+          <Route path='/links/:backHalf/details' element={<LinkDetailsView />} />
         </Route>
       </Routes>
     </BrowserRouter>

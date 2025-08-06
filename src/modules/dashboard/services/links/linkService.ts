@@ -2,7 +2,7 @@ import { urlShortenApi } from '@/services/api/urlShortenApi';
 import { Result } from '@/config/rop/result_T';
 import { errorHandler } from '@/config/errorHandler';
 
-import type { GetLinksResponse } from './dtos/linkResponse';
+import type { CreateLinkResponse, GetLinksResponse } from './dtos/linkResponse';
 import {
   type GetAllRequest,
   LinkSortField,
@@ -14,13 +14,16 @@ export class LinkService {
   static async createLink(
     request: CreateLinkRequest,
     controller?: AbortController
-  ): Promise<Result<void>> {
-    console.log(request);
+  ): Promise<Result<CreateLinkResponse>> {
     try {
-      const { status } = await urlShortenApi.post('/links', request, {
-        signal: controller?.signal,
-      });
-      return Result.success(undefined, status);
+      const { status, data } = await urlShortenApi.post<CreateLinkResponse>(
+        '/links',
+        request,
+        {
+          signal: controller?.signal,
+        }
+      );
+      return Result.success(data, status);
     } catch (error: unknown) {
       return errorHandler(error);
     }

@@ -1,4 +1,7 @@
-import type { PaginationResponse } from '@/services/api/genericResponse';
+import type {
+  PaginationResponse,
+  SuccessResponse,
+} from '@/services/api/genericResponse';
 
 export interface LinkData {
   id: string;
@@ -15,3 +18,4 @@ export interface LinkData {
 }
 
 export type GetLinksResponse = PaginationResponse<LinkData>;
+export type CreateLinkResponse = SuccessResponse<LinkData>;
