@@ -10,7 +10,7 @@ export const ViewHeader = ({ button, title, className, ...props }: Props) => {
   return (
     <header
       className={twMerge(
-        'flex flex-wrap items-center gap-2 justify-between',
+        'flex flex-wrap items-center gap-2 justify-between mb-4',
         className
       )}
       {...props}

@@ -47,7 +47,7 @@ export const LinkView = () => {
         }
       />
 
-      <Separator className='my-4' />
+      <Separator className='mb-4' />
 
       <section className='flex flex-col min-h-[90%]'>
         <div className='self-end'>
@@ -69,6 +69,7 @@ export const LinkView = () => {
           {links.data.length > 0 ? (
             links.data.map((link) => (
               <LinkCard
+                key={link.backHalf}
                 backHalf={link.backHalf}
                 date={getShortFormattedDate(new Date(link.createdAt), 'es-ES')}
                 destination={link.destination}
