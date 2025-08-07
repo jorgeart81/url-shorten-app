@@ -2,17 +2,25 @@ import type { Translation } from '../types';
 
 export const es: Translation = {
   // Basic translations
-  welcome: '¡Hola mundo!',
-  clickMe: 'Haz clic',
   appTitle: 'Acortador de URLs',
-
-  exit: 'Salir',
-  continue: 'Continuar',
-  cancel: 'Cancelar',
-  optional: 'Opcional',
   shortlink: 'Enlace corto',
   title: 'Título',
   untitled: 'Sin título',
+  welcome: '¡Bienvenido!',
+
+  // Common actions
+  cancel: 'Cancelar',
+  clickMe: 'Haz clic',
+  continue: 'Continuar',
+  copy: 'Copiar',
+  delete: 'Eliminar',
+  edit: 'Editar',
+  exit: 'Salir',
+  more: 'Más',
+  moreOptions: 'Más opciones',
+  optional: 'Opcional',
+  share: 'Compartir',
+  'view.link.details': 'Ver detalles del enlace',
 
   // Login Form
   'loginForm.title': 'Iniciar sesión',
@@ -70,10 +78,15 @@ export const es: Translation = {
   'emailVerification.errorHelp': '¿No recibiste el correo o el enlace expiró?',
   'emailVerification.errorAction': 'Reenviar verificación',
 
+  // Errors
   'errorBoundary.title': '¡Uy! Ocurrió un error',
   'errorBoundary.description':
     'No pudimos cargar esta sección. Intenta recargar la página.',
   'errorBoundary.reloadButton': 'Recargar',
+  'errorAlert.notFound':
+    'Lo sentimos, hemos encontrado un error. Por favor, espera un momento y vuelve a intentarlo.',
+
+  // Create Link
   'createLink.button.create': 'Crear link',
   'createLink.destination.validation':
     'Necesitaremos una URL válida, como "yourbrnd.co/niceurl"',

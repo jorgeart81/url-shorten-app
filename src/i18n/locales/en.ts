@@ -2,18 +2,25 @@ import type { Translation } from '../types';
 
 export const en: Translation = {
   // Basic translations
-  welcome: 'Hello world!',
-  clickMe: 'Click me',
   appTitle: 'URL Shortener',
-
-  // Common actions
-  exit: 'Exit',
-  continue: 'Continue',
-  cancel: 'Cancel',
-  optional: 'Optional',
   shortlink: 'Short link',
   title: 'Title',
   untitled: 'Untitled',
+  welcome: 'Hello world!',
+
+  // Common actions
+  cancel: 'Cancel',
+  clickMe: 'Click me',
+  continue: 'Continue',
+  copy: 'Copy',
+  delete: 'Delete',
+  edit: 'Edit',
+  exit: 'Exit',
+  more: 'More',
+  moreOptions: 'More options',
+  optional: 'Optional',
+  share: 'Share',
+  'view.link.details': 'View link details',
 
   // Login Form
   'loginForm.title': 'Sign In',
@@ -72,11 +79,13 @@ export const en: Translation = {
     "Didn't receive the email or the link expired?",
   'emailVerification.errorAction': 'Resend verification',
 
-  // Error Boundary
+  // Errors
   'errorBoundary.title': 'Oops! Something went wrong',
   'errorBoundary.description':
     "We couldn't load this section. Try reloading the page.",
   'errorBoundary.reloadButton': 'Reload',
+  'errorAlert.notFound':
+    "Sorry, we've encountered an error. Give us just a moment and try again.",
 
   // Create Link
   'createLink.button.create': 'Create link',
@@ -151,5 +160,5 @@ export const en: Translation = {
   // Dashboard
   home: 'Home',
   links: 'Links',
-  backToList:'Back to list'
+  backToList: 'Back to list',
 };

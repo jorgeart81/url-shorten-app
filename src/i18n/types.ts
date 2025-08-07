@@ -1,17 +1,24 @@
 export interface Translation {
   // Basic translations
-  welcome: string;
-  clickMe: string;
   appTitle: string;
-
-  // Common actions
-  exit: string;
-  continue: string;
-  cancel: string;
-  optional: string;
   shortlink: string;
   title: string;
   untitled: string;
+  welcome: string;
+
+  // Common actions
+  cancel: string;
+  clickMe: string;
+  continue: string;
+  copy: string;
+  delete: string;
+  edit: string;
+  exit: string;
+  more: string;
+  moreOptions: string;
+  optional: string;
+  share: string;
+  'view.link.details': string;
 
   // Login Form
   'loginForm.title': string;
@@ -61,10 +68,11 @@ export interface Translation {
   'emailVerification.errorHelp': string;
   'emailVerification.errorAction': string;
 
-  // Error Boundary
+  // Errors
   'errorBoundary.title': string;
   'errorBoundary.description': string;
   'errorBoundary.reloadButton': string;
+  'errorAlert.notFound': string;
 
   // Create Link
   'createLink.button.create': string;
