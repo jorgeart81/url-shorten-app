@@ -7,12 +7,14 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
 import { RoutePath } from '@/shared/constants/routePath';
 
+import { useLanguage } from '@/components/hooks/useLanguage';
+import { getShortFormattedDate, type Locales } from '@/utils/dateUtils';
+import { useNavigate } from 'react-router';
 import type { CardVariant } from './cardVariant';
 import { LinkCardAction } from './LinkCardAction';
 import { LinkCardImage } from './LinkCardImage';
 import { LinkCardTitle } from './LinkCardTitle';
-import { useLanguage } from '@/components/hooks/useLanguage';
-import { getShortFormattedDate, type Locales } from '@/utils/dateUtils';
+import { useCallback } from 'react';
 
 interface Props {
   backHalf: string;
@@ -37,7 +39,23 @@ export const LinkCard = ({
   variant = 'link',
   onCheckedChange,
 }: Props) => {
+  const detailsRoute = `${RoutePath.Links}/${backHalf}/details`;
+  const shortLink = `${domain}/${backHalf}`;
+
   const { currentLanguage } = useLanguage();
+  const navigate = useNavigate();
+
+  const handleCopy = useCallback(() => {
+    navigator.clipboard.writeText(shortLink);
+  }, [shortLink]);
+
+  const handleDetails =
+    variant === 'link'
+      ? () =>
+          navigate(detailsRoute, {
+            viewTransition: true,
+          })
+      : undefined;
 
   return (
     <Card
@@ -58,11 +76,7 @@ export const LinkCard = ({
         )}
 
         <div className='flex-1 flex flex-col'>
-          <LinkCardTitle
-            goTo={`${RoutePath.Links}/${backHalf}/details`}
-            variant={variant}
-            title={title}
-          />
+          <LinkCardTitle goTo={detailsRoute} variant={variant} title={title} />
 
           <div className='flex flex-row gap-4'>
             <LinkCardImage
@@ -72,7 +86,7 @@ export const LinkCard = ({
 
             <div className='flex flex-col items-start gap-1'>
               <Button className='p-0 h-6 text-lg text-blue-600' variant='link'>
-                {domain}/{backHalf}
+                {shortLink}
               </Button>
               <Button className='p-0 font-light h-min' variant='link'>
                 {destination}
@@ -92,11 +106,10 @@ export const LinkCard = ({
 
         <LinkCardAction
           className='hidden lg:flex gap-2'
-          handleCopy={() => {}}
+          handleCopy={handleCopy}
           handleEdit={() => {}}
-          handleShare={() => {}}
           handleDelete={() => {}}
-          handleDetails={variant === 'link' ? () => {} : undefined}
+          handleDetails={handleDetails}
         />
       </CardHeader>
 
@@ -104,11 +117,10 @@ export const LinkCard = ({
         <Separator className='mb-3' />
         <LinkCardAction
           className='w-full flex gap-2 justify-end'
-          handleCopy={() => {}}
+          handleCopy={handleCopy}
           handleEdit={() => {}}
-          handleShare={() => {}}
           handleDelete={() => {}}
-          handleDetails={variant === 'link' ? () => {} : undefined}
+          handleDetails={handleDetails}
         />
       </CardHeader>
     </Card>

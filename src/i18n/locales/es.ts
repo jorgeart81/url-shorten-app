@@ -12,6 +12,7 @@ export const es: Translation = {
   cancel: 'Cancelar',
   clickMe: 'Haz clic',
   continue: 'Continuar',
+  copied: 'Copiado',
   copy: 'Copiar',
   delete: 'Eliminar',
   edit: 'Editar',

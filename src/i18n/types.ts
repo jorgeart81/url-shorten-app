@@ -10,6 +10,7 @@ export interface Translation {
   cancel: string;
   clickMe: string;
   continue: string;
+  copied: string;
   copy: string;
   delete: string;
   edit: string;
