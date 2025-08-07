@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { useLanguage } from './hooks/useLanguage';
 import { Separator } from './ui/separator';
+import { RotateCcw } from 'lucide-react';
 
 export const FallbackView = () => {
   const { translate } = useLanguage();
@@ -20,7 +21,7 @@ export const FallbackView = () => {
         <Separator className='my-4' />
         <div className='flex h-5 items-center justify-center space-x-4 text-sm'>
           <Button variant='ghost' onClick={() => window.location.reload()}>
-            {translate('errorBoundary.reloadButton')}
+            <RotateCcw /> {translate('errorBoundary.reloadButton')}
           </Button>
         </div>
       </div>

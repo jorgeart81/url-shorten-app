@@ -85,10 +85,7 @@ export const LinkCard = ({
               className=' h-5 min-w-5 rounded-full px-1 font-mono tabular-nums'
               variant='outline'
             >
-              {getShortFormattedDate(
-                date,
-                currentLanguage as Locales
-              )}
+              {getShortFormattedDate(date, currentLanguage as Locales)}
             </Badge>
           </div>
         </div>
@@ -98,6 +95,8 @@ export const LinkCard = ({
           handleCopy={() => {}}
           handleEdit={() => {}}
           handleShare={() => {}}
+          handleDelete={() => {}}
+          handleDetails={variant === 'link' ? () => {} : undefined}
         />
       </CardHeader>
 
@@ -108,6 +107,8 @@ export const LinkCard = ({
           handleCopy={() => {}}
           handleEdit={() => {}}
           handleShare={() => {}}
+          handleDelete={() => {}}
+          handleDetails={variant === 'link' ? () => {} : undefined}
         />
       </CardHeader>
     </Card>
