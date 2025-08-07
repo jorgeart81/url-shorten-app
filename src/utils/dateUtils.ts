@@ -1,6 +1,8 @@
+export type Locales = 'en-US' | 'es-ES';
+
 export function getShortFormattedDate(
   date: Date,
-  locales: 'en-US' | 'es-ES' = 'en-US'
+  locales: Locales = 'en-US'
 ): string {
   return new Intl.DateTimeFormat(locales, {
     month: 'short',

@@ -11,10 +11,12 @@ import type { CardVariant } from './cardVariant';
 import { LinkCardAction } from './LinkCardAction';
 import { LinkCardImage } from './LinkCardImage';
 import { LinkCardTitle } from './LinkCardTitle';
+import { useLanguage } from '@/components/hooks/useLanguage';
+import { getShortFormattedDate, type Locales } from '@/utils/dateUtils';
 
 interface Props {
   backHalf: string;
-  date: string;
+  date: Date;
   destination: string;
   destinationDomain: string;
   domain: string;
@@ -35,6 +37,8 @@ export const LinkCard = ({
   variant = 'link',
   onCheckedChange,
 }: Props) => {
+  const { currentLanguage } = useLanguage();
+
   return (
     <Card
       className={clsx('w-full', {
@@ -81,7 +85,10 @@ export const LinkCard = ({
               className=' h-5 min-w-5 rounded-full px-1 font-mono tabular-nums'
               variant='outline'
             >
-              {date}
+              {getShortFormattedDate(
+                date,
+                currentLanguage as Locales
+              )}
             </Badge>
           </div>
         </div>

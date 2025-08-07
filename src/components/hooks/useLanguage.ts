@@ -24,8 +24,8 @@ export const useLanguage = () => {
 
   return {
     currentLanguage,
-    isSpanish: currentLanguage === 'es',
-    isEnglish: currentLanguage === 'en',
+    isSpanish: currentLanguage === 'es-ES',
+    isEnglish: currentLanguage === 'en-US',
     // Methods
     t,
     translate,

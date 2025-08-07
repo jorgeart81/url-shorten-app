@@ -15,7 +15,6 @@ import {
 } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { RoutePath } from '@/shared/constants/routePath';
-import { getShortFormattedDate } from '@/utils/dateUtils';
 import { LinkCard } from '../components/linkCard/LinkCard';
 import { ViewContainer } from '../components/ViewContainer';
 import { ViewHeader } from '../components/ViewHeader';
@@ -73,7 +72,7 @@ export const LinkView = () => {
               <LinkCard
                 key={link.id}
                 backHalf={link.backHalf}
-                date={getShortFormattedDate(new Date(link.createdAt), 'es-ES')}
+                date={new Date(link.createdAt)}
                 destination={link.destination}
                 destinationDomain={link.destinationDomain}
                 domain={link.domain}
