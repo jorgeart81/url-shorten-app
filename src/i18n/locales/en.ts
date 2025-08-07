@@ -151,4 +151,5 @@ export const en: Translation = {
   // Dashboard
   home: 'Home',
   links: 'Links',
+  backToList:'Back to list'
 };

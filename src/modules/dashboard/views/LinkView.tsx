@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router';
+
 import { Head } from '@/components/Head';
 import { useLanguage } from '@/components/hooks/useLanguage';
 import { Button } from '@/components/ui/button';
@@ -12,13 +15,11 @@ import {
 } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { RoutePath } from '@/shared/constants/routePath';
-import { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { getShortFormattedDate } from '@/utils/dateUtils';
+import { LinkCard } from '../components/linkCard/LinkCard';
 import { ViewContainer } from '../components/ViewContainer';
 import { ViewHeader } from '../components/ViewHeader';
 import { useDashboardStore } from '../store/dashboardStore';
-import { LinkCard } from '../components/LinkCard';
-import { getShortFormattedDate } from '@/utils/dateUtils';
 
 export const LinkView = () => {
   const { translate: t } = useLanguage();
@@ -26,6 +27,7 @@ export const LinkView = () => {
 
   const links = useDashboardStore((state) => state.links);
   const loadLinks = useDashboardStore((state) => state.loadLinks);
+  const [selectLinks, setSelectLinks] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     loadLinks();
@@ -69,13 +71,20 @@ export const LinkView = () => {
           {links.data.length > 0 ? (
             links.data.map((link) => (
               <LinkCard
-                key={link.backHalf}
+                key={link.id}
                 backHalf={link.backHalf}
                 date={getShortFormattedDate(new Date(link.createdAt), 'es-ES')}
                 destination={link.destination}
                 destinationDomain={link.destinationDomain}
                 domain={link.domain}
-                title={link.title}
+                title={link.title ?? t('untitled')}
+                onCheckedChange={(isChecked) => {
+                  setSelectLinks((prev) => ({
+                    ...prev,
+                    [link.id]: isChecked,
+                  }));
+                }}
+                checked={selectLinks[link.id]}
               />
             ))
           ) : (

@@ -156,3 +156,8 @@
     animation: spinner-leaf-fade 800ms linear infinite;
   }
 }
+
+
+@view-transition {
+  navigation: auto;
+}

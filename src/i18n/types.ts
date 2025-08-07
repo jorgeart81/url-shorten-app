@@ -122,6 +122,7 @@ export interface Translation {
   // Dashboard
   home: string;
   links: string;
+  backToList: string;
 }
 
 export type TranslationKeys = keyof Translation;

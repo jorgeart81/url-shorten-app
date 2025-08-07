@@ -144,4 +144,5 @@ export const es: Translation = {
   // Dashboard
   home: 'Inicio',
   links: 'Enlaces',
+  backToList: 'Volver a la lista',
 };
