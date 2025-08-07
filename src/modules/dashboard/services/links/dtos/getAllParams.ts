@@ -1,4 +1,4 @@
-export interface GetAllRequest {
+export interface GetAllParams {
   page: number;
   size: number;
   isActive: boolean;
