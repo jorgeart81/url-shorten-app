@@ -1,3 +1,6 @@
+import { useCallback } from 'react';
+import { useNavigate } from 'react-router';
+
 import clsx from 'clsx';
 
 import { Badge } from '@/components/ui/badge';
@@ -6,15 +9,13 @@ import { Card, CardHeader } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
 import { RoutePath } from '@/shared/constants/routePath';
-
 import { useLanguage } from '@/components/hooks/useLanguage';
 import { getShortFormattedDate, type Locales } from '@/utils/dateUtils';
-import { useNavigate } from 'react-router';
-import type { CardVariant } from './cardVariant';
 import { LinkCardAction } from './LinkCardAction';
 import { LinkCardImage } from './LinkCardImage';
 import { LinkCardTitle } from './LinkCardTitle';
-import { useCallback } from 'react';
+
+import type { CardVariant } from './cardVariant';
 
 interface Props {
   backHalf: string;
@@ -39,15 +40,17 @@ export const LinkCard = ({
   variant = 'link',
   onCheckedChange,
 }: Props) => {
-  const detailsRoute = `${RoutePath.Links}/${backHalf}/details`;
+  const protocol = window.location.protocol;
   const shortLink = `${domain}/${backHalf}`;
+  const shortUrl = `${protocol}//${shortLink}`;
+  const detailsRoute = `${RoutePath.Links}/${backHalf}/details`;
 
   const { currentLanguage } = useLanguage();
   const navigate = useNavigate();
 
   const handleCopy = useCallback(() => {
-    navigator.clipboard.writeText(shortLink);
-  }, [shortLink]);
+    navigator.clipboard.writeText(shortUrl);
+  }, [shortUrl]);
 
   const handleDetails =
     variant === 'link'
@@ -85,11 +88,19 @@ export const LinkCard = ({
             />
 
             <div className='flex flex-col items-start gap-1'>
-              <Button className='p-0 h-6 text-lg text-blue-600' variant='link'>
-                {shortLink}
+              <Button
+                asChild
+                variant='link'
+                className='p-0 h-6 text-lg text-blue-600'
+              >
+                <a href={shortUrl} target='_blank'>
+                  {shortLink}
+                </a>
               </Button>
-              <Button className='p-0 font-light h-min' variant='link'>
-                {destination}
+              <Button asChild variant='link' className='p-0 font-light h-min'>
+                <a href={destination} target='_blank'>
+                  {destination}
+                </a>
               </Button>
             </div>
           </div>
