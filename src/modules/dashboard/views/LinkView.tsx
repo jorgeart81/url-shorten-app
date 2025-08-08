@@ -66,7 +66,7 @@ export const LinkView = () => {
           </Select>
         </div>
 
-        <div className='flex-1 flex flex-col justify-center gap-4 py-6'>
+        <div className='flex-1 flex flex-col itema-center gap-4 py-6'>
           {links.data.length > 0 ? (
             links.data.map((link) => (
               <LinkCard
@@ -87,7 +87,7 @@ export const LinkView = () => {
               />
             ))
           ) : (
-            <div className='text-center text-muted-foreground'>
+            <div className='text-center text-muted-foreground my-auto'>
               <h3 className='text-lg font-semibold mb-2'>
                 {t('linksView.noResults.title')}
               </h3>

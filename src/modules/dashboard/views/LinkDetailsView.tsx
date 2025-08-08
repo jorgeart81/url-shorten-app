@@ -13,7 +13,7 @@ export const LinkDetailsView = () => {
   if (!backHalf) return <Navigate to={RoutePath.Links} />;
 
   const getLink = async () => {
-    const { value } = await LinkService.find({ backHalf });
+    const { value } = await LinkService.find(backHalf);
     return value?.data ? mapLinkDataToLink(value.data) : undefined;
   };
 

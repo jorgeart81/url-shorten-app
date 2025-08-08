@@ -22,7 +22,7 @@ import { ViewHeader } from '../components/ViewHeader';
 import { LinkService } from '../services/links/linkService';
 
 export const CreateLinkView = () => {
-  const hostname = window.location.hostname;
+  const { hostname, port } = window.location;
   const formRef = useRef<HTMLFormElement>(null);
 
   const { translate: t } = useLanguage();
@@ -39,12 +39,14 @@ export const CreateLinkView = () => {
         return errors;
       }
 
-      const { destination, ...rest } = result.data;
+      const { customBackHalf, destination, ...rest } = result.data;
 
       const { success, value } = await LinkService.createLink({
         ...rest,
+        customBackHalf:
+          customBackHalf && customBackHalf.trim().length > 0 ? customBackHalf : undefined,
         destination: destination,
-        domain: hostname,
+        domain: port ? `${hostname}:${port}` : hostname,
       });
 
       if (success) {
