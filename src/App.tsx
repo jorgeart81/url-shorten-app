@@ -9,6 +9,7 @@ import { LinkDetailsView } from './modules/dashboard/views/LinkDetailsView';
 import { LinkView } from './modules/dashboard/views/LinkView';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { FallbackView } from './components/FallbackView';
+import { RedirectView } from './modules/dashboard/views/RedirectView';
 
 function App() {
   return (
@@ -17,8 +18,10 @@ function App() {
         <Routes>
           <Route index element={<Navigate to='/auth' />} />
           <Route path='/auth/*' element={<AuthModule />} />
+          <Route path='/:backHalf' element={<RedirectView />} />
           <Route path='*' element={<NotFoundView />} />
 
+          {/* region: Authenticated routes */}
           <Route element={<DashboardLayout />}>
             <Route path='/home' element={<HomeView />} />
             <Route path='/links' element={<LinkView />} />
@@ -28,6 +31,7 @@ function App() {
               element={<LinkDetailsView />}
             />
           </Route>
+          {/* end region*/}
         </Routes>
       </BrowserRouter>
     </ErrorBoundary>
