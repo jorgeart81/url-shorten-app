@@ -16,6 +16,16 @@ import { useDashboardStore } from '../store/dashboardStore';
 
 const allowedStatus: Status[] = ['checking', 'authenticated'];
 
+/**
+ * DashboardLayout
+ *
+ * This component wraps all authenticated dashboard routes.
+ * It checks the user's authentication status and refreshes the token if needed.
+ * If the user is not authenticated, it redirects to the login page.
+ * While authentication is being checked, it shows a loading spinner.
+ * All child routes rendered inside <Outlet /> require authentication.
+ */
+
 export const DashboardLayout = () => {
   const status = useAuthStore((state) => state.status);
   const refreshToken = useAuthStore((state) => state.refreshToken);
