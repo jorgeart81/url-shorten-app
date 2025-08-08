@@ -1,19 +1,20 @@
-import { urlShortenApi } from '@/services/api/urlShortenApi';
-import { Result } from '@/config/rop/result_T';
 import { errorHandler } from '@/config/errorHandler';
+import { Result } from '@/config/rop/result_T';
+import { urlShortenApi } from '@/services/api/urlShortenApi';
 
-import type {
-  CreateLinkResponse,
-  FindLinkResponse,
-  GetLinksResponse,
-} from './dtos/linkResponse';
+import type { CreateLinkRequest } from './dtos/createLinkRequest';
 import {
   type GetAllParams,
   LinkSortField,
   SortDirection,
 } from './dtos/getAllParams';
-import type { CreateLinkRequest } from './dtos/createLinkRequest';
-import type { FindParams } from './dtos/findParams';
+import type {
+  CreateLinkResponse,
+  DestinationData,
+  DestinationLinkResponse,
+  FindLinkResponse,
+  GetLinksResponse,
+} from './dtos/linkResponse';
 
 export class LinkService {
   static async createLink(
@@ -35,18 +36,35 @@ export class LinkService {
   }
 
   static async find(
-    params: FindParams,
+    backHalf: string,
     controller?: AbortController
   ): Promise<Result<FindLinkResponse>> {
     try {
       const { data, status } = await urlShortenApi.get<FindLinkResponse>(
-        `/links/find`,
+        `/links/find/${backHalf}`,
         {
           signal: controller?.signal,
-          params,
         }
       );
       return Result.success(data, status);
+    } catch (error: unknown) {
+      console.log(error);
+      return errorHandler(error);
+    }
+  }
+
+  static async getDestination(
+    backHalf: string,
+    controller?: AbortController
+  ): Promise<Result<DestinationData>> {
+    try {
+      const { data, status } = await urlShortenApi.get<DestinationLinkResponse>(
+        `/links/${backHalf}/destination`,
+        {
+          signal: controller?.signal,
+        }
+      );
+      return Result.success(data.data, status);
     } catch (error: unknown) {
       console.log(error);
       return errorHandler(error);

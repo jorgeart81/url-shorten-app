@@ -20,3 +20,6 @@ export interface LinkData {
 export type GetLinksResponse = PaginationResponse<LinkData>;
 export type CreateLinkResponse = SuccessResponse<LinkData>;
 export type FindLinkResponse = SuccessResponse<LinkData>;
+
+export type DestinationData = Pick<LinkData, 'destination'>;
+export type DestinationLinkResponse = SuccessResponse<DestinationData>;
