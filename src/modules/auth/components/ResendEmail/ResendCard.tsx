@@ -1,4 +1,4 @@
-import { useTransition } from 'react';
+import { useRef, useTransition } from 'react';
 
 import { useLanguage } from '@/components/hooks/useLanguage';
 import { useToast } from '@/components/hooks/useToast';
@@ -21,7 +21,7 @@ interface Props {
 }
 
 export default function ResendCard({ disable, resendCode, onExit }: Props) {
-  const controller = new AbortController();
+  const controllerRef = useRef<AbortController | undefined>(undefined);
   const [isPending, startTransition] = useTransition();
 
   const { resendRegressiveTime, resendTimerExecute } = useResendEmail();
@@ -29,10 +29,11 @@ export default function ResendCard({ disable, resendCode, onExit }: Props) {
   const { toasInfo, toastWarning } = useToast();
 
   const handleResend = () => {
+    controllerRef.current = new AbortController();
     startTransition(async () => {
       const result = await AuthService.resendConfirmationEmail(
         resendCode,
-        controller
+        controllerRef.current
       );
 
       if (result.success) {
@@ -48,7 +49,7 @@ export default function ResendCard({ disable, resendCode, onExit }: Props) {
   };
 
   const handleExit = () => {
-    controller.abort();
+    controllerRef.current?.abort();
     onExit?.();
   };
 

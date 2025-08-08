@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useLanguage } from '@/components/hooks/useLanguage';
 import { useToast } from '@/components/hooks/useToast';
@@ -9,11 +9,10 @@ import { useAuthStore } from '../../store/authStore';
 import ResendCard from './ResendCard';
 import ResendEmailDialog from './ResendEmailDialog';
 
-const controller = new AbortController();
-
 export default function ResendingEmail() {
   const [endSession, setEndSession] = useState(false);
   const [codeError, setCodeError] = useState<ResultErrorCode>();
+  const controllerRef = useRef<AbortController | undefined>(undefined);
 
   const { translate } = useLanguage();
   const { toasInfo, toastWarning } = useToast();
@@ -31,17 +30,18 @@ export default function ResendingEmail() {
   const deleteState = useAuthStore((state) => state.deleteState);
   const sessionExpired = useAuthStore((state) => state.sessionExpired);
 
-  const validateCode = async (controller: AbortController, code: string) => {
+  const validateCode = async (code: string) => {
+    controllerRef.current = new AbortController();
     const { errorCode } = await AuthService.validateResendCode(
       code,
-      controller
+      controllerRef.current
     );
 
     if (errorCode) handleError(errorCode);
   };
 
   const handleExitExpiredSession = () => {
-    controller.abort();
+    controllerRef.current?.abort();
     sessionTimerReset();
     resendTimerReset();
     deleteState();
@@ -93,7 +93,7 @@ export default function ResendingEmail() {
       return;
     }
 
-    validateCode(controller, resendCode);
+    validateCode(resendCode);
     sessionTimerExecute();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
