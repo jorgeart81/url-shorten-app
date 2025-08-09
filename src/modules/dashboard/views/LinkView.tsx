@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import { Head } from '@/components/Head';
 import { useLanguage } from '@/components/hooks/useLanguage';
@@ -16,6 +16,7 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { RoutePath } from '@/shared/constants/routePath';
 import { LinkCard } from '../components/linkCard/LinkCard';
+import { NoLinksContent } from '../components/NoLinksContent';
 import { ViewContainer } from '../components/ViewContainer';
 import { ViewHeader } from '../components/ViewHeader';
 import { useDashboardStore } from '../store/dashboardStore';
@@ -87,31 +88,7 @@ export const LinkView = () => {
               />
             ))
           ) : (
-            <div className='text-center text-muted-foreground my-auto'>
-              <h3 className='text-lg font-semibold mb-2'>
-                {t('linksView.noResults.title')}
-              </h3>
-
-              <p>
-                {
-                  t('linksView.noResults.description').split(
-                    '{{hiddenLink}}'
-                  )[0]
-                }
-                <br />
-                <Link
-                  to={{ search: '?archived=on' }}
-                  className='ml-auto underline-offset-4 underline dark:text-gray-300'
-                >
-                  {t('linksView.noResults.hiddenLink')}
-                </Link>
-                {
-                  t('linksView.noResults.description').split(
-                    '{{hiddenLink}}'
-                  )[1]
-                }
-              </p>
-            </div>
+            <NoLinksContent />
           )}
         </div>
       </section>
