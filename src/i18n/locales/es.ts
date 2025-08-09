@@ -159,4 +159,5 @@ export const es: Translation = {
   home: 'Inicio',
   links: 'Enlaces',
   backToList: 'Volver a la lista',
+  logOut: 'Cerrar sesión',
 };

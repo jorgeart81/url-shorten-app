@@ -162,4 +162,5 @@ export const en: Translation = {
   home: 'Home',
   links: 'Links',
   backToList: 'Back to list',
+  logOut: 'Log out',
 };

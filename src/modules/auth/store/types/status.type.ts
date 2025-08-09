@@ -1,6 +1,7 @@
 export type Status =
-  | 'checking'
-  | 'unauthorized'
   | 'authenticated'
+  | 'authenticating'
+  | 'checking'
   | 'sessionExpired'
+  | 'unauthorized'
   | 'unconfirmedEmail';

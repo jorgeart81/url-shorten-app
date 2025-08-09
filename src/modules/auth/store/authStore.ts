@@ -43,7 +43,7 @@ const storeApi: StateCreator<
   },
 
   login: async (request: LoginRequest) => {
-    set({ status: 'checking', error: undefined });
+    set({ status: 'authenticating', error: undefined });
     const { success, value, errorCode } = await AuthService.login(request);
     const resendCode = value?.data?.resendCode;
 
@@ -134,7 +134,7 @@ export const useAuthStore = create<AuthState & Actions>()(
   persist(devtools(storeApi), {
     name: SotorageKey.AUTH,
     partialize: (state) => {
-      const { error, ...rest } = state; // eslint-disable-line @typescript-eslint/no-unused-vars
+      const { error, errorCode, ...rest } = state; // eslint-disable-line @typescript-eslint/no-unused-vars
       return rest;
     },
   })

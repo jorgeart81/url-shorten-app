@@ -7,6 +7,7 @@ export interface AccountData {
   readonly firstName?: string;
   readonly lastName?: string;
   readonly devices: DeviceData[];
+  readonly domains: DomainData[];
 }
 
 export interface DeviceData {
@@ -16,6 +17,11 @@ export interface DeviceData {
   readonly keepLoggedIn: boolean;
   readonly clientType: string;
   readonly userAgent: string;
+}
+
+export interface DomainData {
+  domain: string;
+  isApiDomain: boolean;
 }
 
 export type AccountResponse = SuccessResponse<AccountData>;

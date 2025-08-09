@@ -132,6 +132,7 @@ export interface Translation {
   home: string;
   links: string;
   backToList: string;
+  logOut: string;
 }
 
 export type TranslationKeys = keyof Translation;

@@ -8,7 +8,7 @@ export const AuthLayout = () => {
   const status = useAuthStore((state) => state.status);
   const resendCode = useAuthStore((state) => state.resendCode);
 
-  if (status === 'authenticated') {
+  if (status === 'authenticated' || status === 'checking') {
     return <Navigate to={RoutePath.Home} />;
   }
 
