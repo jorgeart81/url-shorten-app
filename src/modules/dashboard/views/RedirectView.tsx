@@ -1,34 +1,31 @@
-import { useEffect, useState } from 'react';
+import { Suspense } from 'react';
 import { Navigate, useParams } from 'react-router';
 
+import { PendingSpinner } from '@/components/status-indicators/PendingSpinner';
 import { RoutePath } from '@/shared/constants/routePath';
+import { Redirect } from '../components/Redirect';
 import { LinkService } from '../services/links/linkService';
 
 export const RedirectView = () => {
   const { backHalf } = useParams();
-  const [destnation, setDestination] = useState<string>();
-
-  useEffect(() => {
-    if (!backHalf) return;
-    const controller = new AbortController();
-
-    LinkService.getDestination(backHalf, controller).then((r) => {
-      console.log(r);
-      if (!r.success || !r.value?.destination) return;
-      setDestination(r.value.destination);
-    });
-
-    return () => {
-      controller.abort();
-    };
-  }, [backHalf]);
 
   if (!backHalf) return <Navigate to={RoutePath.Login} />;
 
-  if (destnation) {
-    window.location.replace(destnation);
-    return null;
-  }
+  const getDestinationUrl = async (): Promise<string | undefined> => {
+    const controller = new AbortController();
+    const { success, value } = await LinkService.getDestination(
+      backHalf,
+      controller
+    );
 
-  return <div>Show Error</div>;
+    if (!success || !value?.destination) return;
+
+    return value.destination;
+  };
+
+  return (
+    <Suspense fallback={<PendingSpinner fullScreen size='sm' />}>
+      <Redirect getDestinationUrl={getDestinationUrl()} />
+    </Suspense>
+  );
 };

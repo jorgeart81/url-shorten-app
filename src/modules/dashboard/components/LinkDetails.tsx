@@ -8,10 +8,11 @@ import { LinkCard } from './linkCard/LinkCard';
 
 import { Alert, AlertTitle } from '@/components/ui/alert';
 import { AlertCircleIcon, ChevronLeft } from 'lucide-react';
-import type { LinkData } from '../services/links/dtos/linkResponse';
+
+import type { Link } from '../store/types/link';
 
 interface Props {
-  getLink: Promise<LinkData | undefined>;
+  getLink: Promise<Link | undefined>;
 }
 
 export const LinkDetails: FC<Props> = ({ getLink }) => {

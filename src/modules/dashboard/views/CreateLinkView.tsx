@@ -20,9 +20,10 @@ import {
 import { ViewContainer } from '../components/ViewContainer';
 import { ViewHeader } from '../components/ViewHeader';
 import { LinkService } from '../services/links/linkService';
+import { env } from '@/config/env';
 
 export const CreateLinkView = () => {
-  const { hostname, port } = window.location;
+  const domain = env.redirectionDomain;
   const formRef = useRef<HTMLFormElement>(null);
 
   const { translate: t } = useLanguage();
@@ -44,9 +45,10 @@ export const CreateLinkView = () => {
       const { success, value } = await LinkService.createLink({
         ...rest,
         customBackHalf:
-          customBackHalf && customBackHalf.trim().length > 0 ? customBackHalf : undefined,
+          customBackHalf && customBackHalf.trim().length > 0
+            ? customBackHalf
+            : undefined,
         destination: destination,
-        domain: port ? `${hostname}:${port}` : hostname,
       });
 
       if (success) {
@@ -131,13 +133,13 @@ export const CreateLinkView = () => {
                               type='hidden'
                               id='domain'
                               name='domain'
-                              value={hostname}
+                              value={domain}
                               readOnly
                             />
                             <Input
                               type='text'
                               placeholder='example.com'
-                              value={hostname}
+                              value={domain}
                               disabled
                             />
                           </div>

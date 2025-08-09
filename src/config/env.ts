@@ -13,6 +13,9 @@ const envSchema = z.object({
       return num;
     }),
   VITE_APP_NAME: z.string().default('Url Shorten'),
+
+  VITE_REDIRECTION_DOMAIN: z.string(),
+
   VITE_DEBUG_MODE: z
     .string()
     .optional()
@@ -39,6 +42,9 @@ export const env = {
     `${validatedEnv.VITE_API_URL}:${validatedEnv.VITE_API_PORT}/api`
   ),
   appName: validatedEnv.VITE_APP_NAME,
+
+  redirectionDomain: validatedEnv.VITE_REDIRECTION_DOMAIN,
+
   debugMode: validatedEnv.VITE_DEBUG_MODE,
 } as const;
 
