@@ -1,9 +1,13 @@
+import type { ResultErrorCode } from '@/config/rop/resultErrorCode';
 import type { Language } from '@/i18n/config';
 import type { TranslationKeys } from '@/i18n/types';
 import { useTranslation } from 'react-i18next';
 
 export const useLanguage = () => {
   const { t, i18n } = useTranslation();
+  const currentLanguage = i18n.language;
+
+  const translate = (key: TranslationKeys) => t(key);
 
   /**
    * Changes the application's language.
@@ -18,9 +22,19 @@ export const useLanguage = () => {
     localStorage.setItem('language', String(lng));
   };
 
-  const currentLanguage = i18n.language;
-
-  const translate = (key: TranslationKeys) => t(key);
+  /**
+   * Retrieves the translated title and description for a given error code.
+   *
+   * Uses translation keys based on the provided ResultErrorCode value,
+   * allowing you to display localized and specific error messages in the UI.
+   *
+   * @param errorCode - Error code defined in ResultErrorCode. Defaults to 'UNKNOWN'.
+   * @returns An object containing the translated 'title' and 'description' properties.
+   */
+  const getErrorTranslation = (errorCode: ResultErrorCode = 'UNKNOWN') => ({
+    title: t(`${errorCode}.title`),
+    description: t(`${errorCode}.description`),
+  });
 
   return {
     currentLanguage,
@@ -28,7 +42,8 @@ export const useLanguage = () => {
     isEnglish: currentLanguage === 'en-US',
     // Methods
     t,
-    translate,
     changeLanguage,
+    getErrorTranslation,
+    translate,
   };
 };
