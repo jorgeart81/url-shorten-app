@@ -1,8 +1,14 @@
 import { useEffect } from 'react';
+
+import { LogOut, RotateCcw } from 'lucide-react';
 import { Navigate, Outlet } from 'react-router';
 
 import { AppSidebar } from '@/components/app-sidebar';
+import { FallbackContent } from '@/components/FallbackContent ';
+import { useLanguage } from '@/components/hooks/useLanguage';
+import { useToast } from '@/components/hooks/useToast';
 import { PendingSpinner } from '@/components/status-indicators/PendingSpinner';
+import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import {
   SidebarInset,
@@ -25,11 +31,15 @@ const allowedStatus: Status[] = ['checking', 'authenticated'];
  * While authentication is being checked, it shows a loading spinner.
  * All child routes rendered inside <Outlet /> require authentication.
  */
-
 export const DashboardLayout = () => {
+  const { toastError } = useToast();
+  const { translate: t, getErrorTranslation } = useLanguage();
+
   const status = useAuthStore((state) => state.status);
-  const refreshToken = useAuthStore((state) => state.refreshToken);
+  const errorCode = useAuthStore((state) => state.errorCode);
+  const logout = useAuthStore((state) => state.logout);
   const getAccount = useDashboardStore((state) => state.getAccount);
+  const refreshToken = useAuthStore((state) => state.refreshToken);
 
   const init = async () => {
     if (status === 'authenticated')
@@ -37,7 +47,11 @@ export const DashboardLayout = () => {
 
     if (status == null || allowedStatus.includes(status)) {
       const { isSuccess } = await refreshToken();
-      if (isSuccess) await getAccount();
+      if (!isSuccess) {
+        toastError(getErrorTranslation(errorCode).description);
+        return;
+      }
+      await getAccount();
     }
   };
 
@@ -49,7 +63,24 @@ export const DashboardLayout = () => {
     return <Navigate to={RoutePath.Login} />;
   }
 
-  if (status === 'checking') return <PendingSpinner fullScreen />;
+  if (errorCode === 'NETWORK_ERROR')
+    return (
+      <FallbackContent
+        title={t('errorBoundary.title')}
+        description={getErrorTranslation(errorCode).description}
+      >
+        <Button variant='ghost' onClick={() => window.location.reload()}>
+          <RotateCcw /> {t('errorBoundary.reloadButton')}
+        </Button>
+        <Button variant='ghost' onClick={logout}>
+          <LogOut /> {t('logOut')}
+        </Button>
+      </FallbackContent>
+    );
+
+  if (status === 'checking') {
+    return <PendingSpinner fullScreen />;
+  }
 
   return (
     <SidebarProvider>
