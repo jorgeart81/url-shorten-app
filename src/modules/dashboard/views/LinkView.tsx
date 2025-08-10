@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useEffect, useState, useTransition } from 'react';
+import { useNavigate, useSearchParams } from 'react-router';
 
 import { Head } from '@/components/Head';
 import { useLanguage } from '@/components/hooks/useLanguage';
+import { PaginationBar } from '@/components/pagination/PaginationBar';
 import { Button } from '@/components/ui/button';
 import {
   Select,
@@ -20,18 +21,26 @@ import { NoLinksContent } from '../components/NoLinksContent';
 import { ViewContainer } from '../components/ViewContainer';
 import { ViewHeader } from '../components/ViewHeader';
 import { useDashboardStore } from '../store/dashboardStore';
+import { PendingSpinner } from '@/components/status-indicators/PendingSpinner';
 
 export const LinkView = () => {
+  const [isPending, startTransition] = useTransition();
+
   const { translate: t } = useLanguage();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const page = Number(searchParams.get('page'));
 
   const links = useDashboardStore((state) => state.links);
   const loadLinks = useDashboardStore((state) => state.loadLinks);
   const [selectLinks, setSelectLinks] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
-    loadLinks();
-  }, []);
+    if (isNaN(page) || page < 0) return;
+    startTransition(async () => {
+      await loadLinks(page, true);
+    });
+  }, [loadLinks, page]);
 
   return (
     <ViewContainer>
@@ -67,31 +76,44 @@ export const LinkView = () => {
           </Select>
         </div>
 
-        <div className='flex-1 flex flex-col itema-center gap-4 py-6'>
-          {links.data.length > 0 ? (
-            links.data.map((link) => (
-              <LinkCard
-                key={link.id}
-                backHalf={link.backHalf}
-                date={new Date(link.createdAt)}
-                destination={link.destination}
-                destinationDomain={link.destinationDomain}
-                domain={link.domain}
-                title={link.title ?? t('untitled')}
-                onCheckedChange={(isChecked) => {
-                  setSelectLinks((prev) => ({
-                    ...prev,
-                    [link.id]: isChecked,
-                  }));
-                }}
-                checked={selectLinks[link.id]}
-              />
-            ))
-          ) : (
-            <NoLinksContent />
-          )}
-        </div>
+        {isPending ? (
+          <PendingSpinner size='sm' fullSize className='my-auto' />
+        ) : (
+          <div className='flex-1 flex flex-col itema-center gap-4 py-6'>
+            {links.data.length > 0 ? (
+              links.data.map((link) => (
+                <LinkCard
+                  key={link.id}
+                  backHalf={link.backHalf}
+                  date={new Date(link.createdAt)}
+                  destination={link.destination}
+                  destinationDomain={link.destinationDomain}
+                  domain={link.domain}
+                  title={link.title ?? t('untitled')}
+                  onCheckedChange={(isChecked) => {
+                    setSelectLinks((prev) => ({
+                      ...prev,
+                      [link.id]: isChecked,
+                    }));
+                  }}
+                  checked={selectLinks[link.id]}
+                />
+              ))
+            ) : (
+              <NoLinksContent />
+            )}
+          </div>
+        )}
       </section>
+
+      <PaginationBar
+        pageNumber={links.pageNumber}
+        pageSize={links.pageSize}
+        totalRecords={links.totalRecords}
+        totalPages={links.totalPages}
+        hasNextPage={links.hasNextPage}
+        hasPreviousPage={links.hasPreviousPage}
+      />
     </ViewContainer>
   );
 };
