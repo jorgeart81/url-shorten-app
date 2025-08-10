@@ -71,20 +71,20 @@ export class LinkService {
     }
   }
 
-  static async getAll(
-    params: GetAllParams = {
+  static async getAll(params: GetAllParams): Promise<Result<GetLinksResponse>> {
+    const defaultParams = {
       page: 1,
       size: 5,
       isActive: true,
       linkSortField: LinkSortField.CreatedAt,
       sortDirection: SortDirection.Asc,
-    }
-  ): Promise<Result<GetLinksResponse>> {
+    };
+
     try {
       const { data, status } = await urlShortenApi.get<GetLinksResponse>(
         `/links`,
         {
-          params,
+          params: { ...defaultParams, ...params },
         }
       );
       return Result.success(data, status);

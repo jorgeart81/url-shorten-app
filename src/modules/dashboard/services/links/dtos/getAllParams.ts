@@ -1,9 +1,9 @@
 export interface GetAllParams {
   page: number;
-  size: number;
-  isActive: boolean;
-  linkSortField: LinkSortField;
-  sortDirection: SortDirection;
+  size?: number;
+  isActive?: boolean;
+  linkSortField?: LinkSortField;
+  sortDirection?: SortDirection;
 }
 
 export const LinkSortField = {

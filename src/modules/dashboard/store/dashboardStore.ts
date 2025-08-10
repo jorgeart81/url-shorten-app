@@ -1,16 +1,19 @@
 import { create, type StateCreator } from 'zustand';
-import type { Device, UserAccount } from './types/userAccount';
 import { devtools, persist } from 'zustand/middleware';
-import { SotorageKey } from '@/shared/constants/storageKey';
+
+import { LinkService } from '../services/links/linkService';
 import { UserService } from '../services/user/userService';
+
+import { SotorageKey } from '@/shared/constants/storageKey';
 import {
   mapAccountDataToUserAccount,
   mapDeviceDataDtoToDevice,
 } from './mappers/accountMapper';
-import type { Link } from './types/link';
-import { LinkService } from '../services/links/linkService';
 import { mapLinkDataToLink } from './mappers/linkMapper';
+
+import type { Link } from './types/link';
 import type { Pagination } from './types/pagination';
+import type { Device, UserAccount } from './types/userAccount';
 
 interface DashboardState {
   user: UserAccount;
@@ -20,7 +23,7 @@ interface DashboardState {
 
 interface Actions {
   getAccount: () => Promise<void>;
-  loadLinks: () => Promise<void>;
+  loadLinks: (page: number, isActive: boolean) => Promise<void>;
 }
 
 const initialState: DashboardState = {
@@ -62,8 +65,13 @@ const storeApi: StateCreator<
       devices: value.data.devices.map(mapDeviceDataDtoToDevice),
     }));
   },
-  loadLinks: async () => {
-    const { success, value } = await LinkService.getAll();
+  loadLinks: async (page: number, isActive: boolean) => {
+    const pageNumber = page <= 0 ? 1 : page;
+
+    const { success, value } = await LinkService.getAll({
+      page: pageNumber,
+      isActive: isActive,
+    });
 
     if (!success || !value) {
       //TODO: handling errors
