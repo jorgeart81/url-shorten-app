@@ -34,7 +34,7 @@ export const PaginationBar: FC<Props> = ({
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
   const sliceStart = Math.min(
     Math.max(pageNumber - pageMargin - 1, 0),
-    showMaxItems
+    totalPages - showMaxItems
   );
   const sliceEnd = Math.min(
     Math.max(pageNumber + pageMargin, showMaxItems),
@@ -91,7 +91,7 @@ export const PaginationBar: FC<Props> = ({
           </PaginationItem>
         ))}
 
-        <PaginationItem hidden={totalPages - pageNumber <= pageMargin}>
+        <PaginationItem hidden={totalPages - sliceEnd <= 0}>
           <PaginationEllipsis />
         </PaginationItem>
 
