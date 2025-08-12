@@ -1,11 +1,18 @@
 import { Link } from 'react-router';
 
 import { useLanguage } from '@/components/hooks/useLanguage';
+import type { ComponentProps, FC } from 'react';
+import { twMerge } from 'tailwind-merge';
 
-export const NoLinksContent = () => {
+export const NoLinksContent: FC<ComponentProps<'div'>> = ({ className }) => {
   const { translate: t } = useLanguage();
   return (
-    <div className='text-center text-muted-foreground my-auto'>
+    <div
+      className={twMerge(
+        'text-center text-muted-foreground my-auto',
+        className
+      )}
+    >
       <h3 className='text-lg font-semibold mb-2'>
         {t('linksView.noResults.title')}
       </h3>

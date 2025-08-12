@@ -54,12 +54,12 @@ export const PaginationBar: FC<Props> = ({
 
   const handlePrev = () => {
     if (pageNumber <= 1) return;
-    navigate(buildPageUrl(pageNumber - 1));
+    navigate(buildPageUrl(pageNumber - 1), { viewTransition: true });
   };
 
   const handleNext = () => {
     if (pageNumber >= totalPages) return;
-    navigate(buildPageUrl(pageNumber + 1));
+    navigate(buildPageUrl(pageNumber + 1), { viewTransition: true });
   };
 
   return (

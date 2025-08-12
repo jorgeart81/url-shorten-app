@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router';
 import { Head } from '@/components/Head';
 import { useLanguage } from '@/components/hooks/useLanguage';
 import { PaginationBar } from '@/components/pagination/PaginationBar';
+import { PendingSpinner } from '@/components/status-indicators/PendingSpinner';
 import { Button } from '@/components/ui/button';
 import {
   Select,
@@ -21,7 +22,6 @@ import { NoLinksContent } from '../components/NoLinksContent';
 import { ViewContainer } from '../components/ViewContainer';
 import { ViewHeader } from '../components/ViewHeader';
 import { useDashboardStore } from '../store/dashboardStore';
-import { PendingSpinner } from '@/components/status-indicators/PendingSpinner';
 
 export const LinkView = () => {
   const [isPending, startTransition] = useTransition();
@@ -60,7 +60,7 @@ export const LinkView = () => {
 
       <Separator className='mb-4' />
 
-      <section className='flex flex-col min-h-[90%]'>
+      <section className='flex flex-col'>
         <div className='self-end'>
           <Select>
             <SelectTrigger className='w-[180px]'>
@@ -77,9 +77,13 @@ export const LinkView = () => {
         </div>
 
         {isPending ? (
-          <PendingSpinner size='sm' fullSize className='my-auto' />
+          <PendingSpinner
+            size='sm'
+            fullSize
+            className='min-h-[calc(100dvh-250px)]'
+          />
         ) : (
-          <div className='flex-1 flex flex-col itema-center gap-4 py-6'>
+          <div className='flex flex-col item-center gap-4 py-6'>
             {links.data.length > 0 ? (
               links.data.map((link) => (
                 <LinkCard
@@ -100,7 +104,9 @@ export const LinkView = () => {
                 />
               ))
             ) : (
-              <NoLinksContent />
+              <div className='min-h-[calc(100dvh-250px)] flex flex-col'>
+                <NoLinksContent />
+              </div>
             )}
           </div>
         )}
