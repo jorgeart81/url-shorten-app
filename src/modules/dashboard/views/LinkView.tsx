@@ -22,6 +22,9 @@ import { NoLinksContent } from '../components/NoLinksContent';
 import { ViewContainer } from '../components/ViewContainer';
 import { ViewHeader } from '../components/ViewHeader';
 import { useDashboardStore } from '../store/dashboardStore';
+import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
+import type { CheckedState } from '@radix-ui/react-checkbox';
 
 export const LinkView = () => {
   const [isPending, startTransition] = useTransition();
@@ -31,9 +34,20 @@ export const LinkView = () => {
   const navigate = useNavigate();
   const page = Number(searchParams.get('page'));
 
-  const links = useDashboardStore((state) => state.links);
+  const {
+    data: links,
+    pageNumber,
+    pageSize,
+    totalRecords,
+    totalPages,
+    hasNextPage,
+    hasPreviousPage,
+  } = useDashboardStore((state) => state.links);
   const loadLinks = useDashboardStore((state) => state.loadLinks);
   const [selectLinks, setSelectLinks] = useState<Record<string, boolean>>({});
+  const selectedCount = Object.values(selectLinks).filter(
+    (isSelect) => isSelect
+  ).length;
 
   useEffect(() => {
     if (isNaN(page) || page < 0) return;
@@ -41,6 +55,25 @@ export const LinkView = () => {
       await loadLinks(page, true);
     });
   }, [loadLinks, page]);
+
+  const selectAll = () => {
+    if (links.length === 0) {
+      setSelectLinks({});
+      return;
+    }
+
+    const allSelected = links.reduce<Record<string, boolean>>((acc, link) => {
+      acc[link.id] = true;
+      return acc;
+    }, {});
+    setSelectLinks(allSelected);
+  };
+
+  const handleChecked = (): CheckedState => {
+    if (links.length === selectedCount) return true;
+    if (selectedCount > 0) return 'indeterminate';
+    return false;
+  };
 
   return (
     <ViewContainer>
@@ -60,8 +93,21 @@ export const LinkView = () => {
 
       <Separator className='mb-4' />
 
-      <section className='flex flex-col'>
-        <div className='self-end'>
+      <section className='flex flex-col min-h-[calc(100dvh-250px)]'>
+        <div className='w-full flex justify-between'>
+          <div className='flex items-center gap-3'>
+            <Checkbox
+              id='terms'
+              checked={handleChecked()}
+              onCheckedChange={(isChecked) =>
+                isChecked ? selectAll() : setSelectLinks({})
+              }
+            />
+            <Label htmlFor='terms'>
+              {selectedCount} {t('selected').toLocaleLowerCase()}
+            </Label>
+          </div>
+
           <Select>
             <SelectTrigger className='w-[180px]'>
               <SelectValue placeholder='Show' />
@@ -77,49 +123,46 @@ export const LinkView = () => {
         </div>
 
         {isPending ? (
-          <PendingSpinner
-            size='sm'
-            fullSize
-            className='min-h-[calc(100dvh-250px)]'
-          />
+          <PendingSpinner size='sm' fullSize className='my-auto' />
         ) : (
           <div className='flex flex-col item-center gap-4 py-6'>
-            {links.data.length > 0 ? (
-              links.data.map((link) => (
-                <LinkCard
-                  key={link.id}
-                  backHalf={link.backHalf}
-                  date={new Date(link.createdAt)}
-                  destination={link.destination}
-                  destinationDomain={link.destinationDomain}
-                  domain={link.domain}
-                  title={link.title ?? t('untitled')}
-                  onCheckedChange={(isChecked) => {
-                    setSelectLinks((prev) => ({
-                      ...prev,
-                      [link.id]: isChecked,
-                    }));
-                  }}
-                  checked={selectLinks[link.id]}
+            {links.length > 0 ? (
+              <>
+                {links.map((link) => (
+                  <LinkCard
+                    key={link.id}
+                    backHalf={link.backHalf}
+                    date={new Date(link.createdAt)}
+                    destination={link.destination}
+                    destinationDomain={link.destinationDomain}
+                    domain={link.domain}
+                    title={link.title ?? t('untitled')}
+                    onCheckedChange={(isChecked) => {
+                      setSelectLinks((prev) => ({
+                        ...prev,
+                        [link.id]: isChecked,
+                      }));
+                    }}
+                    checked={selectLinks[link.id]}
+                  />
+                ))}
+                <PaginationBar
+                  pageNumber={pageNumber}
+                  pageSize={pageSize}
+                  totalRecords={totalRecords}
+                  totalPages={totalPages}
+                  hasNextPage={hasNextPage}
+                  hasPreviousPage={hasPreviousPage}
                 />
-              ))
+              </>
             ) : (
-              <div className='min-h-[calc(100dvh-250px)] flex flex-col'>
+              <div className='flex flex-col'>
                 <NoLinksContent />
               </div>
             )}
           </div>
         )}
       </section>
-
-      <PaginationBar
-        pageNumber={links.pageNumber}
-        pageSize={links.pageSize}
-        totalRecords={links.totalRecords}
-        totalPages={links.totalPages}
-        hasNextPage={links.hasNextPage}
-        hasPreviousPage={links.hasPreviousPage}
-      />
     </ViewContainer>
   );
 };
