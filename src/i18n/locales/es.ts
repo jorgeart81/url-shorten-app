@@ -153,11 +153,16 @@ export const es: Translation = {
   'UNKNOWN.description':
     'Ha ocurrido un error inesperado. Intenta nuevamente más tarde.',
 
+  // Edit Link
+  destinationURL: 'URL de destino',
+  optionalDetails: 'Detalles opcionales',
+
   sendingEmail: 'Enviando correo…',
   sessionExpirationWarning: 'Tu sesión finalizará en 1 minuto.',
 
   // Dashboard
   home: 'Inicio',
+  link: 'Enlace',
   links: 'Enlaces',
   backToList: 'Volver a la lista',
   logOut: 'Cerrar sesión',

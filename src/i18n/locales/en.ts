@@ -159,8 +159,13 @@ export const en: Translation = {
   sendingEmail: 'Sending email…',
   sessionExpirationWarning: 'Your session will expire in 1 minute.',
 
+  // Edit Link
+  destinationURL: 'Destintion URL',
+  optionalDetails: 'Optional details',
+
   // Dashboard
   home: 'Home',
+  link: 'Link',
   links: 'Links',
   backToList: 'Back to list',
   logOut: 'Log out',

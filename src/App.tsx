@@ -10,6 +10,7 @@ import { LinkView } from './modules/dashboard/views/LinkView';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { FallbackView } from './components/FallbackView';
 import { RedirectView } from './modules/dashboard/views/RedirectView';
+import { LinkEditView } from './modules/dashboard/views/LinkEditView';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
               path='/links/:backHalf/details'
               element={<LinkDetailsView />}
             />
+            <Route path='/links/:backHalf/edit' element={<LinkEditView />} />
           </Route>
           {/* end region*/}
         </Routes>

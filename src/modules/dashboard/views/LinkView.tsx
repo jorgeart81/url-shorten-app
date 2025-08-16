@@ -79,7 +79,7 @@ export const LinkView = () => {
     <ViewContainer>
       <Head title={t('links')} />
       <ViewHeader
-        title='Links'
+        title={t('links')}
         button={
           <Button
             onClick={() =>

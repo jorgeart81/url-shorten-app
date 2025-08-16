@@ -126,11 +126,16 @@ export interface Translation {
   'USER_NOT_FOUND.description': string;
   'USER_NOT_FOUND.title': string;
 
+  // Edit Link
+  destinationURL: string;
+  optionalDetails: string;
+
   sendingEmail: string;
   sessionExpirationWarning: string;
 
   // Dashboard
   home: string;
+  link: string;
   links: string;
   backToList: string;
   logOut: string;

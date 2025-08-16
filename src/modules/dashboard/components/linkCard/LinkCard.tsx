@@ -60,6 +60,12 @@ export const LinkCard = ({
           })
       : undefined;
 
+  const handleEdit = () => {
+    navigate(`${RoutePath.Links}/${backHalf}/edit`, {
+      viewTransition: true,
+    });
+  };
+
   return (
     <Card
       className={clsx('w-full', {
@@ -118,7 +124,7 @@ export const LinkCard = ({
         <LinkCardAction
           className='hidden lg:flex gap-2'
           handleCopy={handleCopy}
-          handleEdit={() => {}}
+          handleEdit={handleEdit}
           handleDelete={() => {}}
           handleDetails={handleDetails}
         />
@@ -129,7 +135,7 @@ export const LinkCard = ({
         <LinkCardAction
           className='w-full flex gap-2 justify-end'
           handleCopy={handleCopy}
-          handleEdit={() => {}}
+          handleEdit={handleEdit}
           handleDelete={() => {}}
           handleDetails={handleDetails}
         />
