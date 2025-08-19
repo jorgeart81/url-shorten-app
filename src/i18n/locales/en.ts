@@ -20,6 +20,8 @@ export const en: Translation = {
   more: 'More',
   moreOptions: 'More options',
   optional: 'Optional',
+  redirect: 'Redirect',
+  save: 'Save',
   selected: 'Selected',
   share: 'Share',
   'view.link.details': 'View link details',

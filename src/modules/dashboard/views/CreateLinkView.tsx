@@ -27,7 +27,7 @@ export const CreateLinkView = () => {
   const formRef = useRef<HTMLFormElement>(null);
 
   const { translate: t } = useLanguage();
-  const navitate = useNavigate();
+  const navigate = useNavigate();
 
   const [stateValidation, formAction, isPending] = useActionState(
     async (_: unknown, queryData: FormData) => {
@@ -54,7 +54,7 @@ export const CreateLinkView = () => {
       if (success) {
         formRef.current?.reset();
         if (value?.data.backHalf)
-          navitate(`${RoutePath.Links}/${value.data.backHalf}/details`);
+          navigate(`${RoutePath.Links}/${value.data.backHalf}/details`);
       }
     },
     null
@@ -176,7 +176,7 @@ export const CreateLinkView = () => {
       </ViewContainer>
       <footer className='bg-sidebar border-sidebar-border border-t flex justify-center p-3 sm:p-4'>
         <div className='w-screen max-w-3xl flex justify-between'>
-          <Button variant='outline' onClick={() => navitate(RoutePath.Links)}>
+          <Button variant='outline' onClick={() => navigate(RoutePath.Links)}>
             {t('cancel')}
           </Button>
           <Button

@@ -18,8 +18,10 @@ export interface Translation {
   more: string;
   moreOptions: string;
   optional: string;
-  share: string;
+  redirect: string;
+  save: string;
   selected: string;
+  share: string;
   'view.link.details': string;
 
   // Login Form
