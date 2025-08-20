@@ -14,7 +14,7 @@ export const createLinkSchema = z.object({
     .string()
     .trim()
     .max(255, i18n.t('validation.string.maxLength.generic')),
-  customBackHalf: z
+  backHalf: z
     .string()
     .trim()
     .max(

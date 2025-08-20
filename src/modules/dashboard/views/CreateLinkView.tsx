@@ -40,13 +40,13 @@ export const CreateLinkView = () => {
         return errors;
       }
 
-      const { customBackHalf, destination, ...rest } = result.data;
+      const { backHalf, destination, ...rest } = result.data;
 
       const { success, value } = await LinkService.createLink({
         ...rest,
-        customBackHalf:
-          customBackHalf && customBackHalf.trim().length > 0
-            ? customBackHalf
+        backHalf:
+          backHalf && backHalf.trim().length > 0
+            ? backHalf
             : undefined,
         destination: destination,
       });
@@ -147,20 +147,20 @@ export const CreateLinkView = () => {
                             /
                           </div>
                           <div className='grid gap-3'>
-                            <Label htmlFor='customBackHalf'>
+                            <Label htmlFor='backHalf'>
                               {t('createLink.form.label.custom-back-half')}
                               <span className='lowercase font-normal'>
                                 {t('optional')}
                               </span>
                             </Label>
                             <CustomInput
-                              id='customBackHalf'
-                              name='customBackHalf'
+                              id='backHalf'
+                              name='backHalf'
                               type='text'
                               hasError={
-                                stateValidation?.customBackHalf != undefined
+                                stateValidation?.backHalf != undefined
                               }
-                              errors={stateValidation?.customBackHalf?.errors}
+                              errors={stateValidation?.backHalf?.errors}
                               disabled={isPending}
                             />
                           </div>

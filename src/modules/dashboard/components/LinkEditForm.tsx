@@ -21,9 +21,9 @@ export const LinkEditForm: FC<Props> = ({ link, ref }) => {
   const [title, setTitle] = useState(link.title);
 
   return (
-    <form ref={ref}>
+    <form ref={ref} className='flex flex-col gap-y-6'>
       <EditableField
-        name='customBackHalf'
+        name='backHalf'
         label={t('shortlink')}
         buttonTitle={`${t('edit')}`}
         buttonAriaLabel={`${t('edit')} link`}
@@ -42,12 +42,16 @@ export const LinkEditForm: FC<Props> = ({ link, ref }) => {
         value={destination}
       />
 
-      <Separator className='my-4' />
+      <Separator className='my-2' />
+
       <h4 className='scroll-m-20 text-xl font-semibold tracking-tight'>
         {t('optionalDetails')}
       </h4>
       <div>
-        <label className='scroll-m-20 font-semibold tracking-tight'>
+        <label
+          htmlFor='title'
+          className='scroll-m-20 font-semibold tracking-tight'
+        >
           {t('title')}
         </label>
         <CustomInput
@@ -56,6 +60,7 @@ export const LinkEditForm: FC<Props> = ({ link, ref }) => {
           type='text'
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          className='mt-2'
         />
       </div>
     </form>

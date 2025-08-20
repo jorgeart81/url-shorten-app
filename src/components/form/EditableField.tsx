@@ -1,8 +1,4 @@
-import {
-  useState,
-  type FC,
-  type ReactNode
-} from 'react';
+import { useState, type FC, type ReactNode } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { CustomInput } from './CustomInput';
@@ -31,10 +27,13 @@ export const EditableField: FC<Props> = ({
 
   return (
     <div>
-      <label className='scroll-m-20 font-semibold tracking-tight'>
+      <label
+        htmlFor={name}
+        className='scroll-m-20 font-semibold tracking-tight'
+      >
         {label}
       </label>
-      <div className='flex items-center gap-x-4'>
+      <div className='flex items-center gap-x-4 mt-2'>
         {canEdit ? (
           <CustomInput
             id={name}
