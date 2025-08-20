@@ -57,8 +57,10 @@ export const LinkEditView = () => {
     <>
       <ViewContainer>
         <Head title={t('links')} />
-        <ViewHeader title={`${t('edit')} ${t('link').toLocaleLowerCase()}`} />
-        <LinkEditForm ref={formRef} link={link} />
+        <div className='w-full max-w-3xl justify-self-center'>
+          <ViewHeader title={`${t('edit')} ${t('link').toLocaleLowerCase()}`} />
+          <LinkEditForm ref={formRef} link={link} />
+        </div>
       </ViewContainer>
 
       <footer className='bg-sidebar border-sidebar-border border-t flex justify-center p-3 sm:p-4'>

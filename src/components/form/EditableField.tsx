@@ -11,6 +11,7 @@ interface Props {
   buttonAriaLabel: string;
   icon: ReactNode;
   buttonText: string;
+  inputPrefix?: string;
 }
 
 export const EditableField: FC<Props> = ({
@@ -21,6 +22,7 @@ export const EditableField: FC<Props> = ({
   buttonAriaLabel,
   icon,
   buttonText,
+  inputPrefix,
 }) => {
   const [canEdit, setCanEdit] = useState(false);
   const [inputValue, setInputValue] = useState(value);
@@ -33,15 +35,18 @@ export const EditableField: FC<Props> = ({
       >
         {label}
       </label>
-      <div className='flex items-center gap-x-4 mt-2'>
+      <div className='flex items-center mt-2'>
+        {inputPrefix && <p>{inputPrefix}</p>}
         {canEdit ? (
-          <CustomInput
-            id={name}
-            name={name}
-            type='text'
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-          />
+          <>
+            <CustomInput
+              id={name}
+              name={name}
+              type='text'
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+            />
+          </>
         ) : (
           <>
             <p>{value}</p>
@@ -50,6 +55,7 @@ export const EditableField: FC<Props> = ({
               aria-label={buttonAriaLabel}
               variant='ghost'
               onClick={() => setCanEdit(true)}
+              className='ml-4'
             >
               {icon}
               {buttonText}

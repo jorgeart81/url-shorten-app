@@ -15,22 +15,24 @@ interface Props {
 
 export const LinkEditForm: FC<Props> = ({ link, ref }) => {
   const { backHalf, destination, domain } = link;
-  const shortLink = `${domain}/${backHalf}`;
 
   const { translate: t } = useLanguage();
   const [title, setTitle] = useState(link.title);
 
   return (
     <form ref={ref} className='flex flex-col gap-y-6'>
-      <EditableField
-        name='backHalf'
-        label={t('shortlink')}
-        buttonTitle={`${t('edit')}`}
-        buttonAriaLabel={`${t('edit')} link`}
-        icon={<Pencil />}
-        buttonText={t('edit')}
-        value={shortLink}
-      />
+      <div>
+        <EditableField
+          name='backHalf'
+          label={t('shortlink')}
+          buttonTitle={`${t('edit')}`}
+          buttonAriaLabel={`${t('edit')} link`}
+          icon={<Pencil />}
+          buttonText={t('edit')}
+          inputPrefix={`${domain}/`}
+          value={backHalf}
+        />
+      </div>
 
       <EditableField
         name='destination'
