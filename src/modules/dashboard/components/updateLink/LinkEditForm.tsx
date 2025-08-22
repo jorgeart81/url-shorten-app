@@ -6,12 +6,17 @@ import { Separator } from '@/components/ui/separator';
 import { CornerDownRight, Pencil } from 'lucide-react';
 
 import type { Link } from '../../store/types/link';
+import { updateLinkAction } from './updateLink.action';
 import {
-  updateLinkSchema,
-  type UpdateLinkValidationError,
+  type UpdateLinkValidationError
 } from './updateLinkValidation';
-import type { JsonPatchOperation } from '@/config/types/jsonPatchDocument';
-import { z } from 'zod/v4';
+
+export type UpdateStatus = 'noChanges' | 'success' | 'fail';
+export interface UpdateState {
+  link: Link;
+  status: UpdateStatus;
+  validationError?: UpdateLinkValidationError;
+}
 
 interface Props {
   link: Link;
@@ -20,41 +25,16 @@ interface Props {
 }
 
 export const LinkEditForm: FC<Props> = ({ link, ref, onPendingChange }) => {
+  const initialState: UpdateState = { link, status: 'noChanges' };
   const { backHalf, destination, domain, title } = link;
 
   const { translate: t } = useLanguage();
 
-  const [stateValidation, formAction, isPending] = useActionState(
-    async (_: unknown, queryData: FormData) => {
-      const formData = Object.fromEntries(queryData);
-
-      const validationResult = updateLinkSchema.safeParse(formData);
-
-      if (validationResult.success) {
-        const patchOperations: JsonPatchOperation[] = Object.entries(
-          formData
-        ).map(([key, value]) => ({
-          op: 'replace',
-          path: `/${key}`,
-          value,
-        }));
-
-        console.log(patchOperations);
-        return null;
-      }
-
-      if (validationResult.error) {
-        const errors = z.treeifyError(validationResult.error)
-          .properties as UpdateLinkValidationError;
-        return errors;
-      }
-
-      console.log({ formData, validationResult });
-      // if (isSuccess) fromRef.current?.reset();
-    },
-    null
+  const [updateState, formAction, isPending] = useActionState(
+    updateLinkAction,
+    initialState
   );
-
+  console.log({ updateState });
   useEffect(() => {
     onPendingChange?.(isPending);
   }, [isPending, onPendingChange]);
