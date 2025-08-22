@@ -15,6 +15,7 @@ import type {
   FindLinkResponse,
   GetLinksResponse,
 } from './dtos/linkResponse';
+import type { JsonPatchDocument } from '@/config/types/jsonPatchDocument';
 
 export class LinkService {
   static async createLink(
@@ -48,7 +49,6 @@ export class LinkService {
       );
       return Result.success(data, status);
     } catch (error: unknown) {
-      console.log(error);
       return errorHandler(error);
     }
   }
@@ -66,7 +66,6 @@ export class LinkService {
       );
       return Result.success(data.data, status);
     } catch (error: unknown) {
-      console.log(error);
       return errorHandler(error);
     }
   }
@@ -89,7 +88,18 @@ export class LinkService {
       );
       return Result.success(data, status);
     } catch (error: unknown) {
-      console.log(error);
+      return errorHandler(error);
+    }
+  }
+
+  static async partialUpdate(
+    id: string,
+    request: JsonPatchDocument
+  ): Promise<Result<void>> {
+    try {
+      const { status } = await urlShortenApi.patch(`/links/${id}`, request);
+      return Result.success(undefined, status);
+    } catch (error: unknown) {
       return errorHandler(error);
     }
   }
