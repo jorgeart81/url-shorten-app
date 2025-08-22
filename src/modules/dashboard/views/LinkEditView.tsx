@@ -3,16 +3,16 @@ import { Navigate, useNavigate, useParams } from 'react-router';
 
 import { Head } from '@/components/Head';
 import { useLanguage } from '@/components/hooks/useLanguage';
+import { PendingSpinner } from '@/components/status-indicators/PendingSpinner';
+import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { RoutePath } from '@/shared/constants/routePath';
+import { AlertCircleIcon } from 'lucide-react';
+import { LinkEditForm } from '../components/updateLink/LinkEditForm';
 import { ViewContainer } from '../components/ViewContainer';
 import { ViewHeader } from '../components/ViewHeader';
 import { LinkService } from '../services/links/linkService';
 import { mapLinkDataToLink } from '../store/mappers/linkMapper';
-import { PendingSpinner } from '@/components/status-indicators/PendingSpinner';
-import { Alert, AlertTitle } from '@/components/ui/alert';
-import { AlertCircleIcon } from 'lucide-react';
-import { LinkEditForm } from '../components/LinkEditForm';
 
 import type { Link } from '../store/types/link';
 
@@ -22,6 +22,7 @@ export const LinkEditView = () => {
 
   const { translate: t } = useLanguage();
   const [link, setLink] = useState<Link | undefined>();
+  const [isUpdating, setIsUpdating] = useState(false);
   const [isPending, startTransition] = useTransition();
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -59,7 +60,11 @@ export const LinkEditView = () => {
         <Head title={t('links')} />
         <div className='w-full max-w-3xl justify-self-center'>
           <ViewHeader title={`${t('edit')} ${t('link').toLocaleLowerCase()}`} />
-          <LinkEditForm ref={formRef} link={link} />
+          <LinkEditForm
+            ref={formRef}
+            link={link}
+            onPendingChange={setIsUpdating}
+          />
         </div>
       </ViewContainer>
 
@@ -73,6 +78,7 @@ export const LinkEditView = () => {
               e.stopPropagation();
               formRef.current?.requestSubmit();
             }}
+            disabled={isUpdating}
             className='w-fit'
           >
             {t('save')}

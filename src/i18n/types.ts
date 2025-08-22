@@ -87,6 +87,9 @@ export interface Translation {
   'createLink.form.label.destination': string;
   'createLink.form.label.domain': string;
 
+  // Update Link
+  'change.destination.url': string;
+
   // Validation messages
   'validation.string.maxLength': string;
   'validation.string.maxLength.generic': string;

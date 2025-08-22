@@ -70,7 +70,7 @@ export default function ResendingEmail() {
 
     toastWarning(translate('UNKNOWN.description'));
   }
-  console.log({ sessionRegressiveTime });
+
   useEffect(() => {
     if (sessionRegressiveTime === 1 && status !== 'sessionExpired') {
       sessionExpired();

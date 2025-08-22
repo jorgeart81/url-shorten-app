@@ -102,6 +102,9 @@ export const en: Translation = {
   'createLink.form.label.destination': 'Destination',
   'createLink.form.label.domain': 'Domain',
 
+  // Update Link
+  'change.destination.url': "Change link's destination URL",
+
   // Validation messages
   'validation.string.maxLength':
     'The field must have {{maxLength}} characters at most.',

@@ -11,16 +11,15 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { env } from '@/config/env';
 import { RoutePath } from '@/shared/constants/routePath';
 import {
   createLinkSchema,
-  type CreateLinkData,
   type CreateLinkValidationError,
 } from '../components/createLink/createLinkValidation';
 import { ViewContainer } from '../components/ViewContainer';
 import { ViewHeader } from '../components/ViewHeader';
 import { LinkService } from '../services/links/linkService';
-import { env } from '@/config/env';
 
 export const CreateLinkView = () => {
   const domain = env.redirectionDomain;
@@ -31,7 +30,7 @@ export const CreateLinkView = () => {
 
   const [stateValidation, formAction, isPending] = useActionState(
     async (_: unknown, queryData: FormData) => {
-      const formData = Object.fromEntries(queryData) as CreateLinkData;
+      const formData = Object.fromEntries(queryData);
       const result = createLinkSchema.safeParse(formData);
 
       if (!result.success && result.error) {
@@ -44,10 +43,7 @@ export const CreateLinkView = () => {
 
       const { success, value } = await LinkService.createLink({
         ...rest,
-        backHalf:
-          backHalf && backHalf.trim().length > 0
-            ? backHalf
-            : undefined,
+        backHalf: backHalf && backHalf.trim().length > 0 ? backHalf : undefined,
         destination: destination,
       });
 
@@ -157,9 +153,7 @@ export const CreateLinkView = () => {
                               id='backHalf'
                               name='backHalf'
                               type='text'
-                              hasError={
-                                stateValidation?.backHalf != undefined
-                              }
+                              hasError={stateValidation?.backHalf != undefined}
                               errors={stateValidation?.backHalf?.errors}
                               disabled={isPending}
                             />

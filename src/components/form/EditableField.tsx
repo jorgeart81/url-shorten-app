@@ -7,11 +7,13 @@ interface Props {
   name: string;
   label: string;
   value: string;
-  buttonTitle: string;
-  buttonAriaLabel: string;
-  icon: ReactNode;
-  buttonText: string;
+  icon?: ReactNode;
+  buttonText?: string;
+  buttonTitle?: string;
+  buttonAriaLabel?: string;
   inputPrefix?: string;
+  disabled?: boolean;
+  showInput?: boolean;
 }
 
 export const EditableField: FC<Props> = ({
@@ -23,8 +25,10 @@ export const EditableField: FC<Props> = ({
   icon,
   buttonText,
   inputPrefix,
+  disabled,
+  showInput = false,
 }) => {
-  const [canEdit, setCanEdit] = useState(false);
+  const [canEdit, setCanEdit] = useState(showInput);
   const [inputValue, setInputValue] = useState(value);
 
   return (
@@ -45,21 +49,24 @@ export const EditableField: FC<Props> = ({
               type='text'
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
+              disabled={disabled}
             />
           </>
         ) : (
           <>
             <p>{value}</p>
-            <Button
-              title={buttonTitle}
-              aria-label={buttonAriaLabel}
-              variant='ghost'
-              onClick={() => setCanEdit(true)}
-              className='ml-4'
-            >
-              {icon}
-              {buttonText}
-            </Button>
+            {buttonText && (
+              <Button
+                title={buttonTitle}
+                aria-label={buttonAriaLabel}
+                variant='ghost'
+                onClick={() => setCanEdit(true)}
+                className='ml-4'
+              >
+                {icon}
+                {buttonText}
+              </Button>
+            )}
           </>
         )}
       </div>

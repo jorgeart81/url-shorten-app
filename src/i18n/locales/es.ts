@@ -109,6 +109,9 @@ export const es: Translation = {
     'Intenta ajustar tu búsqueda, los filtros, o {{hiddenLink}} en su lugar.',
   'linksView.noResults.hiddenLink': 'intenta buscar enlaces ocultos',
 
+  // Update Link
+  'change.destination.url': 'Cambiar la URL de destino',
+
   // Code Errors
   'AUTH_ERROR.description':
     'Ocurrió un problema durante el proceso de autenticación.',
