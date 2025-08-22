@@ -2,6 +2,7 @@ import { useState, type FC, type ReactNode } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { CustomInput } from './CustomInput';
+import clsx from 'clsx';
 
 interface Props {
   name: string;
@@ -14,6 +15,8 @@ interface Props {
   inputPrefix?: string;
   disabled?: boolean;
   showInput?: boolean;
+  errors?: [];
+  hasError?: boolean;
 }
 
 export const EditableField: FC<Props> = ({
@@ -27,6 +30,8 @@ export const EditableField: FC<Props> = ({
   inputPrefix,
   disabled,
   showInput = false,
+  hasError,
+  errors,
 }) => {
   const [canEdit, setCanEdit] = useState(showInput);
   const [inputValue, setInputValue] = useState(value);
@@ -39,7 +44,7 @@ export const EditableField: FC<Props> = ({
       >
         {label}
       </label>
-      <div className='flex items-center mt-2'>
+      <div className={clsx(' mt-2', { 'flex items-center': !canEdit })}>
         {inputPrefix && <p>{inputPrefix}</p>}
         {canEdit ? (
           <>
@@ -50,6 +55,8 @@ export const EditableField: FC<Props> = ({
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               disabled={disabled}
+              hasError={hasError}
+              errors={errors}
             />
           </>
         ) : (

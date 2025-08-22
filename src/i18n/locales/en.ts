@@ -94,7 +94,7 @@ export const en: Translation = {
   // Create Link
   'createLink.button.create': 'Create link',
   'createLink.destination.validation':
-    'We\'ll need a valid URL, like "yourbrnd.co/niceurl"',
+    'We\'ll need a valid URL, like "https://yourbrnd.co/niceurl"',
   'createLink.form.subtitle':
     'You can create {{linkCount}} more links this month.',
   'createLink.form.title': 'Create a link',

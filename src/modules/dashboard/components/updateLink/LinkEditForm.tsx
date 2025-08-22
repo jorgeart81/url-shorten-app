@@ -1,15 +1,16 @@
 import { useActionState, useEffect, type FC, type Ref } from 'react';
+import { Navigate } from 'react-router';
 
 import { EditableField } from '@/components/form/EditableField';
 import { useLanguage } from '@/components/hooks/useLanguage';
 import { Separator } from '@/components/ui/separator';
 import { CornerDownRight, Pencil } from 'lucide-react';
 
-import type { Link } from '../../store/types/link';
+import { RoutePath } from '@/shared/constants/routePath';
 import { updateLinkAction } from './updateLink.action';
-import {
-  type UpdateLinkValidationError
-} from './updateLinkValidation';
+
+import type { Link } from '../../store/types/link';
+import { type UpdateLinkValidationError } from './updateLinkValidation';
 
 export type UpdateStatus = 'noChanges' | 'success' | 'fail';
 export interface UpdateState {
@@ -34,10 +35,13 @@ export const LinkEditForm: FC<Props> = ({ link, ref, onPendingChange }) => {
     updateLinkAction,
     initialState
   );
-  console.log({ updateState });
+
   useEffect(() => {
     onPendingChange?.(isPending);
   }, [isPending, onPendingChange]);
+
+  if (updateState.status === 'success')
+    return <Navigate to={`${RoutePath.Links}/${link.backHalf}/details`} />;
 
   return (
     <form action={formAction} ref={ref} className='flex flex-col gap-y-6'>
@@ -61,6 +65,7 @@ export const LinkEditForm: FC<Props> = ({ link, ref, onPendingChange }) => {
         buttonText={t('redirect')}
         value={destination}
         disabled={isPending}
+        errors={updateState.validationError?.destination?.errors}
       />
 
       <Separator className='my-2' />
@@ -74,6 +79,7 @@ export const LinkEditForm: FC<Props> = ({ link, ref, onPendingChange }) => {
         value={title}
         disabled={isPending}
         showInput
+        errors={updateState.validationError?.title?.errors}
       />
     </form>
   );
