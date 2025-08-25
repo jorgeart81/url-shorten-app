@@ -98,6 +98,7 @@ export interface Translation {
   'linksView.noResults.title': string;
   'linksView.noResults.description': string;
   'linksView.noResults.hiddenLink': string;
+  'linksView.noResults.activeLink': string;
 
   // Code Errors
   'ACCESS_DENIED.description': string;

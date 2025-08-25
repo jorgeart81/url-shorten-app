@@ -108,6 +108,7 @@ export const es: Translation = {
   'linksView.noResults.description':
     'Intenta ajustar tu búsqueda, los filtros, o {{hiddenLink}} en su lugar.',
   'linksView.noResults.hiddenLink': 'intenta buscar enlaces ocultos',
+  'linksView.noResults.activeLink': 'intenta buscar enlaces activos',
 
   // Update Link
   'change.destination.url': 'Cambiar la URL de destino',

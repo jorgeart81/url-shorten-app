@@ -30,9 +30,11 @@ export const LinkView = () => {
   const [isPending, startTransition] = useTransition();
 
   const { translate: t } = useLanguage();
-  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const page = Number(searchParams.get('page'));
+  const archived = searchParams.get('archived');
+  const showStatus = archived === 'on' ? 'hidden' : 'active';
 
   const {
     data: links,
@@ -52,9 +54,9 @@ export const LinkView = () => {
   useEffect(() => {
     if (isNaN(page) || page < 0) return;
     startTransition(async () => {
-      await loadLinks(page, true);
+      await loadLinks(page, showStatus === 'active');
     });
-  }, [loadLinks, page]);
+  }, [loadLinks, page, showStatus]);
 
   const selectAll = () => {
     if (links.length === 0) {
@@ -70,9 +72,20 @@ export const LinkView = () => {
   };
 
   const handleChecked = (): CheckedState => {
-    if (links.length === selectedCount) return true;
+    if (links.length > 0 && links.length === selectedCount) return true;
     if (selectedCount > 0) return 'indeterminate';
     return false;
+  };
+
+  const handleShow = (value: string) => {
+    const params = new URLSearchParams()
+    if (value === 'hidden') {
+      params.set('archived', 'on');
+    } else {
+      params.delete('archived');
+    }
+    setSearchParams(params);
+    setSelectLinks({});
   };
 
   return (
@@ -108,7 +121,7 @@ export const LinkView = () => {
             </Label>
           </div>
 
-          <Select>
+          <Select onValueChange={handleShow} value={showStatus}>
             <SelectTrigger className='w-[180px]'>
               <SelectValue placeholder='Show' />
             </SelectTrigger>

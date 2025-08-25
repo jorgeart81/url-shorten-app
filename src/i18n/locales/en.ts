@@ -116,6 +116,7 @@ export const en: Translation = {
   'linksView.noResults.description':
     'Try adjusting your search, filters, or {{hiddenLink}} instead.',
   'linksView.noResults.hiddenLink': 'try searching for hidden links',
+  'linksView.noResults.activeLink': 'try searching for active links',
 
   // Code Errors
   'ACCESS_DENIED.description':
