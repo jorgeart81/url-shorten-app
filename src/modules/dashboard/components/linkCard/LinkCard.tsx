@@ -68,11 +68,11 @@ export const LinkCard = ({
 
   return (
     <Card
-      className={clsx('w-full', {
+      className={clsx('relative w-full', {
         'border-blue-900': checked,
       })}
     >
-      <CardHeader className='flex gap-4'>
+      <CardHeader className='relative flex gap-4'>
         {variant === 'link' && (
           <>
             <Checkbox
@@ -84,28 +84,50 @@ export const LinkCard = ({
           </>
         )}
 
-        <div className='flex-1 flex flex-col'>
+        <div
+          className={clsx(
+            'flex-1 flex flex-col max-w-full lg:max-w-[calc(100%-200px)]',
+            {
+              ' lg:max-w-[calc(100%-300px)]': variant === 'link',
+            }
+          )}
+        >
           <LinkCardTitle goTo={detailsRoute} variant={variant} title={title} />
 
-          <div className='flex flex-row gap-4'>
+          <div className='flex flex-row gap-4 over'>
             <LinkCardImage
               hidden={variant === 'link'}
               domain={destinationDomain}
             />
 
-            <div className='flex flex-col items-start gap-1'>
+            <div className='relative flex flex-col items-start gap-1 max-w-[calc(100%-30px)] md:max-w-[calc(100%-100px)] lg:max-w-full overflow-hidden'>
               <Button
                 asChild
                 variant='link'
-                className='p-0 h-6 text-lg text-blue-600'
+                className='relative p-0 h-6 text-lg text-blue-600 max-w-full'
+                title={shortLink}
               >
-                <a href={shortUrl} target='_blank'>
-                  {shortLink}
+                <a
+                  href={shortUrl}
+                  className='flex justify-start'
+                  target='_blank'
+                >
+                  <p className='relative max-w-full truncate'>{shortLink}</p>
                 </a>
               </Button>
-              <Button asChild variant='link' className='p-0 font-light h-min'>
-                <a href={destination} target='_blank'>
-                  {destination}
+
+              <Button
+                asChild
+                variant='link'
+                className='relative p-0 font-light h-min r-4 max-w-full'
+                title={destination}
+              >
+                <a
+                  href={destination}
+                  className='flex justify-start'
+                  target='_blank'
+                >
+                  <p className='relative truncate'>{destination}</p>
                 </a>
               </Button>
             </div>
@@ -122,7 +144,7 @@ export const LinkCard = ({
         </div>
 
         <LinkCardAction
-          className='hidden lg:flex gap-2'
+          className='hidden lg:flex gap-2 relative'
           handleCopy={handleCopy}
           handleEdit={handleEdit}
           handleDelete={() => {}}

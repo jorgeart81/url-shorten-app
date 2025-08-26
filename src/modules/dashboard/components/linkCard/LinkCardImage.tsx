@@ -1,15 +1,22 @@
 import type { FC } from 'react';
 
 import clsx from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
-interface Props {
+interface Props extends React.ComponentProps<'div'> {
   domain: string;
   hidden?: boolean;
 }
 
-export const LinkCardImage: FC<Props> = ({ domain, hidden = false }) => {
+export const LinkCardImage: FC<Props> = ({
+  domain,
+  hidden = false,
+  className,
+}) => {
   return (
-    <div className={clsx('hidden', { 'sm:block': !hidden })}>
+    <div
+      className={twMerge(clsx('hidden', { 'sm:block': !hidden }), className)}
+    >
       <div className='flex justify-center items-center p-1.5 bg-white size-11 rounded-full overflow-clip'>
         <img
           className='rounded-full'
