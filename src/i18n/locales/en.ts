@@ -7,6 +7,7 @@ export const en: Translation = {
   title: 'Title',
   untitled: 'Untitled',
   welcome: 'Hello world!',
+  yourPlatform: 'Your Platform',
 
   // Common actions
   cancel: 'Cancel',
@@ -101,6 +102,7 @@ export const en: Translation = {
   'createLink.form.label.custom-back-half': 'Custom back-half',
   'createLink.form.label.destination': 'Destination',
   'createLink.form.label.domain': 'Domain',
+  'quick.create': 'Quick create',
 
   // Update Link
   'change.destination.url': "Change link's destination URL",

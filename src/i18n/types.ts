@@ -5,6 +5,7 @@ export interface Translation {
   title: string;
   untitled: string;
   welcome: string;
+  yourPlatform: string;
 
   // Common actions
   cancel: string;
@@ -86,6 +87,7 @@ export interface Translation {
   'createLink.form.label.custom-back-half': string;
   'createLink.form.label.destination': string;
   'createLink.form.label.domain': string;
+  'quick.create': string;
 
   // Update Link
   'change.destination.url': string;

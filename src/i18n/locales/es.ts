@@ -7,6 +7,7 @@ export const es: Translation = {
   title: 'Título',
   untitled: 'Sin título',
   welcome: '¡Bienvenido!',
+  yourPlatform: 'Tu Plataforma',
 
   // Common actions
   cancel: 'Cancelar',
@@ -100,6 +101,8 @@ export const es: Translation = {
   'createLink.form.label.custom-back-half': 'Ruta personalizada',
   'createLink.form.label.destination': 'Destino',
   'createLink.form.label.domain': 'Dominio',
+  'quick.create': 'Creación rápida',
+
   'validation.string.maxLength':
     'El campo debe tener {{maxLength}} caracteres como máximo.',
   'validation.string.maxLength.generic':
