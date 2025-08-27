@@ -11,6 +11,7 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import { FallbackView } from './components/FallbackView';
 import { RedirectView } from './modules/dashboard/views/RedirectView';
 import { LinkEditView } from './modules/dashboard/views/LinkEditView';
+import { AccountView } from './modules/dashboard/views/AccountView';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
               element={<LinkDetailsView />}
             />
             <Route path='/links/:backHalf/edit' element={<LinkEditView />} />
+            <Route path='/account' element={<AccountView />} />
           </Route>
           {/* end region*/}
         </Routes>

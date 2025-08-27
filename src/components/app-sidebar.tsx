@@ -27,17 +27,7 @@ const data = {
       name: 'Acme Inc',
       logo: GalleryVerticalEnd,
       plan: 'Enterprise',
-    },
-    {
-      name: 'Acme Corp.',
-      logo: AudioWaveform,
-      plan: 'Startup',
-    },
-    {
-      name: 'Evil Corp.',
-      logo: Command,
-      plan: 'Free',
-    },
+    }
   ],
   items: [
     {
@@ -49,12 +39,7 @@ const data = {
       name: 'Links',
       url: '/links',
       icon: Link,
-    },
-    {
-      name: 'Travel',
-      url: '/travel',
-      icon: Map,
-    },
+    }
   ],
 };
 

@@ -170,9 +170,10 @@ export const es: Translation = {
   sessionExpirationWarning: 'Tu sesión finalizará en 1 minuto.',
 
   // Dashboard
+  account:'Cuenta',
+  backToList: 'Volver a la lista',
   home: 'Inicio',
   link: 'Enlace',
   links: 'Enlaces',
-  backToList: 'Volver a la lista',
   logOut: 'Cerrar sesión',
 };

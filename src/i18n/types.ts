@@ -142,10 +142,11 @@ export interface Translation {
   sessionExpirationWarning: string;
 
   // Dashboard
+  account: string;
+  backToList: string;
   home: string;
   link: string;
   links: string;
-  backToList: string;
   logOut: string;
 }
 

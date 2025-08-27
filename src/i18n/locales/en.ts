@@ -172,9 +172,10 @@ export const en: Translation = {
   optionalDetails: 'Optional details',
 
   // Dashboard
+  account: 'Account',
+  backToList: 'Back to list',
   home: 'Home',
   link: 'Link',
   links: 'Links',
-  backToList: 'Back to list',
   logOut: 'Log out',
 };

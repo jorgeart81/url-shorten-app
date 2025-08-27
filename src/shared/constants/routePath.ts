@@ -1,8 +1,9 @@
 export const RoutePath = {
+  Account: '/account',
   Auth: '/auth',
+  CreateLink: '/links/create',
   Home: '/home',
   Links: '/links',
-  CreateLink: '/links/create',
   Login: '/auth/login',
   RefreshToken: '/auth/refresh-token',
   ResendConfirmation: '/auth/resend-confirmation',
