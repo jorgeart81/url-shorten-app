@@ -103,7 +103,7 @@ const storeApi: StateCreator<
   },
 
   signUp: async (request: RegisterRequest) => {
-    set({ status: 'checking', error: undefined });
+    set({ status: 'registering', error: undefined });
     const { success, value, errorCode } = await AuthService.signUp(request);
     const resendCode = value?.data.resendCode;
 

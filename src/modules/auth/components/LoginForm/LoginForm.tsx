@@ -24,7 +24,7 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<'div'>) {
-  const fromRef = useRef<HTMLFormElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
   const { error, login, onSubmit } = useAuth();
   const { translate } = useLanguage();
 
@@ -49,7 +49,18 @@ export function LoginForm({
         keepLoggedIn: formData.keepLoggedIn == 'on',
       });
 
-      if (isSuccess) fromRef.current?.reset();
+      if (!isSuccess) {
+        if (formRef.current) {
+          const passwordInput = formRef.current.querySelector<HTMLInputElement>(
+            'input[name="password"]'
+          );
+          if (passwordInput) passwordInput.value = '';
+        }
+
+        return;
+      }
+
+      formRef.current?.reset();
     },
     null
   );
@@ -65,7 +76,7 @@ export function LoginForm({
         <CardContent>
           <form
             noValidate
-            ref={fromRef}
+            ref={formRef}
             onSubmit={(e) => onSubmit(e, formAction)}
           >
             <div className='grid gap-6'>

@@ -1,4 +1,4 @@
-import { useActionState, useRef } from 'react';
+import { useActionState } from 'react';
 
 import { cn } from '@/lib/utils';
 import { NavLink } from 'react-router';
@@ -22,8 +22,7 @@ export const SignupForm = ({
   className,
   ...props
 }: React.ComponentProps<'div'>) => {
-  const fromRef = useRef<HTMLFormElement>(null);
-  const { error, signUp, onSubmit } = useAuth();
+  const { error, signUp } = useAuth();
   const { translate } = useLanguage();
 
   const [stateValidation, formAction, isPending] = useActionState(
@@ -37,12 +36,10 @@ export const SignupForm = ({
         return errors;
       }
 
-      const { isSuccess } = await signUp({
+      await signUp({
         email: formData.email,
         password: formData.password,
       });
-
-      if (isSuccess) fromRef.current?.reset();
     },
     null
   );
@@ -55,11 +52,7 @@ export const SignupForm = ({
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <form
-            noValidate
-            ref={fromRef}
-            onSubmit={(e) => onSubmit(e, formAction)}
-          >
+          <form noValidate action={formAction}>
             <div className='grid gap-6'>
               <div className='after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t'></div>
               <div className='grid gap-6'>
