@@ -50,7 +50,7 @@ export const LinkView = () => {
   const selectedCount = Object.values(selectLinks).filter(
     (isSelect) => isSelect
   ).length;
-
+console.log({links})
   useEffect(() => {
     if (isNaN(page) || page < 0) return;
     startTransition(async () => {
@@ -144,6 +144,7 @@ export const LinkView = () => {
                 {links.map((link) => (
                   <LinkCard
                     key={link.id}
+                    id={link.id}
                     backHalf={link.backHalf}
                     date={new Date(link.createdAt)}
                     destination={link.destination}

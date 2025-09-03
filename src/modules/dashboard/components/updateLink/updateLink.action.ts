@@ -53,7 +53,7 @@ const formDataValidation = (data: { [k: string]: FormDataEntryValue }) => {
 export const updateLinkAction = async (
   state: UpdateState,
   queryData: FormData
-) => {
+): Promise<UpdateState> => {
   let status: UpdateStatus = state.status;
   const formData = Object.fromEntries(queryData);
 

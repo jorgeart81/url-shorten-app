@@ -3,14 +3,15 @@ import { useNavigate } from 'react-router';
 
 import clsx from 'clsx';
 
+import { useLanguage } from '@/components/hooks/useLanguage';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
 import { RoutePath } from '@/shared/constants/routePath';
-import { useLanguage } from '@/components/hooks/useLanguage';
 import { getShortFormattedDate, type Locales } from '@/utils/dateUtils';
+import { useDashboardStore } from '../../store/dashboardStore';
 import { LinkCardAction } from './LinkCardAction';
 import { LinkCardImage } from './LinkCardImage';
 import { LinkCardTitle } from './LinkCardTitle';
@@ -18,6 +19,7 @@ import { LinkCardTitle } from './LinkCardTitle';
 import type { CardVariant } from './cardVariant';
 
 interface Props {
+  id: string;
   backHalf: string;
   date: Date;
   destination: string;
@@ -31,6 +33,7 @@ interface Props {
 }
 
 export const LinkCard = ({
+  id,
   backHalf,
   date,
   destination,
@@ -49,6 +52,9 @@ export const LinkCard = ({
 
   const { translate: t, currentLanguage } = useLanguage();
   const navigate = useNavigate();
+
+  const updateLinkActiveStatus =
+    useDashboardStore.getState().updateLinkActiveStatus;
 
   const handleCopy = useCallback(() => {
     navigator.clipboard.writeText(shortUrl);
@@ -155,8 +161,8 @@ export const LinkCard = ({
           isActive={isActive}
           handleCopy={handleCopy}
           handleEdit={handleEdit}
-          handleActivate={() => {}}
-          handleDeactivate={() => {}}
+          handleActivate={() => updateLinkActiveStatus(id, true)}
+          handleDeactivate={() => updateLinkActiveStatus(id, false)}
           handleDetails={handleDetails}
         />
       </CardHeader>
@@ -168,8 +174,8 @@ export const LinkCard = ({
           isActive={isActive}
           handleCopy={handleCopy}
           handleEdit={handleEdit}
-          handleActivate={() => {}}
-          handleDeactivate={() => {}}
+          handleActivate={() => updateLinkActiveStatus(id, true)}
+          handleDeactivate={() => updateLinkActiveStatus(id, false)}
           handleDetails={handleDetails}
         />
       </CardHeader>

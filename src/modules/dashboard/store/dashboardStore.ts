@@ -14,6 +14,7 @@ import { mapLinkDataToLink } from './mappers/linkMapper';
 import type { Link } from './types/link';
 import type { Pagination } from './types/pagination';
 import type { Device, UserAccount } from './types/userAccount';
+import type { JsonPatchDocument } from '@/config/types/jsonPatchDocument';
 
 interface DashboardState {
   user: UserAccount;
@@ -24,6 +25,7 @@ interface DashboardState {
 interface Actions {
   getAccount: () => Promise<void>;
   loadLinks: (page: number, isActive: boolean) => Promise<void>;
+  updateLinkActiveStatus: (id: string, activate: boolean) => Promise<void>;
 }
 
 const initialState: DashboardState = {
@@ -90,6 +92,26 @@ const storeApi: StateCreator<
         hasPreviousPage: value.hasPreviousPage,
       },
     }));
+  },
+  updateLinkActiveStatus: async (id: string, activate: boolean) => {
+    const request: JsonPatchDocument = new Array({
+      op: 'replace',
+      path: `/isActive`,
+      value: activate,
+    });
+    const { success } = await LinkService.partialUpdate(id, request);
+
+    if (success) {
+      const updatedLinks = get().links.data.filter((link) => link.id !== id);
+
+      set((prev) => ({
+        ...prev,
+        links: {
+          ...prev.links,
+          data: updatedLinks,
+        },
+      }));
+    }
   },
 });
 
