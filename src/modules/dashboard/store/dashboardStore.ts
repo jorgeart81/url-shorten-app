@@ -102,15 +102,10 @@ const storeApi: StateCreator<
     const { success } = await LinkService.partialUpdate(id, request);
 
     if (success) {
-      const updatedLinks = get().links.data.filter((link) => link.id !== id);
+      const pageNumber = get().links.pageNumber;
+      const loadLinks = get().loadLinks;
 
-      set((prev) => ({
-        ...prev,
-        links: {
-          ...prev.links,
-          data: updatedLinks,
-        },
-      }));
+      await loadLinks(pageNumber, !activate);
     }
   },
 });

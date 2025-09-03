@@ -50,7 +50,7 @@ export const LinkView = () => {
   const selectedCount = Object.values(selectLinks).filter(
     (isSelect) => isSelect
   ).length;
-console.log({links})
+
   useEffect(() => {
     if (isNaN(page) || page < 0) return;
     startTransition(async () => {
