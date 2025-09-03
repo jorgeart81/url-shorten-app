@@ -10,6 +10,34 @@ import type { JsonPatchOperation } from '@/config/types/jsonPatchDocument';
 import type { Link } from '../../store/types/link';
 import type { UpdateState, UpdateStatus } from './LinkEditForm';
 
+/**
+ * Compares the submitted form data with the original link object and determines which fields have changed.
+ *
+ * Returns an object with:
+ * - hasChanges: boolean indicating if there are any changes.
+ * - changeEntries: array of [key, value] pairs for fields that have changed.
+ *
+ * Only fields present in both the form data and the link object are compared.
+ * Fields are considered changed if their value in the form data is different from the value in the link object.
+ *
+ * @param data - The form data as an object of key-value pairs.
+ * @param link - The original link object to compare against.
+ * @returns An object with hasChanges and changeEntries.
+ *
+ * @example
+ * const changes = changeData({ title: "New", destination: "url" }, link);
+ * if (changes.hasChanges) {
+ *   // Proceed with patch operations
+ * }
+ */
+const changeData = (data: { [k: string]: FormDataEntryValue }, link: Link) => {
+  const changeEntries = Object.entries(data).filter(
+    ([key, value]) => key in link && value !== link[key as keyof Link]
+  );
+
+  return { hasChanges: changeEntries.length > 0, changeEntries };
+};
+
 const formDataValidation = (data: { [k: string]: FormDataEntryValue }) => {
   const validationResult = updateLinkSchema.safeParse(data);
 
@@ -20,14 +48,6 @@ const formDataValidation = (data: { [k: string]: FormDataEntryValue }) => {
     return { hasErrors: true, errors: errors };
   }
   return { hasErrors: false, errors: undefined };
-};
-
-const changeData = (data: { [k: string]: FormDataEntryValue }, link: Link) => {
-  const changeEntries = Object.entries(data).filter(
-    ([key, value]) => key in link && value !== link[key as keyof Link]
-  );
-
-  return { hasChanges: changeEntries.length > 0, changeEntries };
 };
 
 export const updateLinkAction = async (
