@@ -168,6 +168,10 @@ export const en: Translation = {
   sessionExpirationWarning: 'Your session will expire in 1 minute.',
 
   // Edit Link
+  active: 'Active',
+  inactive: 'Inactive',
+  activate: 'Activate',
+  deactivate: 'Deactivate',
   destinationURL: 'Destintion URL',
   optionalDetails: 'Optional details',
 

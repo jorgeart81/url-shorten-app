@@ -135,6 +135,10 @@ export interface Translation {
   'USER_NOT_FOUND.title': string;
 
   // Edit Link
+  active: string;
+  inactive: string;
+  activate: string;
+  deactivate: string;
   destinationURL: string;
   optionalDetails: string;
 

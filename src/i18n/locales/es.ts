@@ -162,7 +162,11 @@ export const es: Translation = {
   'UNKNOWN.description':
     'Ha ocurrido un error inesperado. Intenta nuevamente más tarde.',
 
-  // Edit Link
+  // Edit
+  active: 'Activo',
+  inactive: 'Oculto',
+  activate: 'Activar',
+  deactivate: 'Desactivar',
   destinationURL: 'URL de destino',
   optionalDetails: 'Detalles opcionales',
 
@@ -170,7 +174,7 @@ export const es: Translation = {
   sessionExpirationWarning: 'Tu sesión finalizará en 1 minuto.',
 
   // Dashboard
-  account:'Cuenta',
+  account: 'Cuenta',
   backToList: 'Volver a la lista',
   home: 'Inicio',
   link: 'Enlace',

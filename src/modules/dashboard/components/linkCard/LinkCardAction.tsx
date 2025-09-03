@@ -19,6 +19,8 @@ import {
   EllipsisVertical,
   Link2,
   Pencil,
+  Power,
+  PowerOff,
   Share2,
   Trash,
 } from 'lucide-react';
@@ -28,20 +30,26 @@ import { TimeSpan } from '@/utils/timeSpan';
 
 interface Props {
   className?: string;
+  isActive?: boolean;
   handleCopy: MouseEventHandler;
   handleEdit: MouseEventHandler;
   handleShare?: MouseEventHandler;
-  handleDelete: MouseEventHandler;
+  handleDelete?: MouseEventHandler;
   handleDetails?: MouseEventHandler;
+  handleActivate?: MouseEventHandler;
+  handleDeactivate?: MouseEventHandler;
 }
 
 export const LinkCardAction: FC<Props> = ({
   className,
+  isActive,
   handleCopy: onCopy,
   handleEdit,
   handleShare,
   handleDelete,
   handleDetails,
+  handleActivate,
+  handleDeactivate,
 }) => {
   const { translate: t } = useLanguage();
   const [isCopied, setIsCopied] = useState(false);
@@ -89,9 +97,21 @@ export const LinkCardAction: FC<Props> = ({
         </DropdownMenuTrigger>
         <DropdownMenuContent className='w-56' align='start'>
           <DropdownMenuGroup>
-            <DropdownMenuItem onClick={handleDelete}>
-              <Trash /> {t('delete')}
-            </DropdownMenuItem>
+            {isActive ? (
+              <DropdownMenuItem onClick={handleDeactivate}>
+                <PowerOff /> {t('deactivate')}
+              </DropdownMenuItem>
+            ) : (
+              <DropdownMenuItem onClick={handleActivate}>
+                <Power /> {t('activate')}
+              </DropdownMenuItem>
+            )}
+
+            {handleDelete && (
+              <DropdownMenuItem onClick={handleDelete}>
+                <Trash /> {t('delete')}
+              </DropdownMenuItem>
+            )}
             {handleDetails && (
               <DropdownMenuItem onClick={handleDetails}>
                 <Link2 className='rotate-45' /> {t('view.link.details')}

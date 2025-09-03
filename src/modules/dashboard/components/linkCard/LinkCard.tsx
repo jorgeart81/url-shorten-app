@@ -25,6 +25,7 @@ interface Props {
   domain: string;
   title: string;
   checked?: boolean;
+  isActive?: boolean;
   variant?: CardVariant;
   onCheckedChange?: (isChecked: boolean) => void;
 }
@@ -37,6 +38,7 @@ export const LinkCard = ({
   domain,
   title,
   checked = false,
+  isActive,
   variant = 'link',
   onCheckedChange,
 }: Props) => {
@@ -45,7 +47,7 @@ export const LinkCard = ({
   const shortUrl = `${protocol}//${shortLink}`;
   const detailsRoute = `${RoutePath.Links}/${backHalf}/details`;
 
-  const { currentLanguage } = useLanguage();
+  const { translate: t, currentLanguage } = useLanguage();
   const navigate = useNavigate();
 
   const handleCopy = useCallback(() => {
@@ -140,14 +142,21 @@ export const LinkCard = ({
             >
               {getShortFormattedDate(date, currentLanguage as Locales)}
             </Badge>
+            {isActive ? (
+              <Badge>{t('active')}</Badge>
+            ) : (
+              <Badge variant='secondary'>{t('inactive')}</Badge>
+            )}
           </div>
         </div>
 
         <LinkCardAction
           className='hidden lg:flex gap-2 relative'
+          isActive={isActive}
           handleCopy={handleCopy}
           handleEdit={handleEdit}
-          handleDelete={() => {}}
+          handleActivate={() => {}}
+          handleDeactivate={() => {}}
           handleDetails={handleDetails}
         />
       </CardHeader>
@@ -156,9 +165,11 @@ export const LinkCard = ({
         <Separator className='mb-3' />
         <LinkCardAction
           className='w-full flex gap-2 justify-end'
+          isActive={isActive}
           handleCopy={handleCopy}
           handleEdit={handleEdit}
-          handleDelete={() => {}}
+          handleActivate={() => {}}
+          handleDeactivate={() => {}}
           handleDetails={handleDetails}
         />
       </CardHeader>

@@ -78,7 +78,7 @@ export const LinkView = () => {
   };
 
   const handleShow = (value: string) => {
-    const params = new URLSearchParams()
+    const params = new URLSearchParams();
     if (value === 'hidden') {
       params.set('archived', 'on');
     } else {
@@ -157,6 +157,7 @@ export const LinkView = () => {
                       }));
                     }}
                     checked={selectLinks[link.id]}
+                    isActive={link.isActive}
                   />
                 ))}
                 <PaginationBar
