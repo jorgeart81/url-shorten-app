@@ -28,7 +28,7 @@ export const en: Translation = {
   'view.link.details': 'View link details',
 
   // Login Form
-  'loginForm.title': 'Sign In',
+  'loginForm.title': 'Log In',
   'loginForm.input.emailLabel': 'Email address',
   'loginForm.input.passwordLabel': 'Password',
   'loginForm.forgotPassword': 'Forgot your password?',
@@ -43,7 +43,7 @@ export const en: Translation = {
   'registerForm.input.passwordLabel': 'Password',
   'registerForm.forgotPassword': 'Forgot your password?',
   'registerForm.rememberMe': 'Remember me',
-  'registerForm.login': 'Sign In',
+  'registerForm.login': 'Log In',
   'registerForm.haveAccount': 'Already have an account?',
   'registerForm.create': 'Sign Up',
 
@@ -182,4 +182,8 @@ export const en: Translation = {
   link: 'Link',
   links: 'Links',
   logOut: 'Log out',
+
+  // Landing
+  logIn:'Log In',
+  signUp:'Sign Up'
 };

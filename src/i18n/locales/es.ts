@@ -180,4 +180,8 @@ export const es: Translation = {
   link: 'Enlace',
   links: 'Enlaces',
   logOut: 'Cerrar sesión',
+
+  // Landing
+  logIn: 'Iniciar sesión',
+  signUp: 'Regístrate',
 };

@@ -152,6 +152,10 @@ export interface Translation {
   link: string;
   links: string;
   logOut: string;
+
+  // Landing
+  logIn: string;
+  signUp: string;
 }
 
 export type TranslationKeys = keyof Translation;
