@@ -157,7 +157,10 @@
   }
 }
 
-
 @view-transition {
   navigation: auto;
+}
+
+.gap-inherit {
+  gap: inherit;
 }

@@ -12,13 +12,18 @@ import { FallbackView } from './components/FallbackView';
 import { RedirectView } from './modules/dashboard/views/RedirectView';
 import { LinkEditView } from './modules/dashboard/views/LinkEditView';
 import { AccountView } from './modules/dashboard/views/AccountView';
+import { LandingView } from './modules/landing/views/LandingView';
+import { LandingLayout } from './modules/landing/components/LandingLayout';
 
 function App() {
   return (
     <ErrorBoundary fallback={<FallbackView />}>
       <BrowserRouter>
         <Routes>
-          <Route index element={<Navigate to='/auth' />} />
+          <Route element={<LandingLayout />}>
+            <Route path='/' element={<LandingView />} />
+          </Route>
+          {/* <Route index element={<Navigate to='/auth' />} /> */}
           <Route path='/auth/*' element={<AuthModule />} />
           <Route path='/:backHalf' element={<RedirectView />} />
           <Route path='*' element={<NotFoundView />} />
