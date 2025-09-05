@@ -153,10 +153,21 @@ export interface Translation {
   links: string;
   logOut: string;
 
+  // Account
+  email: string;
+  userName: string;
+  update: string;
+
   // Landing
+  client: string;
+  device: string;
+  devices: string;
   logIn: string;
-  signUp: string;
   myAccount: string;
+  preferences: string;
+  signUp: string;
+  status: string;
+  'recentDevices.list.title': string;
 }
 
 export type TranslationKeys = keyof Translation;

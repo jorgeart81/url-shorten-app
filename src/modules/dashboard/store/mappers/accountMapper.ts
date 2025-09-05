@@ -43,6 +43,7 @@ export function mapAccountDataToUserAccount(data: AccountData): UserAccount {
  */
 export function mapDeviceDataDtoToDevice(device: DeviceData): Device {
   return {
+    id: device.id,
     deviceName: device.deviceName,
     isActive: device.isActive,
     isCurrentDevice: device.isCurrentDevice,

@@ -11,6 +11,7 @@ export interface AccountData {
 }
 
 export interface DeviceData {
+  readonly id: string;
   readonly deviceName: string;
   readonly isActive: boolean;
   readonly isCurrentDevice: boolean;

@@ -181,8 +181,19 @@ export const es: Translation = {
   links: 'Enlaces',
   logOut: 'Cerrar sesión',
 
+  // Account
+  client: 'Cliente',
+  device: 'Dispositivo',
+  devices: 'Dispositivos',
+  email: 'Dirección de email',
+  preferences: 'Preferencias',
+  status: 'Estado',
+  update: 'Actualizar',
+  userName: 'Nombre de usuario',
+  'recentDevices.list.title': 'Dispositivos recientes',
+
   // Landing
   logIn: 'Iniciar Sesión',
   signUp: 'Regístrate',
-  myAccount:'Mi Cuenta',
+  myAccount: 'Mi Cuenta',
 };

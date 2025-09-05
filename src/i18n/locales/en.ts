@@ -183,6 +183,17 @@ export const en: Translation = {
   links: 'Links',
   logOut: 'Log out',
 
+  // Account
+  client: 'Client',
+  device: 'Device',
+  devices: 'Devices',
+  email: 'Email',
+  preferences: 'Preferences',
+  status: 'Status',
+  update: 'Update',
+  userName: 'Username',
+  'recentDevices.list.title': 'Recent devices',
+
   // Landing
   logIn: 'Log In',
   signUp: 'Sign Up',

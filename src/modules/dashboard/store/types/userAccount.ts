@@ -7,6 +7,7 @@ export interface UserAccount {
 }
 
 export interface Device {
+  id: string;
   deviceName: string;
   isActive: boolean;
   isCurrentDevice: boolean;
