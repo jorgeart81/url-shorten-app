@@ -27,7 +27,6 @@ export const createLinkAction = async (
   const formData = Object.fromEntries(queryData);
   const { hasErrors, errors, data } = formDataValidation(formData);
   
-  console.log(formData)
   if (hasErrors || !data) return { ...state, validationError: errors };
   
   const { backHalf, destination, ...rest } = data;

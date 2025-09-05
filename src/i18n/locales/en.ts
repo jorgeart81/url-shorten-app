@@ -184,6 +184,7 @@ export const en: Translation = {
   logOut: 'Log out',
 
   // Landing
-  logIn:'Log In',
-  signUp:'Sign Up'
+  logIn: 'Log In',
+  signUp: 'Sign Up',
+  myAccount: 'My Account',
 };

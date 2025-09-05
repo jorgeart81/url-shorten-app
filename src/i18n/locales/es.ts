@@ -182,6 +182,7 @@ export const es: Translation = {
   logOut: 'Cerrar sesión',
 
   // Landing
-  logIn: 'Iniciar sesión',
+  logIn: 'Iniciar Sesión',
   signUp: 'Regístrate',
+  myAccount:'Mi Cuenta',
 };

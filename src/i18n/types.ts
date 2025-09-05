@@ -156,6 +156,7 @@ export interface Translation {
   // Landing
   logIn: string;
   signUp: string;
+  myAccount: string;
 }
 
 export type TranslationKeys = keyof Translation;

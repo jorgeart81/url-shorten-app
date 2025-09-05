@@ -5,9 +5,12 @@ import { RoutePath } from '@/shared/constants/routePath';
 import { useLanguage } from '@/components/hooks/useLanguage';
 
 import styles from './layout.module.css';
+import { useAuthStore } from '@/modules/auth/store/authStore';
 
 export const LandingLayout = () => {
   const { translate: t } = useLanguage();
+  const status = useAuthStore((state) => state.status);
+
   return (
     <div
       className={`w-screen min-h-dvh flex flex-col items-center ${styles['bg-container']}`}
@@ -21,14 +24,16 @@ export const LandingLayout = () => {
         <div className='flex gap-inherit'>
           <Button asChild variant='outline' size='sm'>
             <NavLink to={RoutePath.Login} viewTransition>
-              {t('logIn')}
+              {status === 'authenticated' ? t('myAccount') : t('logIn')}
             </NavLink>
           </Button>
-          <Button size='sm'>
-            <NavLink to={RoutePath.Signup} viewTransition>
-              {t('signUp')}
-            </NavLink>
-          </Button>
+          {status !== 'authenticated' && (
+            <Button size='sm'>
+              <NavLink to={RoutePath.Signup} viewTransition>
+                {t('signUp')}
+              </NavLink>
+            </Button>
+          )}
         </div>
       </nav>
       <div className='relative w-full max-w-6xl flex-1'>
