@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { type JSX } from 'react';
 
 interface Props {
@@ -13,12 +14,12 @@ export class ErrorBoundary extends React.Component<Props> {
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(error: React.ErrorInfo) {
+  static getDerivedStateFromError(_error: React.ErrorInfo) {
     // Update state so the next render will show the fallback UI.
     return { hasError: true };
   }
 
-  componentDidCatch(error: Error, info: React.ErrorInfo) {
+  componentDidCatch(_error: Error, _info: React.ErrorInfo) {
     // Example "componentStack":
     //   in ComponentThatThrows (created by App)
     //   in ErrorBoundary (created by App)

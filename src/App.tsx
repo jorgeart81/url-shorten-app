@@ -1,19 +1,19 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
+import { BrowserRouter, Route, Routes } from 'react-router';
 
+import { ErrorBoundary } from './components/ErrorBoundary';
+import { FallbackView } from './components/FallbackView';
 import { NotFoundView } from './components/NotFoundView';
 import { AuthModule } from './modules/auth/AuthModule';
 import { DashboardLayout } from './modules/dashboard/components/DashboardLayout';
+import { AccountView } from './modules/dashboard/views/AccountView';
 import { CreateLinkView } from './modules/dashboard/views/CreateLinkView';
 import { HomeView } from './modules/dashboard/views/HomeView';
 import { LinkDetailsView } from './modules/dashboard/views/LinkDetailsView';
-import { LinkView } from './modules/dashboard/views/LinkView';
-import { ErrorBoundary } from './components/ErrorBoundary';
-import { FallbackView } from './components/FallbackView';
-import { RedirectView } from './modules/dashboard/views/RedirectView';
 import { LinkEditView } from './modules/dashboard/views/LinkEditView';
-import { AccountView } from './modules/dashboard/views/AccountView';
-import { LandingView } from './modules/landing/views/LandingView';
+import { LinkView } from './modules/dashboard/views/LinkView';
+import { RedirectView } from './modules/dashboard/views/RedirectView';
 import { LandingLayout } from './modules/landing/components/LandingLayout';
+import { LandingView } from './modules/landing/views/LandingView';
 
 function App() {
   return (
@@ -23,7 +23,6 @@ function App() {
           <Route element={<LandingLayout />}>
             <Route path='/' element={<LandingView />} />
           </Route>
-          {/* <Route index element={<Navigate to='/auth' />} /> */}
           <Route path='/auth/*' element={<AuthModule />} />
           <Route path='/:backHalf' element={<RedirectView />} />
           <Route path='*' element={<NotFoundView />} />

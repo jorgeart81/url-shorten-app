@@ -33,6 +33,7 @@ export const LinkDetails: FC<Props> = ({ getLink }) => {
 
       {link ? (
         <LinkCard
+          id={link.id}
           backHalf={link.backHalf}
           date={new Date(link.createdAt)}
           destination={link.destination}

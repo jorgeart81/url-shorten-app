@@ -3,7 +3,7 @@ import { useEffect, useState, type JSX } from 'react';
 import { CookieKey } from '@/shared/constants/cookieKey';
 import { ElapsedCounter } from '@/utils/elapsedCounter';
 import { ResendEmailContext } from './resendEmailContext';
-import { useAuthStore } from '@/modules/auth/store/authStore';
+// import { useAuthStore } from '@/modules/auth/store/authStore';
 
 const sessionCounter = ElapsedCounter.getInstance(
   CookieKey.EmailResendSession,
@@ -20,7 +20,7 @@ export const ResendEmailProvider = ({
   const [sessionRegressiveTime, setSessionRegressiveTime] = useState(0);
   const [resedElapsedTime, setResendElapsedTime] = useState(0);
   const [resendRegressiveTime, setResendRegressiveTime] = useState(0);
-  const status = useAuthStore((state) => state.status);
+  // const status = useAuthStore((state) => state.status);
 
   const sessionExecute = ({ reload = false }: { reload?: boolean } = {}) => {
     sessionCounter.startTimer({

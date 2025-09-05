@@ -1,10 +1,7 @@
 import {
-  AudioWaveform,
-  Command,
   GalleryVerticalEnd,
   House,
-  Link,
-  Map,
+  Link
 } from 'lucide-react';
 import * as React from 'react';
 
