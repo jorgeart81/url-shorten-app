@@ -94,6 +94,7 @@ export interface Translation {
 
   // Validation messages
   'validation.string.maxLength': string;
+  'validation.string.minLength': string;
   'validation.string.maxLength.generic': string;
 
   // Links View

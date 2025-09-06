@@ -1,14 +1,9 @@
-import { useState } from 'react';
+import type { FC } from 'react';
 
-import { Label } from '@radix-ui/react-label';
+import clsx from 'clsx';
 
-import { CustomInput } from '@/components/form/CustomInput';
 import { Head } from '@/components/Head';
 import { useLanguage } from '@/components/hooks/useLanguage';
-import { Button } from '@/components/ui/button';
-import { ViewContainer } from '../components/ViewContainer';
-import { ViewHeader } from '../components/ViewHeader';
-import { useDashboardStore } from '../store/dashboardStore';
 import { Separator } from '@/components/ui/separator';
 import {
   Table,
@@ -20,14 +15,15 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import clsx from 'clsx';
+import { AccountPreferencesForm } from '../components/account/AccountPreferencesForm';
+import { ViewContainer } from '../components/ViewContainer';
+import { ViewHeader } from '../components/ViewHeader';
+import { useDashboardStore } from '../store/dashboardStore';
 
-export const AccountView = () => {
+export const AccountView: FC = () => {
   const { translate: t } = useLanguage();
   const devices = useDashboardStore((state) => state.devices);
   const user = useDashboardStore((state) => state.user);
-
-  const [userName, setUserName] = useState(user.displayName);
 
   return (
     <ViewContainer>
@@ -39,37 +35,7 @@ export const AccountView = () => {
           {t('preferences')}
         </h2>
 
-        <form>
-          <div className='md:flex gap-3'>
-            <div className='grid gap-3 flex-1'>
-              <Label htmlFor='userName'>{t('userName')}</Label>
-              <CustomInput
-                id='userName'
-                name='userName'
-                type='text'
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-              />
-            </div>
-            <div className='grid gap-3 flex-1'>
-              <Label htmlFor='email'>{t('email')}</Label>
-              <CustomInput
-                id='email'
-                name='email'
-                type='email'
-                defaultValue={user.email}
-                disabled
-              />
-            </div>
-          </div>
-          <Button
-            type='submit'
-            className='w-full md:w-fit mt-6'
-            disabled={userName === user.displayName}
-          >
-            {t('update')}
-          </Button>
-        </form>
+        <AccountPreferencesForm user={user} />
       </section>
 
       <Separator className='my-4' />

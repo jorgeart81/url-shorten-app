@@ -26,6 +26,7 @@ interface Actions {
   getAccount: () => Promise<void>;
   loadLinks: (page: number, isActive: boolean) => Promise<void>;
   updateLinkActiveStatus: (id: string, activate: boolean) => Promise<void>;
+  setUserAccount: (user: UserAccount) => Promise<void>;
 }
 
 const initialState: DashboardState = {
@@ -40,7 +41,7 @@ const initialState: DashboardState = {
     hasPreviousPage: false,
   },
   user: {
-    displayName: '',
+    userName: '',
     email: '',
     isActive: false,
   },
@@ -107,6 +108,12 @@ const storeApi: StateCreator<
 
       await loadLinks(pageNumber, !activate);
     }
+  },
+  setUserAccount: async (user: UserAccount) => {
+    set((prev) => ({
+      ...prev,
+      user: { ...user },
+    }));
   },
 });
 

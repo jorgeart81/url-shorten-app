@@ -105,6 +105,8 @@ export const es: Translation = {
 
   'validation.string.maxLength':
     'El campo debe tener {{maxLength}} caracteres como máximo.',
+  'validation.string.minLength':
+    'El campor debe tener al menos {{minLength}} carateres como mínimo.',
   'validation.string.maxLength.generic':
     'El campoto tiene más caracteres de los permitidos.',
   'linksView.noResults.title': 'No se encontraron resultados',

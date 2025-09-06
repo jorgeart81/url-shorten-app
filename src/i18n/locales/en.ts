@@ -110,6 +110,8 @@ export const en: Translation = {
   // Validation messages
   'validation.string.maxLength':
     'The field must have {{maxLength}} characters at most.',
+  'validation.string.minLength':
+    'The field must have at least {{minLength}} characters.',
   'validation.string.maxLength.generic':
     'The field has more characters than allowed.',
 
