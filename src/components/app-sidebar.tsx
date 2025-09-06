@@ -1,8 +1,4 @@
-import {
-  GalleryVerticalEnd,
-  House,
-  Link
-} from 'lucide-react';
+import { House, Link } from 'lucide-react';
 import * as React from 'react';
 
 import { NavProjects } from '@/components/nav-projects';
@@ -21,10 +17,10 @@ import { useDashboardStore } from '@/modules/dashboard/store/dashboardStore';
 const data = {
   teams: [
     {
-      name: 'Acme Inc',
-      logo: GalleryVerticalEnd,
-      plan: 'Enterprise',
-    }
+      name: 'URL Shorten',
+      logo: () => <img src='/favicon.svg' alt='favicon' className='size-6' />,
+      plan: 'Free',
+    },
   ],
   items: [
     {
@@ -36,7 +32,7 @@ const data = {
       name: 'Links',
       url: '/links',
       icon: Link,
-    }
+    },
   ],
 };
 
@@ -56,7 +52,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           user={{
             name: user.userName,
             email: user.email,
-            avatar: '/avatars/shadcn.jpg',
           }}
         />
       </SidebarFooter>

@@ -16,7 +16,8 @@ export const LandingLayout = () => {
       className={`w-screen min-h-dvh flex flex-col items-center ${styles['bg-container']}`}
     >
       <nav className='w-full max-w-[1440px] h-16 flex gap-3 py-4 px-6'>
-        <div className='flex-1'>
+        <div className='flex items-center gap-2 flex-1'>
+          <img src='/favicon.svg' alt='favicon' className='size-8' />
           <h3 className='scroll-m-20 text-xl font-semibold tracking-tight'>
             URL Shorten
           </h3>
