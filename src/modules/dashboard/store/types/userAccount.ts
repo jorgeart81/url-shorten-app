@@ -1,5 +1,5 @@
 export interface UserAccount {
-  displayName: string;
+  userName: string;
   email: string;
   isActive: boolean;
   firstName?: string;

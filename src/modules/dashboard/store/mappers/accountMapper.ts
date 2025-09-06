@@ -28,7 +28,7 @@ export function mapAccountDataToUserAccount(data: AccountData): UserAccount {
   }
 
   return {
-    displayName,
+    userName: displayName,
     email: data.email,
     isActive: data.isActive,
     firstName: data.firstName,
