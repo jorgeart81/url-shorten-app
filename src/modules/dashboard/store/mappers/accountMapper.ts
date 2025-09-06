@@ -30,6 +30,7 @@ export function mapAccountDataToUserAccount(data: AccountData): UserAccount {
   return {
     userName: displayName,
     email: data.email,
+    emailConfirmed: data.emailConfirmed,
     isActive: data.isActive,
     firstName: data.firstName,
     lastName: data.lastName,

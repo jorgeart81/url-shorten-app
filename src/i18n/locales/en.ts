@@ -185,19 +185,17 @@ export const en: Translation = {
   links: 'Links',
   logOut: 'Log out',
 
-  // Account
   client: 'Client',
   device: 'Device',
   devices: 'Devices',
   email: 'Email',
+  logIn: 'Log In',
+  myAccount: 'My Account',
   preferences: 'Preferences',
+  signUp: 'Sign Up',
   status: 'Status',
   update: 'Update',
   userName: 'Username',
+  verified: ' Verified',
   'recentDevices.list.title': 'Recent devices',
-
-  // Landing
-  logIn: 'Log In',
-  signUp: 'Sign Up',
-  myAccount: 'My Account',
 };

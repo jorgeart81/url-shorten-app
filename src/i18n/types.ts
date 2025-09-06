@@ -154,20 +154,18 @@ export interface Translation {
   links: string;
   logOut: string;
 
-  // Account
-  email: string;
-  userName: string;
-  update: string;
-
-  // Landing
   client: string;
   device: string;
   devices: string;
+  email: string;
   logIn: string;
   myAccount: string;
   preferences: string;
   signUp: string;
   status: string;
+  update: string;
+  userName: string;
+  verified: string;
   'recentDevices.list.title': string;
 }
 

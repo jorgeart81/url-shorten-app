@@ -43,6 +43,7 @@ const initialState: DashboardState = {
   user: {
     userName: '',
     email: '',
+    emailConfirmed: false,
     isActive: false,
   },
 };

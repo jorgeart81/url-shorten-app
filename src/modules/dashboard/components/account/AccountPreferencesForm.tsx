@@ -9,8 +9,9 @@ import {
   updatePreferencesAction,
   type UpdatePreferencesState,
 } from './updatePreferences.action';
-import { Loader2Icon } from 'lucide-react';
+import { BadgeCheckIcon, Loader2Icon } from 'lucide-react';
 import { useDashboardStore } from '../../store/dashboardStore';
+import { Badge } from '@/components/ui/badge';
 
 interface Props {
   user: UserAccount;
@@ -53,7 +54,18 @@ export const AccountPreferencesForm: FC<Props> = ({ user }) => {
             />
           </div>
           <div className='grid gap-3 flex-1'>
-            <Label htmlFor='email'>{t('email')}</Label>
+            <Label htmlFor='email'>
+              {t('email')}
+              {user.emailConfirmed && (
+                <Badge
+                  variant='secondary'
+                  className='bg-blue-500 text-white dark:bg-blue-600'
+                >
+                  <BadgeCheckIcon />
+                  {t('verified')}
+                </Badge>
+              )}
+            </Label>
             <CustomInput
               id='email'
               name='email'

@@ -3,6 +3,7 @@ import type { SuccessResponse } from '@/services/api/genericResponse';
 export interface AccountData {
   readonly userName: string;
   readonly email: string;
+  readonly emailConfirmed: boolean;
   readonly isActive: boolean;
   readonly firstName?: string;
   readonly lastName?: string;

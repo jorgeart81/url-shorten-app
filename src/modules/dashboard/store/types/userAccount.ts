@@ -1,6 +1,7 @@
 export interface UserAccount {
   userName: string;
   email: string;
+  emailConfirmed: boolean;
   isActive: boolean;
   firstName?: string;
   lastName?: string;
