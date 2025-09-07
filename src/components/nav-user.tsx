@@ -1,5 +1,3 @@
-'use client';
-
 import { BadgeCheck, ChevronsUpDown, LogOut } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -51,7 +49,7 @@ export function NavUser({
                   <AvatarImage src={user.avatar} alt={user.name} />
                 )}
                 <AvatarFallback className='rounded-lg'>
-                  {user.name[0].toUpperCase()}
+                  {user.name.length > 0 ? user.name[0].toUpperCase() : ''}
                 </AvatarFallback>
               </Avatar>
               <div className='grid flex-1 text-left text-sm leading-tight'>
