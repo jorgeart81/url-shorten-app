@@ -23,6 +23,7 @@ FROM nginx:alpine
 
 # Copy only the built files and necessary assets from the build stage
 COPY --from=build /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/nginx.conf
 
 # Expose the port the app runs on
 EXPOSE 80
