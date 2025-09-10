@@ -21,6 +21,9 @@ RUN pnpm run build
 # Production stage: use a lightweight web server for the final image
 FROM nginx:alpine
 
+# Remove the default nginx configuration
+RUN rm /etc/nginx/conf.d/default.conf
+
 # Copy only the built files and necessary assets from the build stage
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
