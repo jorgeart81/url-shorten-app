@@ -35,7 +35,7 @@ export const AccountView: FC = () => {
           {t('preferences')}
         </h2>
 
-        <AccountPreferencesForm user={user} />
+        {user && <AccountPreferencesForm user={user} />}
       </section>
 
       <Separator className='my-4' />

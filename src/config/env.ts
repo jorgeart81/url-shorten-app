@@ -10,7 +10,7 @@ const envSchema = z.object({
       throw new Error('VITE_API_PORT must be a number');
     }
     return num;
-  }),
+  }).optional(),
   VITE_APP_NAME: z.string().default('Url Shorten'),
 
   VITE_REDIRECTION_DOMAIN: z.string(),
