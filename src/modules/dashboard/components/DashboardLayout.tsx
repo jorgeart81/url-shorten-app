@@ -38,8 +38,9 @@ export const DashboardLayout = () => {
   const status = useAuthStore((state) => state.status);
   const errorCode = useAuthStore((state) => state.errorCode);
   const logout = useAuthStore((state) => state.logout);
-  const getAccount = useDashboardStore((state) => state.getAccount);
   const refreshToken = useAuthStore((state) => state.refreshToken);
+  const user = useDashboardStore((state) => state.user);
+  const getAccount = useDashboardStore((state) => state.getAccount);
 
   const init = async () => {
     if (status === 'authenticated')
@@ -78,13 +79,13 @@ export const DashboardLayout = () => {
       </FallbackContent>
     );
 
-  if (status === 'checking') {
+  if (status === 'checking' || !user) {
     return <PendingSpinner fullScreen />;
   }
 
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar user={user} />
       <SidebarInset>
         <header className='flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12'>
           <div className='flex items-center gap-2 px-4'>

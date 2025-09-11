@@ -11,7 +11,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from '@/components/ui/sidebar';
-import { useDashboardStore } from '@/modules/dashboard/store/dashboardStore';
+import type { UserAccount } from '@/modules/dashboard/store/types/userAccount';
 
 // This is sample data.
 const data = {
@@ -36,8 +36,12 @@ const data = {
   ],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const user = useDashboardStore((state) => state.user);
+interface Props extends React.ComponentProps<typeof Sidebar> {
+  user: UserAccount;
+}
+
+export function AppSidebar({ user, ...props }: Props) {
+  const { userName, email } = user;
 
   return (
     <Sidebar collapsible='icon' {...props}>
@@ -48,12 +52,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavProjects sectionLabel='Menu' projects={data.items} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser
-          user={{
-            name: user.userName,
-            email: user.email,
-          }}
-        />
+        <NavUser name={userName} email={email} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

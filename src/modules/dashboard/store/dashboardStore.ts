@@ -17,7 +17,7 @@ import type { Device, UserAccount } from './types/userAccount';
 import type { JsonPatchDocument } from '@/config/types/jsonPatchDocument';
 
 interface DashboardState {
-  user: UserAccount;
+  user?: UserAccount;
   devices: Device[];
   links: Pagination<Link>;
 }
@@ -39,12 +39,6 @@ const initialState: DashboardState = {
     totalPages: 0,
     hasNextPage: false,
     hasPreviousPage: false,
-  },
-  user: {
-    userName: '',
-    email: '',
-    emailConfirmed: false,
-    isActive: false,
   },
 };
 
