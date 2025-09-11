@@ -2,16 +2,15 @@ import { z } from 'zod/v4';
 
 // Environment schema definition
 const envSchema = z.object({
+  VITE_API_BASE_URL: z.string(),
   VITE_API_URL: z.string(),
-  VITE_API_PORT: z
-    .string()
-    .transform((val) => {
-      const num = Number(val);
-      if (isNaN(num)) {
-        throw new Error('VITE_API_PORT must be a number');
-      }
-      return num;
-    }),
+  VITE_API_PORT: z.string().transform((val) => {
+    const num = Number(val);
+    if (isNaN(num)) {
+      throw new Error('VITE_API_PORT must be a number');
+    }
+    return num;
+  }),
   VITE_APP_NAME: z.string().default('Url Shorten'),
 
   VITE_REDIRECTION_DOMAIN: z.string(),
@@ -38,9 +37,7 @@ const validatedEnv = envResult.data;
 export const env = {
   apiUrl: validatedEnv.VITE_API_URL,
   apiPort: validatedEnv.VITE_API_PORT,
-  apiBaseUrl: String(
-    `${validatedEnv.VITE_API_URL}:${validatedEnv.VITE_API_PORT}/api`
-  ),
+  apiBaseUrl: validatedEnv.VITE_API_BASE_URL,
   appName: validatedEnv.VITE_APP_NAME,
 
   redirectionDomain: validatedEnv.VITE_REDIRECTION_DOMAIN,
