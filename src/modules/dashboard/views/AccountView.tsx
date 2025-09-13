@@ -57,7 +57,7 @@ export const AccountView: FC = () => {
               <TableRow
                 key={device.id}
                 className={clsx('font-medium', {
-                  'opacity-50': device.isCurrentDevice,
+                  'opacity-50': !device.isCurrentDevice,
                 })}
               >
                 <TableCell className='font-medium'>

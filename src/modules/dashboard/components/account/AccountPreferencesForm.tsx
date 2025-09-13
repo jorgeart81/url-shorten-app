@@ -39,7 +39,7 @@ export const AccountPreferencesForm: FC<Props> = ({ user }) => {
   return (
     <div>
       <form action={formAction}>
-        <div className='md:flex gap-3'>
+        <div className='flex flex-col gap-3 md:flex-row'>
           <div className='grid gap-3 flex-1'>
             <Label htmlFor='userName'>{t('userName')}</Label>
             <CustomInput

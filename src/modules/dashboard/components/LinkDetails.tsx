@@ -40,6 +40,7 @@ export const LinkDetails: FC<Props> = ({ getLink }) => {
           destinationDomain={link.destinationDomain}
           domain={link.domain}
           title={link.title}
+          isActive={link.isActive}
           variant='details'
         />
       ) : (

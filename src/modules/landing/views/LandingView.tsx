@@ -2,7 +2,7 @@ import type { FC } from 'react';
 
 export const LandingView: FC = () => (
   <main>
-    <header className='relative flex flex-col justify-center text-center border-1 min-h-[calc(100vh-112px)]'>
+    <header className='relative flex flex-col justify-center text-center border-1 min-h-[calc(100dvh-112px)]'>
       <h1
         className='relative text-3xl font-bold mb-4 mt-16'
         style={{ fontSize: 'max(24px, min(3.75vw, 48px))' }}
