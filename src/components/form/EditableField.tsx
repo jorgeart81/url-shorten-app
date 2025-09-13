@@ -37,14 +37,14 @@ export const EditableField: FC<Props> = ({
   const [inputValue, setInputValue] = useState(value);
 
   return (
-    <div>
+    <div className='relative overflow-x-scroll'>
       <label
-        htmlFor={name}
+        htmlFor={canEdit ? name : undefined}
         className='scroll-m-20 font-semibold tracking-tight'
       >
         {label}
       </label>
-      <div className={clsx(' mt-2', { 'flex items-center': !canEdit })}>
+      <div className={clsx('mt-2', { 'flex items-center': !canEdit })}>
         {inputPrefix && <p>{inputPrefix}</p>}
         {canEdit ? (
           <>
@@ -60,8 +60,8 @@ export const EditableField: FC<Props> = ({
             />
           </>
         ) : (
-          <>
-            <p>{value}</p>
+          <div className='relative max-w-dvw'>
+            <p className='break-words'>{value}</p>
             {buttonText && (
               <Button
                 title={buttonTitle}
@@ -74,7 +74,7 @@ export const EditableField: FC<Props> = ({
                 {buttonText}
               </Button>
             )}
-          </>
+          </div>
         )}
       </div>
     </div>
