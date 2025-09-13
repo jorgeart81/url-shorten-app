@@ -29,7 +29,7 @@ interface Props {
 
 export function NavUser({ avatar, email, name }: Props) {
   const navigate = useNavigate();
-  const { isMobile } = useSidebar();
+  const { isMobile, openMobile, setOpenMobile } = useSidebar();
   const { translate: t } = useLanguage();
   const logout = useAuthStore((state) => state.logout);
 
@@ -78,9 +78,10 @@ export function NavUser({ avatar, email, name }: Props) {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem
-                onClick={() =>
-                  navigate(RoutePath.Account, { viewTransition: true })
-                }
+                onClick={() => {
+                  navigate(RoutePath.Account, { viewTransition: true });
+                  if (openMobile) setOpenMobile(false);
+                }}
               >
                 <BadgeCheck />
                 {t('account')}

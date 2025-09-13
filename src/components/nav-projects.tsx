@@ -6,6 +6,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from '@/components/ui/sidebar';
 import { type LucideIcon } from 'lucide-react';
 
@@ -21,12 +22,21 @@ interface Props {
 }
 
 export function NavProjects({ sectionLabel = 'Projects', projects }: Props) {
+  const { openMobile, setOpenMobile } = useSidebar();
+
   return (
     <SidebarGroup className='group-data-[collapsible=icon]:hidden'>
       <SidebarGroupLabel>{sectionLabel}</SidebarGroupLabel>
       <SidebarMenu>
         {projects.map((item) => (
-          <SidebarMenuItem key={item.name}>
+          <SidebarMenuItem
+            key={item.name}
+            onClick={() => {
+              if (openMobile) {
+                setOpenMobile(false);
+              }
+            }}
+          >
             <NavLink to={item.url}>
               {({ isActive }) => (
                 <SidebarMenuButton isActive={isActive}>
