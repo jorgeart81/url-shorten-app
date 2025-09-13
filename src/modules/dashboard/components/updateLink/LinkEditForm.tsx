@@ -50,8 +50,7 @@ export const LinkEditForm: FC<Props> = ({ link, ref, onPendingChange }) => {
           name='backHalf'
           label={t('shortlink')}
           icon={<Pencil />}
-          inputPrefix={`${domain}/`}
-          value={backHalf}
+          value={`${domain}/${backHalf}`}
           disabled={isPending}
         />
       </div>
