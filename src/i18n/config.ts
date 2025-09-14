@@ -25,7 +25,7 @@ i18n
   .use(initReactI18next) // Integrates with React
   .init({
     resources,
-    fallbackLng: 'en', // Default language
+    fallbackLng: 'es', // Default language
     debug: true,
 
     interpolation: {
