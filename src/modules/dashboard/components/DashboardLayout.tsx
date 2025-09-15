@@ -49,7 +49,7 @@ export const DashboardLayout = () => {
     if (status == null || allowedStatus.includes(status)) {
       const { isSuccess } = await refreshToken();
       if (!isSuccess) {
-        toastError(getErrorTranslation(errorCode).description);
+        toastError(getErrorTranslation('AUTH_ERROR').description);
         return;
       }
       await getAccount();
@@ -59,10 +59,11 @@ export const DashboardLayout = () => {
   useEffect(() => {
     init();
   }, []);
+
   if (status == null || !allowedStatus.includes(status)) {
     return <Navigate to={RoutePath.Login} />;
   }
-  
+
   if (errorCode === 'NETWORK_ERROR' || errorCode === 'MAX_DEVICE_LIMIT_REACHED')
     return (
       <FallbackContent
@@ -77,8 +78,8 @@ export const DashboardLayout = () => {
         </Button>
       </FallbackContent>
     );
-    
-    if (status === 'checking' || !user) {
+
+  if (status === 'checking' || !user) {
     return <PendingSpinner fullScreen />;
   }
 
