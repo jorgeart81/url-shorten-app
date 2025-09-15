@@ -12,6 +12,7 @@ import type { AuthState } from './types/authState';
 const initialState: AuthState = {
   status: null,
   keepLoggedIn: false,
+  refreshTokenAttempts: 0,
   error: undefined,
   errorCode: undefined,
   resendCode: undefined,
@@ -81,6 +82,7 @@ const storeApi: StateCreator<
     const { success, errorCode } = await AuthService.refreshToken();
 
     if (!success && errorCode === 'INVALID_CREDENTIALS') {
+      await AuthService.logout();
       set((prevState) => ({
         ...prevState,
         errorCode,
@@ -90,7 +92,11 @@ const storeApi: StateCreator<
     }
 
     if (!success) {
-      set((prevState) => ({ ...prevState, errorCode }));
+      set((prevState) => ({
+        ...prevState,
+        errorCode,
+        refreshTokenAttempts: ++prevState.refreshTokenAttempts,
+      }));
       return { isSuccess: false };
     }
 
@@ -98,6 +104,7 @@ const storeApi: StateCreator<
     set((prevState) => ({
       ...prevState,
       status: 'authenticated',
+      refreshTokenAttempts: 0,
     }));
     return { isSuccess: success };
   },
