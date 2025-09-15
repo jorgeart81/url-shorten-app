@@ -15,4 +15,5 @@ export type ResultErrorCode =
   | 'SERVER_ERROR'
   | 'TOO_MANY_REQUESTS'
   | 'UNKNOWN'
-  | 'USER_NOT_FOUND';
+  | 'USER_NOT_FOUND'
+  | 'MAX_DEVICE_LIMIT_REACHED';

@@ -165,6 +165,9 @@ export const en: Translation = {
   'UNKNOWN.title': 'Unknown Error',
   'USER_NOT_FOUND.description': 'No user found with the provided information.',
   'USER_NOT_FOUND.title': 'User Not Found',
+  'MAX_DEVICE_LIMIT_REACHED.title': 'Maximum device limit reached',
+  'MAX_DEVICE_LIMIT_REACHED.description':
+    'You have reached the maximum number of allowed devices. Remove an existing device to add a new one.',
 
   sendingEmail: 'Sending email…',
   sessionExpirationWarning: 'Your session will expire in 1 minute.',

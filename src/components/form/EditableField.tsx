@@ -37,7 +37,7 @@ export const EditableField: FC<Props> = ({
   const [inputValue, setInputValue] = useState(value);
 
   return (
-    <div className='relative overflow-x-scroll'>
+    <div className='relative overflow-x-auto'>
       <label
         htmlFor={canEdit ? name : undefined}
         className='scroll-m-20 font-semibold tracking-tight'

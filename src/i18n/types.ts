@@ -134,6 +134,8 @@ export interface Translation {
   'UNKNOWN.title': string;
   'USER_NOT_FOUND.description': string;
   'USER_NOT_FOUND.title': string;
+  'MAX_DEVICE_LIMIT_REACHED.title': string;
+  'MAX_DEVICE_LIMIT_REACHED.description': string;
 
   // Edit Link
   active: string;

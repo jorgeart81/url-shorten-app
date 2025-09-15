@@ -59,12 +59,11 @@ export const DashboardLayout = () => {
   useEffect(() => {
     init();
   }, []);
-
   if (status == null || !allowedStatus.includes(status)) {
     return <Navigate to={RoutePath.Login} />;
   }
-
-  if (errorCode === 'NETWORK_ERROR')
+  
+  if (errorCode === 'NETWORK_ERROR' || errorCode === 'MAX_DEVICE_LIMIT_REACHED')
     return (
       <FallbackContent
         title={t('errorBoundary.title')}
@@ -78,8 +77,8 @@ export const DashboardLayout = () => {
         </Button>
       </FallbackContent>
     );
-
-  if (status === 'checking' || !user) {
+    
+    if (status === 'checking' || !user) {
     return <PendingSpinner fullScreen />;
   }
 

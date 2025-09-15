@@ -38,6 +38,10 @@ export function errorHandler<T = unknown>(error: unknown): Result<T> {
         general: [apiError.detail || 'An error occurred.'],
       };
 
+      if (errors.general?.includes('Maximum device limit reached.')) {
+        return Result.failure<T>(errors, status, 'MAX_DEVICE_LIMIT_REACHED');
+      }
+
       switch (status) {
         case 400:
           return Result.failure<T>(errors, status, 'INVALID_REQUEST');

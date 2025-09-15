@@ -163,6 +163,9 @@ export const es: Translation = {
   'UNKNOWN.title': 'Error desconocido',
   'UNKNOWN.description':
     'Ha ocurrido un error inesperado. Intenta nuevamente más tarde.',
+  'MAX_DEVICE_LIMIT_REACHED.title': 'Límite máximo de dispositivos alcanzado',
+  'MAX_DEVICE_LIMIT_REACHED.description':
+    'Has alcanzado el número máximo de dispositivos permitidos. Elimina uno existente para agregar uno nuevo.',
 
   // Edit
   active: 'Activo',

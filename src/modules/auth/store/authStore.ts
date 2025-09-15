@@ -81,21 +81,32 @@ const storeApi: StateCreator<
   refreshToken: async () => {
     const { success, errorCode } = await AuthService.refreshToken();
 
-    if (!success && errorCode === 'INVALID_CREDENTIALS') {
-      await AuthService.logout();
+    if (!success) {
       set((prevState) => ({
         ...prevState,
         errorCode,
-        status: 'unauthorized',
+        refreshTokenAttempts: ++prevState.refreshTokenAttempts,
       }));
-      return { isSuccess: false };
+
+      switch (errorCode) {
+        case 'INVALID_CREDENTIALS':
+          await AuthService.logout();
+          set({ ...initialState });
+          return { isSuccess: false };
+
+        case 'MAX_DEVICE_LIMIT_REACHED':
+          if (get().refreshTokenAttempts > 3) {
+            await AuthService.logout();
+            set({ ...initialState });
+          }
+          return { isSuccess: false };
+      }
     }
 
     if (!success) {
       set((prevState) => ({
         ...prevState,
         errorCode,
-        refreshTokenAttempts: ++prevState.refreshTokenAttempts,
       }));
       return { isSuccess: false };
     }
