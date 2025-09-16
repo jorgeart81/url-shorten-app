@@ -45,7 +45,7 @@ export function NavUser({ avatar, email, name }: Props) {
               <Avatar className='h-8 w-8 rounded-lg'>
                 {avatar && <AvatarImage src={avatar} alt={name} />}
                 <AvatarFallback className='rounded-lg'>
-                  {name.length > 0 ? name[0].toUpperCase() : ''}
+                  {name?.length > 0 ? name[0].toUpperCase() : ''}
                 </AvatarFallback>
               </Avatar>
               <div className='grid flex-1 text-left text-sm leading-tight'>
@@ -66,7 +66,7 @@ export function NavUser({ avatar, email, name }: Props) {
                 <Avatar className='h-8 w-8 rounded-lg'>
                   {avatar && <AvatarImage src={avatar} alt={name} />}
                   <AvatarFallback className='rounded-lg'>
-                    {name.length > 0 ? name[0].toUpperCase() : ''}
+                    {name?.length > 0 ? name[0].toUpperCase() : ''}
                   </AvatarFallback>
                 </Avatar>
                 <div className='grid flex-1 text-left text-sm leading-tight'>
