@@ -1,9 +1,4 @@
-import {
-  startTransition,
-  useEffect,
-  useState,
-  type FormEvent
-} from 'react';
+import { startTransition, useEffect, useState, type FormEvent } from 'react';
 
 import { useLanguage } from '@/components/hooks/useLanguage';
 import { useAuthStore } from '../store/authStore';
@@ -33,10 +28,20 @@ export const useAuth = () => {
 
   const handleErrorCode = (errorCode: ResultErrorCode) => {
     let error: Error | undefined = undefined;
-    if (errorCode === 'NETWORK_ERROR') {
+
+    if (
+      errorCode === 'NETWORK_ERROR' ||
+      errorCode === 'INVALID_CREDENTIALS' ||
+      errorCode === 'EMAIL_ALREADY_REGISTERED'
+    ) {
       error = {
-        title: translate('NETWORK_ERROR.title'),
-        message: translate('NETWORK_ERROR.description'),
+        title: translate(`${errorCode}.title`),
+        message: translate(`${errorCode}.description`),
+      };
+    } else {
+      error = {
+        title: translate('UNKNOWN.title'),
+        message: translate('UNKNOWN.description'),
       };
     }
 
@@ -46,6 +51,7 @@ export const useAuth = () => {
   };
 
   useEffect(() => {
+    console.log(errorCode);
     if (!errorCode) return;
     handleErrorCode(errorCode);
   }, [errorCode]);
