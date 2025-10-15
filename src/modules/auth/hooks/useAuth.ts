@@ -1,10 +1,18 @@
 import { startTransition, useEffect, useState, type FormEvent } from 'react';
 
+import { z } from 'zod/v4';
+
 import { useLanguage } from '@/components/hooks/useLanguage';
 import { useAuthStore } from '../store/authStore';
 
 import type { ResultErrorCode } from '@/config/rop/resultErrorCode';
 import type { Error } from '../store/types/authState';
+import {
+  loginSchema,
+  type LoginData,
+  type LoginValidationError,
+} from '../components/LoginForm/loginValidationSchema';
+import { getClientFingerprint } from '@/utils/getPlatform';
 
 export const useAuth = () => {
   const { translate } = useLanguage();
@@ -50,6 +58,30 @@ export const useAuth = () => {
     }
   };
 
+  const loginWithValidation = async (input: LoginData) => {
+    const { data, error, success } = loginSchema.safeParse(input);
+
+    if (!success && error) {
+      return {
+        isSuccess: false,
+        errors: z.treeifyError(error).properties as LoginValidationError,
+      };
+    }
+
+    const { platform, language, cores } = getClientFingerprint();
+    const deviceName = `${platform}/${language}/${cores}`;
+
+    const { isSuccess } = await login({
+      email: data.email,
+      password: data.password,
+      keepLoggedIn: data.keepLoggedIn == 'on',
+      deviceName: deviceName,
+      clientType: 'web',
+    });
+
+    return { isSuccess, errors: undefined };
+  };
+
   useEffect(() => {
     console.log(errorCode);
     if (!errorCode) return;
@@ -61,7 +93,7 @@ export const useAuth = () => {
     status,
 
     // Methods
-    login,
+    login: loginWithValidation,
     onSubmit,
     signUp,
   };

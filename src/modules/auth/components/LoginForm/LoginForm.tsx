@@ -2,7 +2,6 @@ import { useActionState, useRef } from 'react';
 
 import { cn } from '@/lib/utils';
 import { NavLink } from 'react-router';
-import { z } from 'zod/v4';
 
 import { ErrorAlert } from '@/components/alerts/ErrorAlert';
 import { CustomInput } from '@/components/form/CustomInput';
@@ -11,14 +10,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { RoutePath } from '@/shared/constants/routePath';
-import { getClientFingerprint } from '@/utils/getPlatform';
 import { useAuth } from '../../hooks/useAuth';
 import { AuthFormButton } from '../AuthFormButton';
-import {
-  loginSchema,
-  type LoginData,
-  type LoginValidationError,
-} from './loginValidationSchema';
+import { type LoginData } from './loginValidationSchema';
 
 export function LoginForm({
   className,
@@ -31,23 +25,14 @@ export function LoginForm({
   const [stateValidation, formAction, isPending] = useActionState(
     async (_: unknown, queryData: FormData) => {
       const formData = Object.fromEntries(queryData) as LoginData;
-      const result = loginSchema.safeParse(formData);
 
-      if (!result.success && result.error) {
-        const errors = z.treeifyError(result.error)
-          .properties as LoginValidationError;
-        return errors;
-      }
-
-      const { platform, language, cores } = getClientFingerprint();
-
-      const { isSuccess } = await login({
+      const { isSuccess, errors } = await login({
         email: formData.email,
         password: formData.password,
-        deviceName: `${platform}/${language}/${cores}`,
-        clientType: 'web',
-        keepLoggedIn: formData.keepLoggedIn == 'on',
+        keepLoggedIn: formData.keepLoggedIn,
       });
+
+      if (errors != undefined) return errors;
 
       if (!isSuccess) {
         if (formRef.current) {
