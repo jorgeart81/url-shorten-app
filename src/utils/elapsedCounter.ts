@@ -25,12 +25,11 @@ interface StartTimeOptions {
  */
 export class ElapsedCounter {
   private _elapsedCounter: number = -1;
-  private _resendTime: number;
-  private _maxSeconds: number;
   private _timerInterval: NodeJS.Timeout | undefined;
 
-  private readonly key: string;
-  private readonly maxSeconds: number;
+  private readonly _key: string;
+  private readonly _maxSeconds: number;
+  private _resendTime: number | null;
 
   private static elapsedCounterRegistry: Record<string, ElapsedCounter> = {};
 
@@ -39,10 +38,19 @@ export class ElapsedCounter {
    * Use ElapsedCounter.getInstance(key, maxSeconds) to get an instance.
    */
   private constructor(key: string, maxSeconds: number) {
-    this.key = key;
-    this.maxSeconds = maxSeconds;
+    this._key = key;
     this._maxSeconds = maxSeconds;
-    this._resendTime = Number(CookieHandler.getValue(key));
+    this._resendTime = this.getValidResendCookie(key);
+  }
+
+  private getValidResendCookie(key: string) {
+    const cookieValue = CookieHandler.getValue(key);
+    if (cookieValue == undefined) return null;
+
+    const resendTime = Number(cookieValue);
+    if (Number.isNaN(resendTime)) return null;
+
+    return resendTime;
   }
 
   /**
@@ -74,8 +82,10 @@ export class ElapsedCounter {
    * Saves the current timestamp in a cookie with a small buffer for expiration.
    */
   private saveCookie(): void {
-    const expirationDate = new Date(Date.now() + (this.maxSeconds + 15) * 1000);
-    CookieHandler.save(this.key, Date.now(), expirationDate);
+    const expirationDate = new Date(
+      Date.now() + (this._maxSeconds + 15) * 1000
+    );
+    CookieHandler.save(this._key, Date.now(), expirationDate);
   }
 
   /**
@@ -98,14 +108,14 @@ export class ElapsedCounter {
     reload = false,
   }: StartTimeOptions): void {
     if (this._timerInterval) return;
-    if (Number.isNaN(this._resendTime) || this._resendTime <= 0) {
+    if (this._resendTime == null || this._resendTime <= 0) {
       if (reload) return;
       this._resendTime = Date.now();
       this.saveCookie();
     }
 
     const initialElapsed = this.calculateElapsedTime(this._resendTime);
-    if (initialElapsed < 0 || initialElapsed > this.maxSeconds) return;
+    if (initialElapsed < 0 || initialElapsed > this._maxSeconds) return;
     this._elapsedCounter = initialElapsed;
 
     let currentElapsed = initialElapsed;
@@ -117,7 +127,7 @@ export class ElapsedCounter {
       elapsedTime?.(this._elapsedCounter);
       regressiveTime?.(this._maxSeconds - this._elapsedCounter);
 
-      if (currentElapsed >= this.maxSeconds) {
+      if (currentElapsed >= this._maxSeconds) {
         this.resetTimer();
       }
     }, 1000);
@@ -129,8 +139,8 @@ export class ElapsedCounter {
   resetTimer(): void {
     clearInterval(this._timerInterval);
     this._elapsedCounter = -1;
-    this._resendTime = NaN;
+    this._resendTime = null;
     this._timerInterval = undefined;
-    CookieHandler.delete(this.key);
+    CookieHandler.delete(this._key);
   }
 }
