@@ -15,7 +15,7 @@ export default function ResendingEmail() {
   const controllerRef = useRef<AbortController | undefined>(undefined);
 
   const { translate } = useLanguage();
-  const { toasInfo, toastWarning } = useToast();
+  const { toastInfo, toastWarning } = useToast();
   const {
     resendRegressiveTime,
     sessionRegressiveTime,
@@ -28,7 +28,7 @@ export default function ResendingEmail() {
   const status = useAuthStore((state) => state.status);
   const resendCode = useAuthStore((state) => state.resendCode);
   const deleteState = useAuthStore((state) => state.deleteState);
-  const sessionExpired = useAuthStore((state) => state.sessionExpired);
+  const setSessionExpired = useAuthStore((state) => state.sessionExpired);
 
   const validateCode = async (code: string) => {
     controllerRef.current = new AbortController();
@@ -57,13 +57,13 @@ export default function ResendingEmail() {
     }
 
     if (code === 'NETWORK_ERROR') {
-      toasInfo(translate('NETWORK_ERROR.description'));
+      toastInfo(translate('NETWORK_ERROR.description'));
       return;
     }
 
     if (code === 'RESENCODE_EXPIRED') {
-      sessionExpired();
-      toasInfo(translate('RESENCODE_EXPIRED.description'));
+      setSessionExpired();
+      toastInfo(translate('RESENCODE_EXPIRED.description'));
       sessionTimerReset();
       return;
     }
@@ -73,9 +73,9 @@ export default function ResendingEmail() {
 
   useEffect(() => {
     if (sessionRegressiveTime === 1 && status !== 'sessionExpired') {
-      sessionExpired();
+      setSessionExpired();
       setEndSession(true);
-      toasInfo(translate('RESENCODE_EXPIRED.description'));
+      toastInfo(translate('RESENCODE_EXPIRED.description'));
       return;
     }
 
@@ -89,7 +89,7 @@ export default function ResendingEmail() {
     if (endSession || !resendCode) return;
     if (status === 'sessionExpired') {
       setEndSession(true);
-      toasInfo(translate('RESENCODE_EXPIRED.description'));
+      toastInfo(translate('RESENCODE_EXPIRED.description'));
       return;
     }
 

@@ -3,7 +3,6 @@ import { useEffect, useState, type JSX } from 'react';
 import { CookieKey } from '@/shared/constants/cookieKey';
 import { ElapsedCounter } from '@/utils/elapsedCounter';
 import { ResendEmailContext } from './resendEmailContext';
-// import { useAuthStore } from '@/modules/auth/store/authStore';
 
 const sessionCounter = ElapsedCounter.getInstance(
   CookieKey.EmailResendSession,
@@ -18,9 +17,8 @@ export const ResendEmailProvider = ({
 }) => {
   const [sessionElapsedTime, setSessionElapsedTime] = useState(0);
   const [sessionRegressiveTime, setSessionRegressiveTime] = useState(0);
-  const [resedElapsedTime, setResendElapsedTime] = useState(0);
+  const [resendElapsedTime, setResendElapsedTime] = useState(0);
   const [resendRegressiveTime, setResendRegressiveTime] = useState(0);
-  // const status = useAuthStore((state) => state.status);
 
   const sessionExecute = ({ reload = false }: { reload?: boolean } = {}) => {
     sessionCounter.startTimer({
@@ -42,7 +40,7 @@ export const ResendEmailProvider = ({
     sessionCounter.resetTimer();
   };
 
-  const redendReset = () => {
+  const resendReset = () => {
     resendCounter.resetTimer();
   };
 
@@ -51,26 +49,18 @@ export const ResendEmailProvider = ({
     resendExecute({ reload: true });
   }, []);
 
-  // useEffect(() => {
-  //   if (status !== 'unconfirmedEmail') {
-  //     sessionReset();
-  //     resendCounter.cancelTimer();
-  //   }
-
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [status]);
 
   return (
     <ResendEmailContext
       value={{
         sessionElapsedTime,
         sessionRegressiveTime,
-        resedElapsedTime,
+        resendElapsedTime,
         resendRegressiveTime,
         sessionTimerExecute: sessionExecute,
         resendTimerExecute: resendExecute,
         sessionTimerReset: sessionReset,
-        resendTimerReset: redendReset,
+        resendTimerReset: resendReset,
       }}
     >
       {children}

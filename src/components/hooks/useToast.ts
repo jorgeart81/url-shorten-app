@@ -2,7 +2,7 @@ import React from 'react';
 import { toast, type ExternalToast } from 'sonner';
 
 export const useToast = () => {
-  const toasInfo = (
+  const toastInfo = (
     message: string | React.ReactNode,
     data?: ExternalToast
   ) => {
@@ -37,5 +37,11 @@ export const useToast = () => {
     toast.loading(message, data);
   };
 
-  return { toasInfo, toastSuccess, toastError, toastWarning, toastLoading };
+  return {
+    toastInfo,
+    toastSuccess,
+    toastError,
+    toastWarning,
+    toastLoading,
+  };
 };

@@ -3,7 +3,7 @@ import { createContext } from 'react';
 interface ContextState {
   sessionElapsedTime: number;
   sessionRegressiveTime: number;
-  resedElapsedTime: number;
+  resendElapsedTime: number;
   resendRegressiveTime: number;
   sessionTimerExecute: () => void;
   sessionTimerReset: () => void;

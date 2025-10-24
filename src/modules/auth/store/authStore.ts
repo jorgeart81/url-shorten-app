@@ -3,7 +3,7 @@ import { devtools, persist } from 'zustand/middleware';
 
 import type { ActionResult } from '@/config/types/actionResult';
 import { CookieService } from '@/services/cookies/cookieService';
-import { SotorageKey } from '@/shared/constants/storageKey';
+import { StorageKey } from '@/shared/constants/storageKey';
 import { AuthService } from '../services/authService';
 import type { LoginRequest } from '../services/dtos/loginRequest';
 import type { RegisterRequest } from '../services/dtos/registerRequest';
@@ -140,7 +140,7 @@ const storeApi: StateCreator<
 
   deleteState: async () => {
     set({ ...initialState });
-    localStorage.removeItem(SotorageKey.AUTH);
+    localStorage.removeItem(StorageKey.AUTH);
   },
 
   sessionExpired: async () => {
@@ -150,7 +150,7 @@ const storeApi: StateCreator<
 
 export const useAuthStore = create<AuthState & Actions>()(
   persist(devtools(storeApi), {
-    name: SotorageKey.AUTH,
+    name: StorageKey.AUTH,
     partialize: (state) => {
       const { error, errorCode, ...rest } = state; // eslint-disable-line @typescript-eslint/no-unused-vars
       return rest;

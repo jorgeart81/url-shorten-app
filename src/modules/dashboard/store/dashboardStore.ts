@@ -4,7 +4,7 @@ import { devtools, persist } from 'zustand/middleware';
 import { LinkService } from '../services/links/linkService';
 import { UserService } from '../services/user/userService';
 
-import { SotorageKey } from '@/shared/constants/storageKey';
+import { StorageKey } from '@/shared/constants/storageKey';
 import {
   mapAccountDataToUserAccount,
   mapDeviceDataDtoToDevice,
@@ -114,6 +114,6 @@ const storeApi: StateCreator<
 
 export const useDashboardStore = create<DashboardState & Actions>()(
   persist(devtools(storeApi), {
-    name: SotorageKey.DASHBOARD,
+    name: StorageKey.DASHBOARD,
   })
 );

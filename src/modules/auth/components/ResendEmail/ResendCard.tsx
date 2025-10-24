@@ -26,7 +26,7 @@ export default function ResendCard({ disable, resendCode, onExit }: Props) {
 
   const { resendRegressiveTime, resendTimerExecute } = useResendEmail();
   const { translate } = useLanguage();
-  const { toasInfo, toastWarning } = useToast();
+  const { toastInfo, toastWarning } = useToast();
 
   const handleResend = () => {
     controllerRef.current = new AbortController();
@@ -37,7 +37,7 @@ export default function ResendCard({ disable, resendCode, onExit }: Props) {
       );
 
       if (result.success) {
-        toasInfo(translate('emailResend.success'));
+        toastInfo(translate('emailResend.success'));
       }
 
       if (result.errorCode === 'TOO_MANY_REQUESTS') {

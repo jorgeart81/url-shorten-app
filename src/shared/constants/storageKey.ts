@@ -1,6 +1,6 @@
-export const SotorageKey = {
+export const StorageKey = {
   AUTH: 'auth',
   DASHBOARD: 'dashboard',
 } as const;
 
-export type SotorageKey = (typeof SotorageKey)[keyof typeof SotorageKey];
+export type StorageKey = (typeof StorageKey)[keyof typeof StorageKey];
