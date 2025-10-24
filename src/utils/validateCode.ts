@@ -11,7 +11,10 @@
  *  - It can be decoded with decodeURIComponent without error.
  *  - It only contains allowed characters: letters, numbers, dash, underscore, dot, tilde, plus, slash, and equals sign.
  */
-export const isValidUrlCode = (code: string | null, minLength: number): boolean => {
+export const isValidUrlCode = (
+  code: string | null,
+  minLength: number = 100
+): boolean => {
   if (!code || code.trim().length < minLength) return false;
 
   try {
