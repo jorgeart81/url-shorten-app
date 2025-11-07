@@ -38,6 +38,12 @@ export function errorHandler<T = unknown>(error: unknown): Result<T> {
         general: [apiError.detail || 'An error occurred.'],
       };
 
+      const isExpired = ['Payload expired.', 'Invalid or expired token.'].some(
+        (msg) => errors.general?.includes(msg)
+      );
+      if (isExpired) {
+        return Result.failure<T>(errors, status, 'PAYLOAD_EXPIRED');
+      }
       if (errors.general?.includes('Maximum device limit reached.')) {
         return Result.failure<T>(errors, status, 'MAX_DEVICE_LIMIT_REACHED');
       }
