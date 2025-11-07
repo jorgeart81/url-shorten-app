@@ -141,7 +141,7 @@ export class AuthService {
         ? Result.success()
         : Result.failure({ general: ['Unhandled error'] }, status);
     } catch (error: unknown) {
-      return AuthService.resendCodeError(error);
+      return errorHandler(error);
     }
   }
 

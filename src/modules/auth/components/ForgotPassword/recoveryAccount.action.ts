@@ -5,7 +5,7 @@ import {
 } from './recoveryAccountSchema';
 
 export interface RecoveryAccountState {
-  isSuccess: boolean;
+  isSuccess: boolean | null;
   validationError?: RecoveryAccountError;
 }
 
