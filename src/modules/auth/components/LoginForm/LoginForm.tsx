@@ -75,7 +75,7 @@ export function LoginForm({
                     id='email'
                     name='email'
                     type='email'
-                    placeholder='m@example.com'
+                    placeholder='miaccount@example.com'
                     hasError={stateValidation?.email != undefined}
                     errors={stateValidation?.email?.errors}
                     disabled={isPending}
@@ -87,7 +87,7 @@ export function LoginForm({
                       {translate('loginForm.input.passwordLabel')}
                     </Label>
                     <NavLink
-                      to={'#'}
+                      to={RoutePath.RecoveryAccount}
                       viewTransition
                       className='ml-auto text-sm underline-offset-4 hover:underline'
                     >

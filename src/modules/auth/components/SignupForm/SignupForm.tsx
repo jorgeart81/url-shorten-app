@@ -71,7 +71,7 @@ export const SignupForm = ({
                     id='email'
                     name='email'
                     type='email'
-                    placeholder='m@example.com'
+                    placeholder='miaccount@example.com'
                     hasError={stateValidation?.email != undefined}
                     errors={stateValidation?.email?.errors}
                     disabled={isPending}

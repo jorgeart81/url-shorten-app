@@ -7,6 +7,7 @@ export const RoutePath = {
   Login: '/auth/login',
   RefreshToken: '/auth/refresh-token',
   ResendConfirmation: '/auth/resend-confirmation',
+  RecoveryAccount: '/auth/password/reset',
   Signup: '/auth/signup',
 } as const;
 

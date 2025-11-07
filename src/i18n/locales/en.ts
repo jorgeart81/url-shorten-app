@@ -26,6 +26,7 @@ export const en: Translation = {
   selected: 'Selected',
   share: 'Share',
   'view.link.details': 'View link details',
+  'return.to.login': 'Return to login',
 
   // Login Form
   'loginForm.title': 'Log In',
@@ -41,7 +42,6 @@ export const en: Translation = {
   'registerForm.title': 'Sign Up',
   'registerForm.input.emailLabel': 'Email address',
   'registerForm.input.passwordLabel': 'Password',
-  'registerForm.forgotPassword': 'Forgot your password?',
   'registerForm.rememberMe': 'Remember me',
   'registerForm.login': 'Log In',
   'registerForm.haveAccount': 'Already have an account?',
@@ -83,6 +83,12 @@ export const en: Translation = {
   'emailVerification.errorHelp':
     "Didn't receive the email or the link expired?",
   'emailVerification.errorAction': 'Resend verification',
+
+  // Forgot password
+  'forgotPasswordForm.title': 'Recover your account',
+  'forgotPasswordForm.message':
+    "Enter your email address and we'll send you a link to reset your password.",
+  'forgotPasswordForm.button': 'Send reset email',
 
   // Errors
   'errorBoundary.title': 'Oops! Something went wrong',

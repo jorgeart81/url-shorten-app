@@ -48,7 +48,7 @@ export default function EmailConfirmation({ code }: Props) {
   if (isSuccess) deleteState();
 
   return (
-    <div className='relative  w-screen h-dvh flex justify-center items-center'>
+    <div className='relative w-screen h-dvh flex justify-center items-center'>
       {isSuccess ? (
         <Card className='w-full max-w-sm'>
           <CardHeader className='text-center'>

@@ -24,6 +24,7 @@ export interface Translation {
   selected: string;
   share: string;
   'view.link.details': string;
+  'return.to.login': string;
 
   // Login Form
   'loginForm.title': string;
@@ -39,7 +40,6 @@ export interface Translation {
   'registerForm.title': string;
   'registerForm.input.emailLabel': string;
   'registerForm.input.passwordLabel': string;
-  'registerForm.forgotPassword': string;
   'registerForm.rememberMe': string;
   'registerForm.login': string;
   'registerForm.haveAccount': string;
@@ -72,6 +72,11 @@ export interface Translation {
   'emailVerification.errorDescription': string;
   'emailVerification.errorHelp': string;
   'emailVerification.errorAction': string;
+
+  // Forgot password
+  'forgotPasswordForm.title': string;
+  'forgotPasswordForm.message': string;
+  'forgotPasswordForm.button': string;
 
   // Errors
   'errorBoundary.title': string;

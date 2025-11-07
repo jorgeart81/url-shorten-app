@@ -26,6 +26,7 @@ export const es: Translation = {
   selected: 'Selecionado',
   share: 'Compartir',
   'view.link.details': 'Ver detalles del enlace',
+  'return.to.login': 'Volver al formulario de inicio de sesión',
 
   // Login Form
   'loginForm.title': 'Iniciar sesión',
@@ -41,7 +42,6 @@ export const es: Translation = {
   'registerForm.title': 'Regístrate',
   'registerForm.input.emailLabel': 'Dirección de email',
   'registerForm.input.passwordLabel': 'Contraseña',
-  'registerForm.forgotPassword': '¿Olvidaste tu contraseña?',
   'registerForm.rememberMe': 'Recuérdame',
   'registerForm.login': 'Inicia sesión',
   'registerForm.haveAccount': '¿Ya tienes una cuenta?',
@@ -82,6 +82,12 @@ export const es: Translation = {
     'El enlace de verificación no es válido o ya fue usado.',
   'emailVerification.errorHelp': '¿No recibiste el correo o el enlace expiró?',
   'emailVerification.errorAction': 'Reenviar verificación',
+
+  // Forgot password
+  'forgotPasswordForm.title': 'Recupera tu cuenta',
+  'forgotPasswordForm.message':
+    'Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.',
+  'forgotPasswordForm.button': 'Enviar email de restablecimiento',
 
   // Errors
   'errorBoundary.title': '¡Uy! Ocurrió un error',

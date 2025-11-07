@@ -99,10 +99,9 @@ export class AuthService {
         { signal: controller?.signal, timeout: TimeSpan.fromSeconds(30) }
       );
 
-      if (status == 204) {
-        return Result.success(undefined);
-      }
-      return Result.failure({ general: ['Unhandled error'] }, status);
+      return status == 204
+        ? Result.success()
+        : Result.failure({ general: ['Unhandled error'] }, status);
     } catch (error: unknown) {
       return AuthService.resendCodeError(error);
     }
@@ -119,10 +118,28 @@ export class AuthService {
         { signal: controller?.signal }
       );
 
-      if (status == 200) {
-        return Result.success();
-      }
-      return Result.failure({ general: ['Unhandled error'] }, status);
+      return status == 200
+        ? Result.success()
+        : Result.failure({ general: ['Unhandled error'] }, status);
+    } catch (error: unknown) {
+      return AuthService.resendCodeError(error);
+    }
+  }
+
+  static async forgotPassword(
+    email: string,
+    controller?: AbortController
+  ): Promise<Result<void>> {
+    try {
+      const { status } = await urlShortenApi.post<SuccessResponse<void>>(
+        '/auth/forgot-password',
+        { email },
+        { signal: controller?.signal }
+      );
+
+      return status == 200
+        ? Result.success()
+        : Result.failure({ general: ['Unhandled error'] }, status);
     } catch (error: unknown) {
       return AuthService.resendCodeError(error);
     }

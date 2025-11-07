@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { FallbackView } from './components/FallbackView';
 import { NotFoundView } from './components/NotFoundView';
-import { AuthModule } from './modules/auth/AuthModule';
+import { AuthModuleRoutes } from './modules/auth/AuthModule';
 import { DashboardLayout } from './modules/dashboard/components/DashboardLayout';
 import { AccountView } from './modules/dashboard/views/AccountView';
 import { CreateLinkView } from './modules/dashboard/views/CreateLinkView';
@@ -23,7 +23,7 @@ function App() {
           <Route element={<LandingLayout />}>
             <Route path='/' element={<LandingView />} />
           </Route>
-          <Route path='/auth/*' element={<AuthModule />} />
+          <Route path='/auth/*' element={<AuthModuleRoutes />} />
           <Route path='/:backHalf' element={<RedirectView />} />
           <Route path='*' element={<NotFoundView />} />
 
