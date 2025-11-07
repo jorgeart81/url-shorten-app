@@ -1,6 +1,6 @@
-import { AuthService } from '../../services/authService';
+import { AuthService } from '../../../services/authService';
 import {
-  formDataValidation,
+  recoveryFormValidation,
   type RecoveryAccountError,
 } from './recoveryAccountSchema';
 
@@ -14,7 +14,7 @@ export const recoveryAccountAction = async (
   queryData: FormData
 ) => {
   const formData = Object.fromEntries(queryData);
-  const { hasErrors, errors, data } = formDataValidation(formData);
+  const { hasErrors, errors, data } = recoveryFormValidation(formData);
 
   if (hasErrors || !data) return { ...state, validationError: errors };
 

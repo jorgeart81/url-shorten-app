@@ -89,6 +89,22 @@ export const es: Translation = {
     'Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.',
   'forgotPasswordForm.button': 'Enviar email de restablecimiento',
 
+  // Reset password
+  'resetPasswordForm.title': 'Crea una nueva contraseña',
+  'resetPasswordForm.message':
+    'Ingresa tu nueva contraseña y confírmala para completar el proceso de restablecimiento.',
+  'resetPasswordForm.passwordLabel': 'Nueva contraseña',
+  'resetPasswordForm.confirmPasswordLabel': 'Confirmar contraseña',
+  'resetPasswordForm.button': 'Actualizar contraseña',
+  'validations.passwordsDoNotMatch': 'Las contraseñas no coinciden',
+  'passwordResetSuccess.title': 'Contraseña restablecida',
+  'passwordResetSuccess.message':
+    'Tu contraseña se ha restablecido correctamente. Ahora puedes iniciar sesión con tu nueva contraseña.',
+  'passwordResetInvalidCode.title': 'Enlace inválido o expirado',
+  'passwordResetInvalidCode.message':
+    'El enlace para restablecer tu contraseña no es válido o ha expirado. Solicita uno nuevo para continuar.',
+  'passwordResetInvalidCode.button': 'Solicitar nuevo enlace',
+
   // Errors
   'errorBoundary.title': '¡Uy! Ocurrió un error',
   'errorBoundary.description':

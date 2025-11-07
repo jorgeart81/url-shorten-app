@@ -90,6 +90,22 @@ export const en: Translation = {
     "Enter your email address and we'll send you a link to reset your password.",
   'forgotPasswordForm.button': 'Send reset email',
 
+  // Reset password
+  'resetPasswordForm.title': 'Set a new password',
+  'resetPasswordForm.message':
+    'Enter your new password below and confirm it to complete the reset process.',
+  'resetPasswordForm.passwordLabel': 'New password',
+  'resetPasswordForm.confirmPasswordLabel': 'Confirm password',
+  'resetPasswordForm.button': 'Update password',
+  'validations.passwordsDoNotMatch': 'Passwords do not match',
+  'passwordResetSuccess.title': 'Password reset successful',
+  'passwordResetSuccess.message':
+    'Your password has been reset successfully. You can now sign in with your new password.',
+  'passwordResetInvalidCode.title': 'Invalid or expired link',
+  'passwordResetInvalidCode.message':
+    'The password reset link is invalid or has expired. Please request a new one to continue.',
+  'passwordResetInvalidCode.button': 'Request new link',
+
   // Errors
   'errorBoundary.title': 'Oops! Something went wrong',
   'errorBoundary.description':

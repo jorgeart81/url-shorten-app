@@ -78,6 +78,19 @@ export interface Translation {
   'forgotPasswordForm.message': string;
   'forgotPasswordForm.button': string;
 
+  // Reset password
+  'resetPasswordForm.title': string;
+  'resetPasswordForm.message': string;
+  'resetPasswordForm.button': string;
+  'resetPasswordForm.passwordLabel': string;
+  'resetPasswordForm.confirmPasswordLabel': string;
+  'validations.passwordsDoNotMatch': string;
+  'passwordResetSuccess.title': string;
+  'passwordResetSuccess.message': string;
+  'passwordResetInvalidCode.title': string;
+  'passwordResetInvalidCode.message': string;
+  'passwordResetInvalidCode.button': string;
+
   // Errors
   'errorBoundary.title': string;
   'errorBoundary.description': string;

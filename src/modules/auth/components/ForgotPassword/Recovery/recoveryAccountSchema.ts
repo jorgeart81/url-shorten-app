@@ -10,7 +10,7 @@ export type RecoveryAccountError = Partial<
   Record<keyof RecoveryAccountData, { errors: [] } | undefined>
 >;
 
-export const formDataValidation = (data: {
+export const recoveryFormValidation = (data: {
   [k: string]: FormDataEntryValue;
 }) => {
   const validationResult = recoveryAccountSchema.safeParse(data);

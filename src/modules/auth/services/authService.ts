@@ -145,6 +145,26 @@ export class AuthService {
     }
   }
 
+  static async resetPassword(
+    code: string,
+    newPassword: string,
+    controller?: AbortController
+  ): Promise<Result<void>> {
+    try {
+      const { status } = await urlShortenApi.post<SuccessResponse<void>>(
+        '/auth/reset-password',
+        { newPassword },
+        { params: { code }, signal: controller?.signal }
+      );
+
+      return status == 204
+        ? Result.success()
+        : Result.failure({ general: ['Unhandled error'] }, status);
+    } catch (error: unknown) {
+      return errorHandler(error);
+    }
+  }
+
   private static resendCodeError<T = unknown>(error: unknown) {
     if (error instanceof AxiosError && error.response) {
       const response = error.response;
