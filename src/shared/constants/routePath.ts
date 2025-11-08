@@ -9,6 +9,7 @@ export const RoutePath = {
   ResendConfirmation: '/auth/resend-confirmation',
   RecoveryAccount: '/auth/password/reset',
   Signup: '/auth/signup',
+  TermsAndConditions: '/terms-and-conditions',
 } as const;
 
 export type RoutePath = (typeof RoutePath)[keyof typeof RoutePath];

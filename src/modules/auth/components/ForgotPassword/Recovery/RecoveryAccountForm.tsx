@@ -13,6 +13,7 @@ import { AuthFormButton } from '../../AuthFormButton';
 import type { RecoveryAccountState } from './recoveryAccount.action';
 import { recoveryAccountAction } from './recoveryAccount.action';
 import { useToast } from '@/components/hooks/useToast';
+import { FormFooter } from '../../FormFooter';
 
 export default function RecoveryAccountForm({
   className,
@@ -87,10 +88,7 @@ export default function RecoveryAccountForm({
         />
       )}
 
-      <div className='text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4'>
-        By clicking continue, you agree to our <a href='#'>Terms of Service</a>{' '}
-        and <a href='#'>Privacy Policy</a>.
-      </div>
+      <FormFooter />
     </div>
   );
 }

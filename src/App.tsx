@@ -14,6 +14,8 @@ import { LinkView } from './modules/dashboard/views/LinkView';
 import { RedirectView } from './modules/dashboard/views/RedirectView';
 import { LandingLayout } from './modules/landing/components/LandingLayout';
 import { LandingView } from './modules/landing/views/LandingView';
+import { TermsAndConditions } from './modules/landing/views/TermsAndConditions';
+import { RoutePath } from './shared/constants/routePath';
 
 function App() {
   return (
@@ -22,7 +24,12 @@ function App() {
         <Routes>
           <Route element={<LandingLayout />}>
             <Route path='/' element={<LandingView />} />
+            <Route
+              path={RoutePath.TermsAndConditions}
+              element={<TermsAndConditions />}
+            />
           </Route>
+
           <Route path='/auth/*' element={<AuthModuleRoutes />} />
           <Route path='/:backHalf' element={<RedirectView />} />
           <Route path='*' element={<NotFoundView />} />

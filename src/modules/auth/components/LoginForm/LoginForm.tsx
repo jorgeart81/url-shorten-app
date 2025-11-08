@@ -13,6 +13,7 @@ import { RoutePath } from '@/shared/constants/routePath';
 import { useAuth } from '../../hooks/useAuth';
 import { AuthFormButton } from '../AuthFormButton';
 import { type LoginData } from './loginValidationSchema';
+import { FormFooter } from '../FormFooter';
 
 export function LoginForm({
   className,
@@ -138,10 +139,7 @@ export function LoginForm({
 
       {error && <ErrorAlert title={error.title} description={error.message} />}
 
-      <div className='text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4'>
-        By clicking continue, you agree to our <a href='#'>Terms of Service</a>{' '}
-        and <a href='#'>Privacy Policy</a>.
-      </div>
+      <FormFooter />
     </div>
   );
 }

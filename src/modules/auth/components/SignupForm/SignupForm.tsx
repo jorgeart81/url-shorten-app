@@ -17,6 +17,7 @@ import {
   type SignupData,
   type SignupValidationError,
 } from './signupValidation';
+import { FormFooter } from '../FormFooter';
 
 export const SignupForm = ({
   className,
@@ -41,7 +42,7 @@ export const SignupForm = ({
         email: formData.email,
         password: formData.password,
       });
-      
+
       formRef.current?.reset();
     },
     null
@@ -113,10 +114,7 @@ export const SignupForm = ({
 
       {error && <ErrorAlert title={error.title} description={error.message} />}
 
-      <div className='text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4'>
-        By clicking continue, you agree to our <a href='#'>Terms of Service</a>{' '}
-        and <a href='#'>Privacy Policy</a>.
-      </div>
+      <FormFooter />
     </div>
   );
 };
