@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { useNavigate } from 'react-router';
 
 import clsx from 'clsx';
@@ -56,9 +55,7 @@ export const LinkCard = ({
   const updateLinkActiveStatus =
     useDashboardStore.getState().updateLinkActiveStatus;
 
-  const handleCopy = useCallback(() => {
-    navigator.clipboard.writeText(shortUrl);
-  }, [shortUrl]);
+  const handleCopy = () => navigator.clipboard.writeText(shortUrl);
 
   const handleDetails =
     variant === 'link'
@@ -97,7 +94,7 @@ export const LinkCard = ({
             'flex-1 flex flex-col max-w-full lg:max-w-[calc(100%-200px)]',
             {
               ' lg:max-w-[calc(100%-300px)]': variant === 'link',
-            }
+            },
           )}
         >
           <LinkCardTitle goTo={detailsRoute} variant={variant} title={title} />
