@@ -75,13 +75,13 @@ export const usePagination = ({ totalPages, defaultPage, pageMargin = 2, maxVisi
     const hasHiddenPagesBefore = pageNumber - pageMargin > 1
     const hasHiddenPagesAfter = safeTotalPages > pageNumber + pageMargin
 
-    if (!hasHiddenPagesAfter) {
-      setVisiblePages(Array.from({ length: showLength }, (_, i) => safeTotalPages - maxVisiblePages + 1 + i))
+    if (!hasHiddenPagesBefore) {
+      setVisiblePages(Array.from({ length: showLength }, (_, i) => startPage + i))
       return
     }
 
-    if (!hasHiddenPagesBefore) {
-      setVisiblePages(Array.from({ length: showLength }, (_, i) => startPage + i))
+    if (!hasHiddenPagesAfter) {
+      setVisiblePages(Array.from({ length: showLength }, (_, i) => safeTotalPages - maxVisiblePages + 1 + i))
       return
     }
 
