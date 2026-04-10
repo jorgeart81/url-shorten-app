@@ -9,34 +9,54 @@ import { useEffect, useEffectEvent, useState } from "react";
  */
 interface Options {
   totalPages: number;
+  defaultPage: number;
   pageMargin?: number;
   maxVisiblePages?: number;
+  startPage?: number;
 }
 
 /**
- * Custom hook to manage pagination logic
- * 
- * Calculates which pages should be visible based on the current page,
- * page margin, and maximum number of visible pages.
- * 
- * @param {Options} options - Pagination configuration
- * @returns {Object} Pagination state and methods
- * @returns {number} currentPage - Current page (1-indexed)
- * @returns {boolean} hasNextPage - Whether there is a next page
- * @returns {boolean} hasPrevPage - Whether there is a previous page
- * @returns {number[]} visiblePages - Array of page numbers to display
- * @returns {Function} handleNext - Navigate to the next page
- * @returns {Function} handlePrev - Navigate to the previous page
- * 
+ * usePagination - Custom React hook for managing pagination state and logic.
+ *
+ * @param {Object} options - Pagination configuration options.
+ * @param {number} options.totalPages - Total number of available pages.
+ * @param {number} options.defaultPage - Initial page (1-indexed).
+ * @param {number} [options.pageMargin=2] - Number of pages to show before and after the current page.
+ * @param {number} [options.maxVisiblePages=5] - Maximum number of page buttons to display.
+ * @param {number} [options.startPage=1] - The first page number (default is 1).
+ *
+ * @returns {Object} Pagination state and handlers.
+ * @returns {number} currentPage - The current active page.
+ * @returns {boolean} hasNextPage - Whether there is a next page.
+ * @returns {boolean} hasPrevPage - Whether there is a previous page.
+ * @returns {number[]} visiblePages - Array of page numbers to display in the pagination control.
+ * @returns {Function} handleNext - Advances to the next page.
+ * @returns {Function} handlePrev - Goes back to the previous page.
+ * @returns {Function} changeCurrentPage - Sets the current page to a specific value.
+ *
  * @example
- * const { currentPage, visiblePages, handleNext, handlePrev } = usePagination({
+ * const {
+ *   currentPage,
+ *   visiblePages,
+ *   handleNext,
+ *   handlePrev,
+ *   changeCurrentPage
+ * } = usePagination({
  *   totalPages: 20,
+ *   defaultPage: 1,
  *   pageMargin: 2,
  *   maxVisiblePages: 5
  * });
  */
-export const usePagination = ({ totalPages, pageMargin = 2, maxVisiblePages = 5 }: Options) => {
-  const [currentPage, setCurrentPage] = useState<number>(1)
+export const usePagination = ({ totalPages, defaultPage, pageMargin = 2, maxVisiblePages = 5, startPage = 1 }: Options) => {
+  if (defaultPage > totalPages) {
+    throw new Error("defaultPage cannot be greater than totalPages");
+  }
+  if (defaultPage < startPage) {
+    throw new Error("defaultPage cannot be less than startPage");
+  }
+
+  const [currentPage, setCurrentPage] = useState<number>(defaultPage)
   const [visiblePages, setVisiblePages] = useState<number[]>([])
 
   const safeTotalPages = Math.max(totalPages, 0);
@@ -47,16 +67,23 @@ export const usePagination = ({ totalPages, pageMargin = 2, maxVisiblePages = 5 
   /**
    * Calculates which pages should be visible based on the current page
    * Only executes when navigation methods (handleNext/handlePrev) are called
-   * 
+   *
    * @param {number} pageNumber - The page number to calculate visible pages for
    */
   const calculateVisiblePages = useEffectEvent((pageNumber: number) => {
+    const hasRightOverflow = pageNumber + pageMargin > maxVisiblePages
     const hasHiddenPagesBefore = pageNumber - pageMargin > 1
     const hasHiddenPagesAfter = safeTotalPages > pageNumber + pageMargin
-    const hasRightOverflow = pageNumber + pageMargin > maxVisiblePages
 
-    if (visiblePages.length > 0 && !hasRightOverflow) return
-    if (!hasHiddenPagesBefore && !hasHiddenPagesAfter) return
+    if (!hasHiddenPagesAfter) {
+      setVisiblePages(Array.from({ length: showLength }, (_, i) => safeTotalPages - maxVisiblePages + 1 + i))
+      return
+    }
+
+    if (!hasHiddenPagesBefore) {
+      setVisiblePages(Array.from({ length: showLength }, (_, i) => startPage + i))
+      return
+    }
 
     setVisiblePages(Array.from({ length: showLength }, (_, i) => hasRightOverflow ? pageNumber - pageMargin + i : pageNumber + i))
   })
@@ -75,6 +102,8 @@ export const usePagination = ({ totalPages, pageMargin = 2, maxVisiblePages = 5 
     setCurrentPage(prev => ++prev)
   };
 
+  const changeCurrentPage = (pageNumber: number) => setCurrentPage(pageNumber)
+
   return {
     // State
     currentPage,
@@ -85,5 +114,6 @@ export const usePagination = ({ totalPages, pageMargin = 2, maxVisiblePages = 5 
     // Methods
     handleNext,
     handlePrev,
+    changeCurrentPage,
   }
 }

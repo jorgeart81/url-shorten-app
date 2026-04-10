@@ -6,10 +6,11 @@ describe("usePagination hook", () => {
   const totalPages = 5
   const maxVisiblePages = 5
   const pageMargin = 2
+  const defaultPage = 1
 
   it("should increment current page", () => {
     const { result } = renderHook(() =>
-      usePagination({ totalPages })
+      usePagination({ totalPages, defaultPage })
     );
 
     act(() => {
@@ -21,7 +22,7 @@ describe("usePagination hook", () => {
 
   it("should not go below page 1", () => {
     const { result } = renderHook(() =>
-      usePagination({ totalPages })
+      usePagination({ totalPages, defaultPage })
     );
 
     act(() => {
@@ -34,7 +35,7 @@ describe("usePagination hook", () => {
   it("should not exceed the total number of pages", () => {
     const totalPages = 10
     const { result } = renderHook(() =>
-      usePagination({ totalPages: totalPages, maxVisiblePages, pageMargin })
+      usePagination({ totalPages: totalPages, defaultPage, maxVisiblePages, pageMargin })
     );
 
     Array.from({ length: totalPages + 2 }).forEach(() => act(() => {
@@ -46,7 +47,7 @@ describe("usePagination hook", () => {
 
   it("should return correct visible pages", () => {
     const { result } = renderHook(() =>
-      usePagination({ totalPages: 10, maxVisiblePages, pageMargin })
+      usePagination({ totalPages: 10, defaultPage, maxVisiblePages, pageMargin })
     );
 
     expect(result.current.visiblePages).toEqual([1, 2, 3, 4, 5]);
@@ -66,7 +67,7 @@ describe("usePagination hook", () => {
 
   it("should limit visible pages", () => {
     const { result } = renderHook(() =>
-      usePagination({ totalPages, maxVisiblePages })
+      usePagination({ totalPages, defaultPage, maxVisiblePages })
     );
 
     expect(result.current.visiblePages.length).toBe(5);
@@ -74,7 +75,7 @@ describe("usePagination hook", () => {
 
   it("should not exceed totalPages", () => {
     const { result } = renderHook(() =>
-      usePagination({ totalPages })
+      usePagination({ totalPages, defaultPage })
     );
 
     Array.from({ length: totalPages * 2 }).forEach(() => act(() => {
