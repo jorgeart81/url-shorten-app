@@ -48,7 +48,10 @@ export const PaginationBar: FC<Props> = ({
 
   const buildPageUrl = (page: number) => {
     const params = new URLSearchParams(window.location.search);
-    params.set('page', page.toString());
+    const pageNumber =
+      page < sliceStart ? sliceStart + 1 : page > sliceEnd ? sliceEnd : page;
+
+    params.set('page', pageNumber.toString());
     return `?${params.toString()}`;
   };
 
