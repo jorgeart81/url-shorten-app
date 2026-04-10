@@ -69,6 +69,7 @@ export const PaginationBar: FC<Props> = ({
     <Pagination>
       <PaginationContent>
         <PaginationItem
+          data-testid='prev-button'
           onClick={handlePrev}
           hidden={!hasPreviousPage || !isLimitExceeded}
         >
@@ -99,6 +100,7 @@ export const PaginationBar: FC<Props> = ({
         </PaginationItem>
 
         <PaginationItem
+          data-testid='next-button'
           onClick={handleNext}
           hidden={!hasNextPage || !isLimitExceeded}
         >
