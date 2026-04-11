@@ -83,7 +83,6 @@ export const useAuth = () => {
   };
 
   useEffect(() => {
-    console.log(errorCode);
     if (!errorCode) return;
     handleErrorCode(errorCode);
   }, [errorCode]);

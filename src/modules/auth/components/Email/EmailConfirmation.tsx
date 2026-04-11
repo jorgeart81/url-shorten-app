@@ -12,7 +12,6 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { RoutePath } from '@/shared/constants/routePath';
-import { isValidUrlCode } from '@/utils/validateCode';
 import { AuthService } from '../../services/authService';
 import { useAuthStore } from '../../store/authStore';
 
@@ -30,13 +29,10 @@ export default function EmailConfirmation({ code }: Props) {
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
-    if (!code || !isValidUrlCode(code, 100)) {
-      return;
-    }
     // Confirm email when the component mounts
     startTransition(async () => {
-      const { success } = await AuthService.confirmEmail(code);
-      setIsSuccess(success);
+      const { success, statusCode } = await AuthService.confirmEmail(code);
+      setIsSuccess(success || statusCode == 409);
     });
   }, []);
 
