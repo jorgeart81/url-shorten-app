@@ -28,17 +28,18 @@ export default function EmailConfirmation({ code }: Props) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isPending, startTransition] = useTransition();
 
+  const goToAuth = () => {
+    navigate(RoutePath.Login, { replace: true });
+  };
+
   useEffect(() => {
     // Confirm email when the component mounts
     startTransition(async () => {
       const { success, statusCode } = await AuthService.confirmEmail(code);
+      if (statusCode === 400) return goToAuth();
       setIsSuccess(success || statusCode == 409);
     });
   }, []);
-
-  const goToAuth = () => {
-    navigate(RoutePath.Login, { replace: true });
-  };
 
   if (isPending) return <PendingSpinner fullScreen />;
   if (isSuccess) deleteState();
