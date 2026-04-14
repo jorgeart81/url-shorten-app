@@ -1,4 +1,4 @@
-import { useEffect, useEffectEvent, useState } from "react";
+import { useEffect, useState } from "react";
 
 /**
  * Pagination hook configuration
@@ -70,7 +70,7 @@ export const usePagination = ({ totalPages, defaultPage, pageMargin = 2, maxVisi
    *
    * @param {number} pageNumber - The page number to calculate visible pages for
    */
-  const calculateVisiblePages = useEffectEvent((pageNumber: number) => {
+  const calculateVisiblePages = (pageNumber: number) => {
     const hasRightOverflow = pageNumber + pageMargin > maxVisiblePages
     const hasHiddenPagesBefore = pageNumber - pageMargin > 1
     const hasHiddenPagesAfter = safeTotalPages > pageNumber + pageMargin
@@ -86,7 +86,7 @@ export const usePagination = ({ totalPages, defaultPage, pageMargin = 2, maxVisi
     }
 
     setVisiblePages(Array.from({ length: showLength }, (_, i) => hasRightOverflow ? pageNumber - pageMargin + i : pageNumber + i))
-  })
+  }
 
   useEffect(() => {
     calculateVisiblePages(currentPage)
