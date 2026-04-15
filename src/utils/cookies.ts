@@ -1,3 +1,5 @@
+import { env } from '@/config/env';
+
 /**
  * Utility class for handling browser cookies.
  *
@@ -9,6 +11,10 @@
  *   CookieHandler.delete('token'); // Delete cookie
  */
 export class CookieHandler {
+  private static get secureFlag(): string {
+    return env.debugMode ? '' : 'Secure; ';
+  }
+
   /**
    * Saves a value in a cookie with a specified expiration date.
    * @param key The name of the cookie.
@@ -16,7 +22,7 @@ export class CookieHandler {
    * @param expirationDate The expiration date of the cookie.
    */
   static save<T>(key: string, value: T, expirationDate: Date) {
-    document.cookie = `${key}=${value}; path=/; expires=${expirationDate.toUTCString()};`;
+    document.cookie = `${key}=${value}; path=/; expires=${expirationDate.toUTCString()}; ${this.secureFlag}SameSite=Strict;`;
   }
 
   /**
@@ -35,6 +41,6 @@ export class CookieHandler {
    * @param key The name of the cookie to delete.
    */
   static delete(key: string) {
-    document.cookie = `${key}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+    document.cookie = `${key}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; ${this.secureFlag}SameSite=Strict;`;
   }
 }

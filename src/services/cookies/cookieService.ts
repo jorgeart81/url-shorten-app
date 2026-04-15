@@ -18,8 +18,13 @@ export class CookieService {
       keepLoggedIn ? 'keep' : 'temp',
       new Date(
         Date.now() +
-          (keepLoggedIn ? TimeSpan.fromDays(1) : TimeSpan.fromMinutes(25))
+        (keepLoggedIn ? TimeSpan.fromDays(1) : TimeSpan.fromMinutes(25))
       )
     );
   }
+
+  static emailResendSession =
+    CookieHandler.getValue(CookieKey.EmailResendSession)
+      ? new Date(CookieHandler.getValue(CookieKey.EmailResendSession)!)
+      : undefined;
 }

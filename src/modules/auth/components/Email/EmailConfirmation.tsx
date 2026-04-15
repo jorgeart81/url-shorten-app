@@ -36,7 +36,6 @@ export default function EmailConfirmation({ code }: Props) {
     // Confirm email when the component mounts
     startTransition(async () => {
       const { success, statusCode } = await AuthService.confirmEmail(code);
-      if (statusCode === 400) return goToAuth();
       setIsSuccess(success || statusCode == 409);
     });
   }, []);
