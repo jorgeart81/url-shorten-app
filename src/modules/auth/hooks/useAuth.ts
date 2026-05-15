@@ -1,4 +1,4 @@
-import { startTransition, useEffect, useState, type FormEvent } from "react";
+import { startTransition, useEffect, useState, type SubmitEvent } from "react";
 
 import { useLanguage } from "@/components/hooks/useLanguage";
 import { useAuthStore } from "../store/authStore";
@@ -13,10 +13,9 @@ export const useAuth = () => {
 
   const errorCode = useAuthStore((state) => state.errorCode);
   const status = useAuthStore((state) => state.status);
-  const signUp = useAuthStore((state) => state.signUp);
 
   const onSubmit = (
-    event: FormEvent<HTMLFormElement>,
+    event: SubmitEvent<HTMLFormElement>,
     formAction: (payload: FormData) => void,
   ) => {
     event.preventDefault();
@@ -60,6 +59,5 @@ export const useAuth = () => {
 
     // Methods
     onSubmit,
-    signUp,
   };
 };
