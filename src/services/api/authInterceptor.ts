@@ -1,18 +1,15 @@
-import type { InternalAxiosRequestConfig } from 'axios';
+import type { InternalAxiosRequestConfig } from "axios";
 
-import { useAuthStore } from '@/modules/auth/store/authStore';
-import { RoutePath } from '@/shared/constants/routePath';
-import { CookieService } from '../cookies/cookieService';
+import { useAuthStore } from "@/modules/auth/store/authStore";
+import { CookieService } from "../cookies/cookieService";
+import { ApiRoutes } from "./urlShortenApi";
 
 export function authInterceptor(config: InternalAxiosRequestConfig) {
-  const isAuthRoute = config.url?.startsWith(RoutePath.Auth);
+  const isAuthRouteRequest = config.url?.startsWith(ApiRoutes.Auth.Base);
   const status = useAuthStore.getState().status;
 
-  if (
-    status === 'authenticated' &&
-    !isAuthRoute &&
-    !CookieService.authSession
-  ) {
+  if (status === "authenticated" && !isAuthRouteRequest) {
+    if (CookieService.authSession) return config;
     useAuthStore.getState().refreshToken();
   }
 

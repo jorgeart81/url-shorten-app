@@ -1,14 +1,22 @@
-import { Navigate, Outlet } from 'react-router';
+import { Navigate, Outlet, useLocation } from 'react-router';
 
 import { RoutePath } from '@/shared/constants/routePath';
 import { useAuthStore } from '../store/authStore';
 import { AuthLogo } from './AuthLogo';
 
 export const AuthLayout = () => {
+  const location = useLocation();
+  const redirect = new URLSearchParams(location.search).get('redirect');
+
   const status = useAuthStore((state) => state.status);
   const resendCode = useAuthStore((state) => state.resendCode);
 
-  if (status === 'authenticated' || status === 'checking') {
+  if (status === 'authenticated') {
+    const from = redirect?.trim() || RoutePath.Home;
+    return <Navigate to={from} replace />;
+  }
+
+  if (status === 'checking') {
     return <Navigate to={RoutePath.Home} />;
   }
 

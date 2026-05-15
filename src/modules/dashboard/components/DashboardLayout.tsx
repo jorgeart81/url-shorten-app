@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { LogOut, RotateCcw } from 'lucide-react';
-import { Navigate, Outlet } from 'react-router';
+import { Navigate, Outlet, useLocation } from 'react-router';
 
 import { AppSidebar } from '@/components/app-sidebar';
 import { FallbackContent } from '@/components/FallbackContent ';
@@ -34,6 +34,7 @@ const allowedStatus: Status[] = ['checking', 'authenticated'];
 export const DashboardLayout = () => {
   const { toastError } = useToast();
   const { translate: t, getErrorTranslation } = useLanguage();
+  const location = useLocation();
 
   const status = useAuthStore((state) => state.status);
   const errorCode = useAuthStore((state) => state.errorCode);
@@ -61,7 +62,12 @@ export const DashboardLayout = () => {
   }, []);
 
   if (status == null || !allowedStatus.includes(status)) {
-    return <Navigate to={RoutePath.Login} />;
+    return (
+      <Navigate
+        to={`${RoutePath.Login}?redirect=${location.pathname}`}
+        replace
+      />
+    );
   }
 
   if (errorCode === 'NETWORK_ERROR' || errorCode === 'MAX_DEVICE_LIMIT_REACHED')

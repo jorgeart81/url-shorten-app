@@ -1,13 +1,13 @@
-import { create, type StateCreator } from 'zustand';
-import { devtools, persist } from 'zustand/middleware';
+import { create, type StateCreator } from "zustand";
+import { devtools, persist } from "zustand/middleware";
 
-import type { ActionResult } from '@/config/types/actionResult';
-import { CookieService } from '@/services/cookies/cookieService';
-import { StorageKey } from '@/shared/constants/storageKey';
-import { AuthService } from '../services/authService';
-import type { LoginRequest } from '../services/dtos/loginRequest';
-import type { RegisterRequest } from '../services/dtos/registerRequest';
-import type { AuthState } from './types/authState';
+import type { ActionResult } from "@/config/types/actionResult";
+import { CookieService } from "@/services/cookies/cookieService";
+import { StorageKey } from "@/shared/constants/storageKey";
+import { AuthService } from "../services/authService";
+import type { LoginRequest } from "../services/dtos/loginRequest";
+import type { RegisterRequest } from "../services/dtos/registerRequest";
+import type { AuthState } from "./types/authState";
 
 const initialState: AuthState = {
   status: null,
@@ -21,7 +21,7 @@ const initialState: AuthState = {
 interface Actions {
   confirmEmail: (
     code: string,
-    controller?: AbortController
+    controller?: AbortController,
   ) => Promise<ActionResult>;
   login: (request: LoginRequest) => Promise<ActionResult>;
   logout: () => Promise<void>;
@@ -33,7 +33,7 @@ interface Actions {
 
 const storeApi: StateCreator<
   AuthState & Actions,
-  [['zustand/devtools', never]]
+  [["zustand/devtools", never]]
 > = (set, get) => ({
   ...initialState,
 
@@ -44,7 +44,7 @@ const storeApi: StateCreator<
   },
 
   login: async (request: LoginRequest) => {
-    set({ ...initialState, status: 'authenticating' });
+    set({ ...initialState, status: "authenticating" });
     const { success, value, errorCode } = await AuthService.login(request);
     const resendCode = value?.data?.resendCode;
 
@@ -56,14 +56,14 @@ const storeApi: StateCreator<
     if (resendCode) {
       set({
         ...initialState,
-        status: 'unconfirmedEmail',
+        status: "unconfirmedEmail",
         resendCode: resendCode,
       });
       return { isSuccess: success };
     }
 
     CookieService.saveAuthSession(request.keepLoggedIn);
-    set({ status: 'authenticated', keepLoggedIn: request.keepLoggedIn });
+    set({ status: "authenticated", keepLoggedIn: request.keepLoggedIn });
     return { isSuccess: success };
   },
 
@@ -89,12 +89,12 @@ const storeApi: StateCreator<
       }));
 
       switch (errorCode) {
-        case 'INVALID_CREDENTIALS':
+        case "INVALID_CREDENTIALS":
           await AuthService.logout();
           set({ ...initialState });
           return { isSuccess: false };
 
-        case 'MAX_DEVICE_LIMIT_REACHED':
+        case "MAX_DEVICE_LIMIT_REACHED":
           if (get().refreshTokenAttempts > 3) {
             await AuthService.logout();
             set({ ...initialState });
@@ -114,14 +114,14 @@ const storeApi: StateCreator<
     CookieService.saveAuthSession(get().keepLoggedIn);
     set((prevState) => ({
       ...prevState,
-      status: 'authenticated',
+      status: "authenticated",
       refreshTokenAttempts: 0,
     }));
     return { isSuccess: success };
   },
 
   signUp: async (request: RegisterRequest) => {
-    set({ ...initialState, status: 'registering' });
+    set({ ...initialState, status: "registering" });
     const { success, value, errorCode } = await AuthService.signUp(request);
     const resendCode = value?.data.resendCode;
 
@@ -132,7 +132,7 @@ const storeApi: StateCreator<
 
     set({
       ...initialState,
-      status: 'unconfirmedEmail',
+      status: "unconfirmedEmail",
       resendCode: resendCode,
     });
     return { isSuccess: success };
@@ -144,7 +144,7 @@ const storeApi: StateCreator<
   },
 
   sessionExpired: async () => {
-    set((prevState) => ({ ...prevState, status: 'sessionExpired' }));
+    set((prevState) => ({ ...prevState, status: "sessionExpired" }));
   },
 });
 
@@ -155,5 +155,5 @@ export const useAuthStore = create<AuthState & Actions>()(
       const { error, errorCode, ...rest } = state; // eslint-disable-line @typescript-eslint/no-unused-vars
       return rest;
     },
-  })
+  }),
 );
