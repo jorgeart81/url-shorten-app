@@ -12,43 +12,20 @@ import { Label } from '@/components/ui/label';
 import { RoutePath } from '@/shared/constants/routePath';
 import { useAuth } from '../../hooks/useAuth';
 import { AuthFormButton } from '../AuthFormButton';
-import { type LoginData } from './loginValidationSchema';
 import { FormFooter } from '../FormFooter';
+import { authenticate } from './action';
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<'div'>) {
   const formRef = useRef<HTMLFormElement>(null);
-  const { error, login, onSubmit } = useAuth();
+  const { error } = useAuth();
   const { translate } = useLanguage();
 
-  const [stateValidation, formAction, isPending] = useActionState(
-    async (_: unknown, queryData: FormData) => {
-      const formData = Object.fromEntries(queryData) as LoginData;
-
-      const { isSuccess, errors } = await login({
-        email: formData.email,
-        password: formData.password,
-        keepLoggedIn: formData.keepLoggedIn,
-      });
-
-      if (errors != undefined) return errors;
-
-      if (!isSuccess) {
-        if (formRef.current) {
-          const passwordInput = formRef.current.querySelector<HTMLInputElement>(
-            'input[name="password"]'
-          );
-          if (passwordInput) passwordInput.value = '';
-        }
-
-        return;
-      }
-
-      formRef.current?.reset();
-    },
-    null
+  const [formState, formAction, isPending] = useActionState(
+    authenticate,
+    undefined
   );
 
   return (
@@ -60,11 +37,7 @@ export function LoginForm({
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <form
-            noValidate
-            ref={formRef}
-            onSubmit={(e) => onSubmit(e, formAction)}
-          >
+          <form noValidate ref={formRef} action={formAction}>
             <div className='grid gap-6'>
               <div className='after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t'></div>
               <div className='grid gap-6'>
@@ -77,8 +50,9 @@ export function LoginForm({
                     name='email'
                     type='email'
                     placeholder='miaccount@example.com'
-                    hasError={stateValidation?.email != undefined}
-                    errors={stateValidation?.email?.errors}
+                    defaultValue={formState?.data?.email}
+                    hasError={formState?.fieldErrors?.email != undefined}
+                    errors={formState?.fieldErrors?.email}
                     disabled={isPending}
                   />
                 </div>
@@ -100,8 +74,8 @@ export function LoginForm({
                     id='password'
                     name='password'
                     type='password'
-                    hasError={stateValidation?.password != undefined}
-                    errors={stateValidation?.password?.errors}
+                    hasError={formState?.fieldErrors?.password != undefined}
+                    errors={formState?.fieldErrors?.password}
                     disabled={isPending}
                   />
                 </div>

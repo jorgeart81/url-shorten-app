@@ -3,7 +3,7 @@ import { Input } from '../ui/input';
 import clsx from 'clsx';
 
 interface Props extends React.ComponentProps<'input'> {
-  errors?: [];
+  errors?: string[];
   hasError?: boolean;
 }
 
@@ -24,7 +24,7 @@ export const CustomInput = ({
         {...props}
       />
       {errors.length > 0 && (
-        <span className='text-xs px-0.5 text-red-400'>{errors}</span>
+        <span className='text-xs px-0.5 text-red-400'>{errors[0]}</span>
       )}
     </>
   );
