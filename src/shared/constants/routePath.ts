@@ -1,15 +1,19 @@
+const LINKS = "/links";
+const HOME = "/home";
+const AUTH = "/auth";
+
 export const RoutePath = {
-  Account: '/account',
-  Auth: '/auth',
-  CreateLink: '/links/create',
-  Home: '/home',
-  Links: '/links',
-  Login: '/auth/login',
-  RefreshToken: '/auth/refresh-token',
-  ResendConfirmation: '/auth/resend-confirmation',
-  RecoveryAccount: '/auth/password/reset',
-  Signup: '/auth/signup',
-  TermsAndConditions: '/terms-and-conditions',
+  Account: "/account",
+  Auth: AUTH,
+  CreateLink: `${LINKS}/create`,
+  Home: HOME,
+  Links: LINKS,
+  Login: `${AUTH}/login`,
+  RecoveryAccount: `${AUTH}/password/reset`,
+  RefreshToken: `${AUTH}/refresh-token`,
+  ResendConfirmation: `${AUTH}/resend-confirmation`,
+  Signup: `${AUTH}/signup`,
+  TermsAndConditions: "/terms-and-conditions",
 } as const;
 
 export type RoutePath = (typeof RoutePath)[keyof typeof RoutePath];
