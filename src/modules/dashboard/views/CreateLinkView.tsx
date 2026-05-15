@@ -1,4 +1,9 @@
-import { startTransition, useActionState, useRef, type FormEvent } from 'react';
+import {
+  startTransition,
+  useActionState,
+  useRef,
+  type SubmitEvent,
+} from 'react';
 import { useNavigate } from 'react-router';
 
 import { z } from 'zod/v4';
@@ -56,7 +61,7 @@ export const CreateLinkView = () => {
     null
   );
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     startTransition(() => {
       formAction(new FormData(event.currentTarget as HTMLFormElement));
