@@ -17,7 +17,7 @@ export interface LoginActionState extends FormActionState<
 const login = useAuthStore.getState().login;
 
 export const authenticate = async (
-  prevState: LoginActionState | undefined,
+  _: LoginActionState | undefined,
   formData: FormData,
 ): Promise<LoginActionState> => {
   const fields = Object.fromEntries(formData) as LoginData;
