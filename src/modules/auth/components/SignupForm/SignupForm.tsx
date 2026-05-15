@@ -1,8 +1,7 @@
-import { useActionState, useRef } from 'react';
+import { useActionState } from 'react';
+import { NavLink } from 'react-router';
 
 import { cn } from '@/lib/utils';
-import { NavLink } from 'react-router';
-import { z } from 'zod/v4';
 
 import { ErrorAlert } from '@/components/alerts/ErrorAlert';
 import { CustomInput } from '@/components/form/CustomInput';
@@ -12,41 +11,21 @@ import { Label } from '@/components/ui/label';
 import { RoutePath } from '@/shared/constants/routePath';
 import { useAuth } from '../../hooks/useAuth';
 import { AuthFormButton } from '../AuthFormButton';
-import {
-  signupSchema,
-  type SignupData,
-  type SignupValidationError,
-} from './signupValidation';
 import { FormFooter } from '../FormFooter';
+import { register } from './action';
 
 export const SignupForm = ({
   className,
   ...props
 }: React.ComponentProps<'div'>) => {
-  const { error, signUp, onSubmit } = useAuth();
+  const { error } = useAuth();
   const { translate } = useLanguage();
-  const formRef = useRef<HTMLFormElement>(null);
 
-  const [stateValidation, formAction, isPending] = useActionState(
-    async (_: unknown, queryData: FormData) => {
-      const formData = Object.fromEntries(queryData) as SignupData;
-      const result = signupSchema.safeParse(formData);
-
-      if (!result.success && result.error) {
-        const errors = z.treeifyError(result.error)
-          .properties as SignupValidationError;
-        return errors;
-      }
-
-      await signUp({
-        email: formData.email,
-        password: formData.password,
-      });
-
-      formRef.current?.reset();
-    },
-    null
+  const [formState, formAction, isPending] = useActionState(
+    register,
+    undefined
   );
+
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card className='relative'>
@@ -56,11 +35,7 @@ export const SignupForm = ({
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <form
-            noValidate
-            ref={formRef}
-            onSubmit={(e) => onSubmit(e, formAction)}
-          >
+          <form noValidate action={formAction}>
             <div className='grid gap-6'>
               <div className='after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t'></div>
               <div className='grid gap-6'>
@@ -73,8 +48,9 @@ export const SignupForm = ({
                     name='email'
                     type='email'
                     placeholder='miaccount@example.com'
-                    hasError={stateValidation?.email != undefined}
-                    errors={stateValidation?.email?.errors}
+                    defaultValue={formState?.data?.email}
+                    hasError={formState?.fieldErrors?.email != undefined}
+                    errors={formState?.fieldErrors?.email}
                     disabled={isPending}
                   />
                 </div>
@@ -86,8 +62,8 @@ export const SignupForm = ({
                     id='password'
                     name='password'
                     type='password'
-                    hasError={stateValidation?.password != undefined}
-                    errors={stateValidation?.password?.errors}
+                    hasError={formState?.fieldErrors?.password != undefined}
+                    errors={formState?.fieldErrors?.password}
                     disabled={isPending}
                   />
                 </div>
