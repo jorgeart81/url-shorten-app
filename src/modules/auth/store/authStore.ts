@@ -91,24 +91,15 @@ const storeApi: StateCreator<
       switch (errorCode) {
         case "INVALID_CREDENTIALS":
           await AuthService.logout();
-          set({ ...initialState });
+          set({ ...initialState, status: "unauthorized" });
           return { isSuccess: false };
 
         case "MAX_DEVICE_LIMIT_REACHED":
           if (get().refreshTokenAttempts > 3) {
             await AuthService.logout();
-            set({ ...initialState });
           }
           return { isSuccess: false };
       }
-    }
-
-    if (!success) {
-      set((prevState) => ({
-        ...prevState,
-        errorCode,
-      }));
-      return { isSuccess: false };
     }
 
     CookieService.saveAuthSession(get().keepLoggedIn);

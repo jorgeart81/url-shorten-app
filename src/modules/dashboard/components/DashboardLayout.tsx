@@ -61,13 +61,17 @@ export const DashboardLayout = () => {
     init();
   }, []);
 
-  if (status == null || !allowedStatus.includes(status)) {
+  if (status === 'unauthorized') {
     return (
       <Navigate
         to={`${RoutePath.Login}?redirect=${location.pathname}`}
         replace
       />
     );
+  }
+
+  if (status == null || !allowedStatus.includes(status)) {
+    return <Navigate to={RoutePath.Login} replace />;
   }
 
   if (errorCode === 'NETWORK_ERROR' || errorCode === 'MAX_DEVICE_LIMIT_REACHED')
