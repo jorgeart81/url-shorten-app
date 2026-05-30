@@ -47,6 +47,12 @@
 			"bracketSpacing": true
 		}
 	},
+	"css": {
+		"parser": {
+			"cssModules": true,
+			"tailwindDirectives": true
+		}
+	},
 	"html": {
 		"formatter": {
 			"indentScriptAndStyle": false,
