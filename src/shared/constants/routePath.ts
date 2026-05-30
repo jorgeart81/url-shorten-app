@@ -1,9 +1,9 @@
-const LINKS = "/links";
-const HOME = "/home";
-const AUTH = "/auth";
+const LINKS = '/links';
+const HOME = '/home';
+const AUTH = '/auth';
 
 export const RoutePath = {
-  Account: "/account",
+  Account: '/account',
   Auth: AUTH,
   CreateLink: `${LINKS}/create`,
   Home: HOME,
@@ -13,7 +13,7 @@ export const RoutePath = {
   RefreshToken: `${AUTH}/refresh-token`,
   ResendConfirmation: `${AUTH}/resend-confirmation`,
   Signup: `${AUTH}/signup`,
-  TermsAndConditions: "/terms-and-conditions",
+  TermsAndConditions: '/terms-and-conditions',
 } as const;
 
 export type RoutePath = (typeof RoutePath)[keyof typeof RoutePath];

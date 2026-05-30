@@ -1,7 +1,7 @@
-import axios, { type AxiosInstance } from "axios";
+import axios, { type AxiosInstance } from 'axios';
 
-import { env } from "@/config/env";
-import { authInterceptor } from "./authInterceptor";
+import { env } from '@/config/env';
+import { authInterceptor } from './authInterceptor';
 
 const urlShortenApi: AxiosInstance = axios.create({
   baseURL: env.apiBaseUrl,
@@ -12,7 +12,7 @@ urlShortenApi.interceptors.request.use(authInterceptor);
 
 export { urlShortenApi };
 
-const AUTH = "/auth";
+const AUTH = '/auth';
 
 export const ApiRoutes = {
   Auth: {

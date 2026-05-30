@@ -8,12 +8,6 @@ interface Props {
 
 export const AuthSuspense: FC<Props> = ({ children = undefined }) => {
   return (
-    <Suspense
-      fallback={
-        <PendingSpinner fullScreen />
-      }
-    >
-      {children}
-    </Suspense>
+    <Suspense fallback={<PendingSpinner fullScreen />}>{children}</Suspense>
   );
 };

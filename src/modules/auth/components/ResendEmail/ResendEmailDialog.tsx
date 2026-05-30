@@ -15,7 +15,7 @@ interface Props {
 
 export default function ResendEmailDialog({ onExit }: Props) {
   const { translate } = useLanguage();
-  
+
   return (
     <>
       <AlertDialog open>

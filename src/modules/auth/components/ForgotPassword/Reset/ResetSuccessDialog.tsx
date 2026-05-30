@@ -21,7 +21,6 @@ export default function ResetPasswordDialog({
   buttonLabel,
   onExit,
 }: Props) {
-
   return (
     <>
       <AlertDialog open>

@@ -1,23 +1,23 @@
-import { AxiosError } from "axios";
+import { AxiosError } from 'axios';
 
-import { errorHandler } from "@/config/errorHandler";
-import { Result } from "@/config/rop/result_T";
-import { ApiRoutes, urlShortenApi } from "@/services/api/urlShortenApi";
+import { errorHandler } from '@/config/errorHandler';
+import { Result } from '@/config/rop/result_T';
+import { ApiRoutes, urlShortenApi } from '@/services/api/urlShortenApi';
 
 import type {
   ApiErrorResponse,
   SuccessResponse,
-} from "@/services/api/genericResponse";
-import { TimeSpan } from "@/utils/timeSpan";
-import type { LoginRequest } from "./dtos/loginRequest";
-import type { LoginResponse } from "./dtos/loginResponse";
-import type { RegisterRequest } from "./dtos/registerRequest";
-import type { RegisterResponse } from "./dtos/registerResponse";
+} from '@/services/api/genericResponse';
+import { TimeSpan } from '@/utils/timeSpan';
+import type { LoginRequest } from './dtos/loginRequest';
+import type { LoginResponse } from './dtos/loginResponse';
+import type { RegisterRequest } from './dtos/registerRequest';
+import type { RegisterResponse } from './dtos/registerResponse';
 
 export class AuthService {
   static async confirmEmail(
     code: string,
-    controller?: AbortController,
+    controller?: AbortController
   ): Promise<Result<void>> {
     try {
       const { status } = await urlShortenApi.post(
@@ -25,7 +25,7 @@ export class AuthService {
         {
           code,
         },
-        { signal: controller?.signal },
+        { signal: controller?.signal }
       );
 
       return Result.success(undefined, status);
@@ -38,7 +38,7 @@ export class AuthService {
     try {
       const { data, status } = await urlShortenApi.post<LoginResponse>(
         ApiRoutes.Auth.Login,
-        request,
+        request
       );
 
       return Result.success(data, status);
@@ -60,7 +60,7 @@ export class AuthService {
     try {
       const { status } = await urlShortenApi.post(
         ApiRoutes.Auth.RefreshToken,
-        {},
+        {}
       );
       return Result.success(undefined, status);
     } catch (error: unknown) {
@@ -69,12 +69,12 @@ export class AuthService {
   }
 
   static async signUp(
-    request: RegisterRequest,
+    request: RegisterRequest
   ): Promise<Result<RegisterResponse>> {
     try {
       const { data, status } = await urlShortenApi.post<RegisterResponse>(
         ApiRoutes.Auth.Register,
-        request,
+        request
       );
 
       return Result.success(data, status);
@@ -83,7 +83,7 @@ export class AuthService {
         return Result.failure(
           error.response?.data?.errors,
           error.response?.status,
-          "EMAIL_ALREADY_REGISTERED",
+          'EMAIL_ALREADY_REGISTERED'
         );
       }
       return errorHandler(error);
@@ -92,18 +92,18 @@ export class AuthService {
 
   static async validateResendCode(
     resendCode: string,
-    controller?: AbortController,
+    controller?: AbortController
   ): Promise<Result<void>> {
     try {
       const { status } = await urlShortenApi.post<SuccessResponse<void>>(
         ApiRoutes.Auth.ValidateResendCode,
         { resendCode },
-        { signal: controller?.signal, timeout: TimeSpan.fromSeconds(30) },
+        { signal: controller?.signal, timeout: TimeSpan.fromSeconds(30) }
       );
 
       return status == 204
         ? Result.success()
-        : Result.failure({ general: ["Unhandled error"] }, status);
+        : Result.failure({ general: ['Unhandled error'] }, status);
     } catch (error: unknown) {
       return AuthService.resendCodeError(error);
     }
@@ -111,18 +111,18 @@ export class AuthService {
 
   static async resendConfirmationEmail(
     resendCode: string,
-    controller?: AbortController,
+    controller?: AbortController
   ): Promise<Result<void>> {
     try {
       const { status } = await urlShortenApi.post<SuccessResponse<void>>(
         ApiRoutes.Auth.ResendConfirmation,
         { resendCode },
-        { signal: controller?.signal },
+        { signal: controller?.signal }
       );
 
       return status == 200
         ? Result.success()
-        : Result.failure({ general: ["Unhandled error"] }, status);
+        : Result.failure({ general: ['Unhandled error'] }, status);
     } catch (error: unknown) {
       return AuthService.resendCodeError(error);
     }
@@ -130,18 +130,18 @@ export class AuthService {
 
   static async forgotPassword(
     email: string,
-    controller?: AbortController,
+    controller?: AbortController
   ): Promise<Result<void>> {
     try {
       const { status } = await urlShortenApi.post<SuccessResponse<void>>(
         ApiRoutes.Auth.ForgotPassword,
         { email },
-        { signal: controller?.signal },
+        { signal: controller?.signal }
       );
 
       return status == 200
         ? Result.success()
-        : Result.failure({ general: ["Unhandled error"] }, status);
+        : Result.failure({ general: ['Unhandled error'] }, status);
     } catch (error: unknown) {
       return errorHandler(error);
     }
@@ -150,18 +150,18 @@ export class AuthService {
   static async resetPassword(
     code: string,
     newPassword: string,
-    controller?: AbortController,
+    controller?: AbortController
   ): Promise<Result<void>> {
     try {
       const { status } = await urlShortenApi.post<SuccessResponse<void>>(
         ApiRoutes.Auth.ResetPassword,
         { newPassword },
-        { params: { code }, signal: controller?.signal },
+        { params: { code }, signal: controller?.signal }
       );
 
       return status == 204
         ? Result.success()
-        : Result.failure({ general: ["Unhandled error"] }, status);
+        : Result.failure({ general: ['Unhandled error'] }, status);
     } catch (error: unknown) {
       return errorHandler(error);
     }
@@ -175,13 +175,13 @@ export class AuthService {
       const errors = data.errors?.general;
 
       const isPayloadExpired =
-        Array.isArray(errors) && errors.includes("Payload expired.");
+        Array.isArray(errors) && errors.includes('Payload expired.');
 
       if (isPayloadExpired)
         return Result.failure<T>(
-          { general: ["Payload expired."] },
+          { general: ['Payload expired.'] },
           status,
-          "RESENCODE_EXPIRED",
+          'RESENCODE_EXPIRED'
         );
     }
     return errorHandler<T>(error);

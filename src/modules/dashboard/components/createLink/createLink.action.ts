@@ -26,11 +26,11 @@ export const createLinkAction = async (
 ) => {
   const formData = Object.fromEntries(queryData);
   const { hasErrors, errors, data } = formDataValidation(formData);
-  
+
   if (hasErrors || !data) return { ...state, validationError: errors };
-  
+
   const { backHalf, destination, ...rest } = data;
-  
+
   const { success, value } = await LinkService.createLink({
     ...rest,
     backHalf: backHalf && backHalf.trim().length > 0 ? backHalf : undefined,
@@ -44,5 +44,5 @@ export const createLinkAction = async (
     };
   }
 
-  return state
+  return state;
 };

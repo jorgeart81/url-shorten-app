@@ -1,24 +1,22 @@
-import z from "zod";
+import z from 'zod';
 
-import type { FormActionState } from "@/shared/constants/types/formActionState";
-import { useAuthStore } from "../../store/authStore";
+import type { FormActionState } from '@/shared/constants/types/formActionState';
+import { useAuthStore } from '../../store/authStore';
 
 import {
   SignupSchema,
   type SignupData,
   type SignupValidationError,
-} from "./signupValidation";
+} from './signupValidation';
 
-interface SignUpActionState extends FormActionState<
-  SignupData,
-  SignupValidationError
-> {}
+interface SignUpActionState
+  extends FormActionState<SignupData, SignupValidationError> {}
 
 const signUp = useAuthStore.getState().signUp;
 
 export const register = async (
   _: SignUpActionState | undefined,
-  formData: FormData,
+  formData: FormData
 ): Promise<SignUpActionState> => {
   const fields = Object.fromEntries(formData) as SignupData;
   const validatedFields = SignupSchema.safeParse(fields);
@@ -26,7 +24,7 @@ export const register = async (
   if (!validatedFields.success) {
     return {
       success: false,
-      message: "Validation error.",
+      message: 'Validation error.',
       data: fields,
       fieldErrors: z.flattenError(validatedFields.error).fieldErrors,
     } satisfies SignUpActionState;
@@ -42,7 +40,7 @@ export const register = async (
   } catch (_: unknown) {
     return {
       success: false,
-      message: "Validation error.",
+      message: 'Validation error.',
     };
   }
 };

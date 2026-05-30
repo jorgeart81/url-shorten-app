@@ -1,6 +1,6 @@
 /**
  * Available operations in JSON Patch according to RFC 6902.
- * 
+ *
  * - `add`: Adds a new value at the specified path
  * - `remove`: Removes the value at the specified path
  * - `replace`: Replaces the existing value at the specified path
@@ -18,12 +18,12 @@ export type PatchOperation =
 
 /**
  * Represents an individual JSON Patch operation according to RFC 6902.
- * 
+ *
  * @interface JsonPatchOperation
  * @property {PatchOperation} op - Type of operation to perform
  * @property {string} path - JSON Pointer path to the target field
  * @property {unknown} value - Value to use in the operation (optional for some operations)
- * 
+ *
  * @example
  * ```typescript
  * const addOperation: JsonPatchOperation = {
@@ -31,7 +31,7 @@ export type PatchOperation =
  *   path: "/title",
  *   value: "New Title"
  * };
- * 
+ *
  * const removeOperation: JsonPatchOperation = {
  *   op: "remove",
  *   path: "/oldField"
@@ -46,10 +46,10 @@ export interface JsonPatchOperation {
 
 /**
  * Array of JSON Patch operations that can be applied in a single request.
- * 
+ *
  * Allows performing multiple atomic modifications to a resource according to RFC 6902.
  * Operations are executed in the specified order.
- * 
+ *
  * @example
  * ```typescript
  * const patchDocument: JsonPatchDocument = [

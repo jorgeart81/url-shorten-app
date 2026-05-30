@@ -1,10 +1,10 @@
-import { startTransition, useEffect, useState, type SubmitEvent } from "react";
+import { startTransition, useEffect, useState, type SubmitEvent } from 'react';
 
-import { useLanguage } from "@/components/hooks/useLanguage";
-import { useAuthStore } from "../store/authStore";
+import { useLanguage } from '@/components/hooks/useLanguage';
+import { useAuthStore } from '../store/authStore';
 
-import type { ResultErrorCode } from "@/config/rop/resultErrorCode";
-import type { Error } from "../store/types/authState";
+import type { ResultErrorCode } from '@/config/rop/resultErrorCode';
+import type { Error } from '../store/types/authState';
 
 export const useAuth = () => {
   const { translate } = useLanguage();
@@ -16,7 +16,7 @@ export const useAuth = () => {
 
   const onSubmit = (
     event: SubmitEvent<HTMLFormElement>,
-    formAction: (payload: FormData) => void,
+    formAction: (payload: FormData) => void
   ) => {
     event.preventDefault();
     startTransition(() => {
@@ -28,9 +28,9 @@ export const useAuth = () => {
     let error: Error | undefined = undefined;
 
     if (
-      errorCode === "NETWORK_ERROR" ||
-      errorCode === "INVALID_CREDENTIALS" ||
-      errorCode === "EMAIL_ALREADY_REGISTERED"
+      errorCode === 'NETWORK_ERROR' ||
+      errorCode === 'INVALID_CREDENTIALS' ||
+      errorCode === 'EMAIL_ALREADY_REGISTERED'
     ) {
       error = {
         title: translate(`${errorCode}.title`),
@@ -38,8 +38,8 @@ export const useAuth = () => {
       };
     } else {
       error = {
-        title: translate("UNKNOWN.title"),
-        message: translate("UNKNOWN.description"),
+        title: translate('UNKNOWN.title'),
+        message: translate('UNKNOWN.description'),
       };
     }
 

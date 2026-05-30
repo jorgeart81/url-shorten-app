@@ -94,7 +94,7 @@ export const LinkCard = ({
             'flex-1 flex flex-col max-w-full lg:max-w-[calc(100%-200px)]',
             {
               ' lg:max-w-[calc(100%-300px)]': variant === 'link',
-            },
+            }
           )}
         >
           <LinkCardTitle goTo={detailsRoute} variant={variant} title={title} />

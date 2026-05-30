@@ -49,7 +49,6 @@ export const ResendEmailProvider = ({
     resendExecute({ reload: true });
   }, []);
 
-
   return (
     <ResendEmailContext
       value={{

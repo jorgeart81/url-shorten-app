@@ -1,24 +1,22 @@
-import z from "zod";
+import z from 'zod';
 
-import type { FormActionState } from "@/shared/constants/types/formActionState";
-import { useAuthStore } from "../../store/authStore";
+import type { FormActionState } from '@/shared/constants/types/formActionState';
+import { useAuthStore } from '../../store/authStore';
 import {
   LoginSchema,
   type LoginData,
   type LoginValidationError,
-} from "./loginValidationSchema";
-import { getClientFingerprint } from "@/utils/getPlatform";
+} from './loginValidationSchema';
+import { getClientFingerprint } from '@/utils/getPlatform';
 
-export interface LoginActionState extends FormActionState<
-  LoginData,
-  LoginValidationError
-> {}
+export interface LoginActionState
+  extends FormActionState<LoginData, LoginValidationError> {}
 
 const login = useAuthStore.getState().login;
 
 export const authenticate = async (
   _: LoginActionState | undefined,
-  formData: FormData,
+  formData: FormData
 ): Promise<LoginActionState> => {
   const fields = Object.fromEntries(formData) as LoginData;
   const validatedFields = LoginSchema.safeParse(fields);
@@ -26,7 +24,7 @@ export const authenticate = async (
   if (!validatedFields.success) {
     return {
       success: false,
-      message: "Validation error.",
+      message: 'Validation error.',
       data: fields,
       fieldErrors: z.flattenError(validatedFields.error).fieldErrors,
     } satisfies LoginActionState;
@@ -39,16 +37,16 @@ export const authenticate = async (
     const { isSuccess } = await login({
       email: fields.email,
       password: fields.password,
-      keepLoggedIn: fields.keepLoggedIn == "on",
+      keepLoggedIn: fields.keepLoggedIn == 'on',
       deviceName: deviceName,
-      clientType: "web",
+      clientType: 'web',
     });
 
     return { success: isSuccess };
   } catch (_: unknown) {
     return {
       success: false,
-      message: "Validation error.",
+      message: 'Validation error.',
     };
   }
 };
