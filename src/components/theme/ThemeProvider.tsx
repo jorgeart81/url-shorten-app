@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ThemeProviderContext, type Theme } from './themeContext';
+import { type Theme, ThemeProviderContext } from './themeContext';
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -10,7 +10,7 @@ type ThemeProviderProps = {
 export function ThemeProvider({
   children,
   defaultTheme = 'dark',
-  storageKey = 'vite-ui-theme',
+  storageKey = 'ui-theme',
   ...props
 }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(
