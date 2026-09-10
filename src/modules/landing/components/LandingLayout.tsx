@@ -1,20 +1,15 @@
 import { NavLink, Outlet } from 'react-router';
-
-import { Button } from '@/components/ui/button';
-import { RoutePath } from '@/shared/constants/routePath';
 import { useLanguage } from '@/components/hooks/useLanguage';
-
-import styles from './layout.module.css';
+import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/modules/auth/store/authStore';
+import { RoutePath } from '@/shared/constants/routePath';
 
 export const LandingLayout = () => {
   const { translate: t } = useLanguage();
   const status = useAuthStore((state) => state.status);
 
   return (
-    <div
-      className={`w-screen min-h-dvh flex flex-col items-center ${styles['bg-container']}`}
-    >
+    <div className='flex min-h-dvh w-screen flex-col items-center'>
       <nav className='w-full max-w-[1440px] h-16 flex gap-3 py-4 px-6'>
         <div className='flex items-center gap-2 flex-1'>
           <img src='/favicon.svg' alt='favicon' className='size-8' />
@@ -28,20 +23,16 @@ export const LandingLayout = () => {
               {status === 'authenticated' ? t('myAccount') : t('logIn')}
             </NavLink>
           </Button>
-          {status !== 'authenticated' && (
-            <Button size='sm'>
-              <NavLink to={RoutePath.Signup} viewTransition>
-                {t('signUp')}
-              </NavLink>
-            </Button>
-          )}
         </div>
       </nav>
       <div className='relative w-full max-w-6xl flex-1'>
         <Outlet />
       </div>
-      <footer className='flex items-center h-12 text-sm text-muted-foreground'>
-        &copy; 2025 URL Shorten App. All rights reserved.
+      <footer className='flex min-h-12 w-full flex-wrap items-center justify-center gap-x-2 gap-y-1 px-6 py-3 text-center text-sm text-muted-foreground *:[a]:underline *:[a]:underline-offset-4 *:[a]:hover:text-primary'>
+        <span>&copy; 2025 URL Shorten App. All rights reserved.</span>
+        <NavLink to={RoutePath.TermsAndConditions}>
+          Terms and Conditions
+        </NavLink>
       </footer>
     </div>
   );
