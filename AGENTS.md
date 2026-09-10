@@ -103,19 +103,3 @@ Always use these constants instead of hardcoding strings.
 ## Tools
 
 When you need to search docs, use `context7` tools.
-
-### fal-ai MCP server
-
-The `fal-ai` MCP server is defined in `.mcp.json` (project-scoped, committed) and its `Authorization` header references `${FAL_KEY}`, which Claude Code expands from the environment at load time — the key itself is never committed.
-
-Each developer must provide their own key locally via `.claude/settings.local.json` (gitignored, personal — do not commit):
-
-```json
-{
-  "env": {
-    "FAL_KEY": "your-key-here"
-  }
-}
-```
-
-Get a key from your fal.ai account dashboard. After creating/updating this file, restart Claude Code (or run `claude mcp list`) to confirm `fal-ai` connects.
