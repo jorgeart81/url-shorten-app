@@ -8,8 +8,6 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { RoutePath } from '@/shared/constants/routePath';
 
-import styles from './heroBackground.module.css';
-
 const features = [
   {
     icon: Link2,
@@ -38,8 +36,6 @@ const features = [
 export const LandingView: FC = () => (
   <main>
     <header className='relative overflow-hidden'>
-      <div className={styles['hero-background']} />
-
       <div className='relative mx-auto flex max-w-3xl flex-col items-center px-6 py-24 text-center'>
         <h1 className='mb-5 text-4xl font-bold tracking-tight text-balance md:text-5xl'>
           Shorten links.
