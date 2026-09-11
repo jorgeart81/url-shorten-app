@@ -16,6 +16,7 @@ export const en: Translation = {
   copied: 'Copied',
   copy: 'Copy',
   delete: 'Delete',
+  download: 'Download',
   edit: 'Edit',
   exit: 'Exit',
   more: 'More',
@@ -143,6 +144,10 @@ export const en: Translation = {
     'Try adjusting your search, filters, or {{hiddenLink}} instead.',
   'linksView.noResults.hiddenLink': 'try searching for hidden links',
   'linksView.noResults.activeLink': 'try searching for active links',
+
+  // Share Link
+  'shareLink.title': 'Share link',
+  'shareLink.description': 'Scan the QR code or copy the link to share it.',
 
   // Code Errors
   'ACCESS_DENIED.description':

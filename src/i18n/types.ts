@@ -14,6 +14,7 @@ export interface Translation {
   copied: string;
   copy: string;
   delete: string;
+  download: string;
   edit: string;
   exit: string;
   more: string;
@@ -120,6 +121,10 @@ export interface Translation {
   'linksView.noResults.description': string;
   'linksView.noResults.hiddenLink': string;
   'linksView.noResults.activeLink': string;
+
+  // Share Link
+  'shareLink.title': string;
+  'shareLink.description': string;
 
   // Code Errors
   'ACCESS_DENIED.description': string;

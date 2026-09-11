@@ -16,6 +16,7 @@ export const es: Translation = {
   copied: 'Copiado',
   copy: 'Copiar',
   delete: 'Eliminar',
+  download: 'Descargar',
   edit: 'Editar',
   exit: 'Salir',
   more: 'Más',
@@ -136,6 +137,11 @@ export const es: Translation = {
     'Intenta ajustar tu búsqueda, los filtros, o {{hiddenLink}} en su lugar.',
   'linksView.noResults.hiddenLink': 'intenta buscar enlaces ocultos',
   'linksView.noResults.activeLink': 'intenta buscar enlaces activos',
+
+  // Share Link
+  'shareLink.title': 'Compartir enlace',
+  'shareLink.description':
+    'Escanea el código QR o copia el enlace para compartirlo.',
 
   // Update Link
   'change.destination.url': 'Cambiar la URL de destino',

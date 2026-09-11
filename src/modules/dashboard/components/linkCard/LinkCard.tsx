@@ -1,6 +1,6 @@
-import { useNavigate } from 'react-router';
-
 import clsx from 'clsx';
+import { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 import { useLanguage } from '@/components/hooks/useLanguage';
 import { Badge } from '@/components/ui/badge';
@@ -11,11 +11,11 @@ import { Separator } from '@/components/ui/separator';
 import { RoutePath } from '@/shared/constants/routePath';
 import { getShortFormattedDate, type Locales } from '@/utils/dateUtils';
 import { useDashboardStore } from '../../store/dashboardStore';
+import type { CardVariant } from './cardVariant';
 import { LinkCardAction } from './LinkCardAction';
 import { LinkCardImage } from './LinkCardImage';
 import { LinkCardTitle } from './LinkCardTitle';
-
-import type { CardVariant } from './cardVariant';
+import { ShareLinkDialog } from './ShareLinkDialog';
 
 interface Props {
   id: string;
@@ -51,6 +51,7 @@ export const LinkCard = ({
 
   const { translate: t, currentLanguage } = useLanguage();
   const navigate = useNavigate();
+  const [isShareOpen, setIsShareOpen] = useState(false);
 
   const updateLinkActiveStatus =
     useDashboardStore.getState().updateLinkActiveStatus;
@@ -158,6 +159,7 @@ export const LinkCard = ({
           isActive={isActive}
           handleCopy={handleCopy}
           handleEdit={handleEdit}
+          handleShare={() => setIsShareOpen(true)}
           handleActivate={() => updateLinkActiveStatus(id, true)}
           handleDeactivate={() => updateLinkActiveStatus(id, false)}
           handleDetails={handleDetails}
@@ -171,11 +173,19 @@ export const LinkCard = ({
           isActive={isActive}
           handleCopy={handleCopy}
           handleEdit={handleEdit}
+          handleShare={() => setIsShareOpen(true)}
           handleActivate={() => updateLinkActiveStatus(id, true)}
           handleDeactivate={() => updateLinkActiveStatus(id, false)}
           handleDetails={handleDetails}
         />
       </CardHeader>
+
+      <ShareLinkDialog
+        open={isShareOpen}
+        onOpenChange={setIsShareOpen}
+        shortUrl={shortUrl}
+        shortLink={shortLink}
+      />
     </Card>
   );
 };
