@@ -1,0 +1,53 @@
+# ALTERNATIVE nginx template — not wired into the Dockerfile/build.
+#
+# Kept alongside nginx.conf.template as an opt-in fix for Coolify-style
+# deploys where the backend container is recreated (new name/IP) on every
+# redeploy, which can make the default template's static `proxy_pass`
+# fail at nginx startup with "host not found in upstream" if the previous
+# hostname is no longer resolvable.
+#
+# This version resolves BACKEND_ORIGIN per-request via Docker's embedded
+# DNS (127.0.0.11) instead of once at startup, using proxy_pass with a
+# variable. That means nginx boots even if the backend isn't resolvable
+# yet, and picks up a new container IP after a redeploy without a
+# restart — but it does NOT survive the backend's hostname/alias itself
+# changing between deploys: BACKEND_ORIGIN still needs to point at a
+# stable service name in Coolify, not the ephemeral container name.
+#
+# Caveat: nginx's `resolver` directive does not consult /etc/hosts, only
+# real DNS queries — so a bare `BACKEND_ORIGIN=http://localhost:...` (the
+# Dockerfile's default, for standalone/local testing) may fail to
+# resolve here even though it works with the static template. Point it
+# at a real DNS-resolvable name (a compose/Coolify service name, or
+# host.docker.internal on Docker Desktop) when using this template.
+#
+# To switch to this template, update the Dockerfile's:
+#   COPY nginx.conf.template /etc/nginx/templates/default.conf.template
+# to:
+#   COPY nginx.conf.dynamic-resolver.template /etc/nginx/templates/default.conf.template
+
+server {
+    listen 80;
+    server_name localhost;
+
+    root /usr/share/nginx/html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # Reverse proxy: the browser only ever sees this same-origin path.
+    # The real backend address (BACKEND_ORIGIN) is resolved server-side,
+    # per-request, via the resolver below.
+    resolver 127.0.0.11 valid=10s ipv6=off;
+
+    location /api/ {
+        set $backend_origin "${BACKEND_ORIGIN}";
+        proxy_pass $backend_origin;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
