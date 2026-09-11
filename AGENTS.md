@@ -87,8 +87,8 @@ Located in `src/config/env.ts`:
 
 - Uses Zod for validation at startup
 - Import `env` from `@/config/env` - do NOT use `import.meta.env` directly
-- Required: `VITE_API_BASE_URL`, `VITE_API_URL`, `VITE_REDIRECTION_DOMAIN`
-- Optional: `VITE_API_PORT`, `VITE_APP_NAME` (default: "Url Shorten"), `VITE_DEBUG_MODE`
+- Required: `VITE_API_BASE_URL`, `VITE_REDIRECTION_DOMAIN`
+- Optional: `VITE_APP_NAME` (default: "Url Shorten"), `VITE_DEBUG_MODE`
 
 ## Shared Constants
 
