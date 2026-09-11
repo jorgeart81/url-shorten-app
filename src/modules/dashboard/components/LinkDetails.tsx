@@ -13,7 +13,6 @@ import { LinkService } from '../services/links/linkService';
 import type { Link } from '../store/types/link';
 import { LinkAnalyticsSection } from './linkAnalytics/LinkAnalyticsSection';
 import { LinkCard } from './linkCard/LinkCard';
-import { NoLinksContent } from './NoLinksContent';
 
 interface Props {
   getLink: Promise<Link | undefined>;
@@ -26,9 +25,10 @@ export const LinkDetails: FC<Props> = ({ getLink }) => {
 
   if (!link?.id)
     return (
-      <div className='flex flex-col'>
-        <NoLinksContent />
-      </div>
+      <Alert variant='destructive'>
+        <AlertCircleIcon />
+        <AlertTitle>{t('errorAlert.notFound')}</AlertTitle>
+      </Alert>
     );
 
   const getAnalytics = async (): Promise<LinkAnalytics | undefined> => {
@@ -47,34 +47,23 @@ export const LinkDetails: FC<Props> = ({ getLink }) => {
         </Button>
       </div>
 
-      {link ? (
-        <>
-          <LinkCard
-            id={link.id}
-            backHalf={link.backHalf}
-            date={new Date(link.createdAt)}
-            destination={link.destination}
-            destinationDomain={link.destinationDomain}
-            domain={link.domain}
-            title={link.title}
-            isActive={link.isActive}
-            variant='details'
-          />
+      <LinkCard
+        id={link.id}
+        backHalf={link.backHalf}
+        date={new Date(link.createdAt)}
+        destination={link.destination}
+        destinationDomain={link.destinationDomain}
+        domain={link.domain}
+        title={link.title}
+        isActive={link.isActive}
+        variant='details'
+      />
 
-          <Suspense
-            fallback={
-              <PendingSpinner size='sm' fullSize className='mt-6 h-40' />
-            }
-          >
-            <LinkAnalyticsSection getAnalytics={getAnalytics()} />
-          </Suspense>
-        </>
-      ) : (
-        <Alert variant='destructive'>
-          <AlertCircleIcon />
-          <AlertTitle>{t('errorAlert.notFound')}</AlertTitle>
-        </Alert>
-      )}
+      <Suspense
+        fallback={<PendingSpinner size='sm' fullSize className='mt-6 h-40' />}
+      >
+        <LinkAnalyticsSection getAnalytics={getAnalytics()} />
+      </Suspense>
     </>
   );
 };
