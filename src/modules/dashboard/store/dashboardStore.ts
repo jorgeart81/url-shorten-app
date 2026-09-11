@@ -1,25 +1,25 @@
 import { create, type StateCreator } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
-
-import { LinkService } from '../services/links/linkService';
-import { UserService } from '../services/user/userService';
+import type { ResultErrorCode } from '@/config/rop/resultErrorCode';
+import type { JsonPatchDocument } from '@/config/types/jsonPatchDocument';
 
 import { StorageKey } from '@/shared/constants/storageKey';
+import { LinkService } from '../services/links/linkService';
+import { UserService } from '../services/user/userService';
 import {
   mapAccountDataToUserAccount,
   mapDeviceDataDtoToDevice,
 } from './mappers/accountMapper';
 import { mapLinkDataToLink } from './mappers/linkMapper';
-
 import type { Link } from './types/link';
 import type { Pagination } from './types/pagination';
 import type { Device, UserAccount } from './types/userAccount';
-import type { JsonPatchDocument } from '@/config/types/jsonPatchDocument';
 
 interface DashboardState {
   user?: UserAccount;
   devices: Device[];
   links: Pagination<Link>;
+  errorCode?: ResultErrorCode;
 }
 
 interface Actions {
@@ -50,10 +50,10 @@ const storeApi: StateCreator<
 
   // Actions
   getAccount: async () => {
-    const { success, value } = await UserService.account();
+    const { success, value, errorCode } = await UserService.account();
 
     if (!success || !value) {
-      //TODO: handling errors
+      set((prev) => ({ ...prev, errorCode }));
       return;
     }
 
@@ -61,6 +61,7 @@ const storeApi: StateCreator<
       ...prev,
       user: mapAccountDataToUserAccount(value.data),
       devices: value.data.devices.map(mapDeviceDataDtoToDevice),
+      errorCode: undefined,
     }));
   },
   loadLinks: async (page: number, isActive: boolean) => {

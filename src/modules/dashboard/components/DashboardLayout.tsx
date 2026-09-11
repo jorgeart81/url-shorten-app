@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
-
 import { LogOut, RotateCcw } from 'lucide-react';
+import { useEffect } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router';
 
 import { AppSidebar } from '@/components/app-sidebar';
@@ -38,26 +37,31 @@ export const DashboardLayout = () => {
 
   const status = useAuthStore((state) => state.status);
   const errorCode = useAuthStore((state) => state.errorCode);
+  const dashboardErrorCode = useDashboardStore((state) => state.errorCode);
+  const activeErrorCode = errorCode ?? dashboardErrorCode;
   const user = useDashboardStore((state) => state.user);
   const logout = useAuthStore.getState().logout;
   const refreshToken = useAuthStore.getState().refreshToken;
   const getAccount = useDashboardStore.getState().getAccount;
 
-  const init = async () => {
-    if (status === 'authenticated')
-      useAuthStore.setState((state) => ({ ...state, status: 'checking' }));
-
-    if (status == null || allowedStatus.includes(status)) {
-      const { isSuccess } = await refreshToken();
-      if (!isSuccess) {
-        toastError(getErrorTranslation('AUTH_ERROR').description);
-        return;
-      }
-      await getAccount();
-    }
-  };
-
+  // Runs once on mount by design: this bootstraps the auth session for the
+  // whole dashboard shell, not on every render/navigation.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: run once on mount
   useEffect(() => {
+    const init = async () => {
+      if (status === 'authenticated')
+        useAuthStore.setState((state) => ({ ...state, status: 'checking' }));
+
+      if (status == null || allowedStatus.includes(status)) {
+        const { isSuccess } = await refreshToken();
+        if (!isSuccess) {
+          toastError(getErrorTranslation('AUTH_ERROR').description);
+          return;
+        }
+        await getAccount();
+      }
+    };
+
     init();
   }, []);
 
@@ -74,11 +78,14 @@ export const DashboardLayout = () => {
     return <Navigate to={RoutePath.Login} replace />;
   }
 
-  if (errorCode === 'NETWORK_ERROR' || errorCode === 'MAX_DEVICE_LIMIT_REACHED')
+  if (
+    activeErrorCode === 'NETWORK_ERROR' ||
+    activeErrorCode === 'MAX_DEVICE_LIMIT_REACHED'
+  )
     return (
       <FallbackContent
         title={t('errorBoundary.title')}
-        description={getErrorTranslation(errorCode).description}
+        description={getErrorTranslation(activeErrorCode).description}
       >
         <Button variant='ghost' onClick={() => window.location.reload()}>
           <RotateCcw /> {t('errorBoundary.reloadButton')}
