@@ -68,6 +68,8 @@ export const ShareLinkDialog: FC<Props> = ({
     }, 'image/png');
   };
 
+  // Web Share API isn't available in every browser/context, so feature-detect
+  // it and hide the Share button rather than let it fail silently on click.
   const supportsShare =
     typeof navigator !== 'undefined' && typeof navigator.share === 'function';
 
