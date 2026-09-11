@@ -38,10 +38,10 @@ export const DashboardLayout = () => {
 
   const status = useAuthStore((state) => state.status);
   const errorCode = useAuthStore((state) => state.errorCode);
-  const logout = useAuthStore((state) => state.logout);
-  const refreshToken = useAuthStore((state) => state.refreshToken);
   const user = useDashboardStore((state) => state.user);
-  const getAccount = useDashboardStore((state) => state.getAccount);
+  const logout = useAuthStore.getState().logout;
+  const refreshToken = useAuthStore.getState().refreshToken;
+  const getAccount = useDashboardStore.getState().getAccount;
 
   const init = async () => {
     if (status === 'authenticated')
