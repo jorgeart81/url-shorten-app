@@ -143,6 +143,14 @@ export const es: Translation = {
   'shareLink.description':
     'Escanea el código QR o copia el enlace para compartirlo.',
 
+  // Link Analytics
+  'analytics.title': 'Analíticas de clics',
+  'analytics.totalClicks': 'Clics totales',
+  'analytics.byDevice': 'Por dispositivo',
+  'analytics.byReferrer': 'Por referente',
+  'analytics.byLocation': 'Por ubicación',
+  'analytics.noData': 'Aún no hay clics.',
+
   // Update Link
   'change.destination.url': 'Cambiar la URL de destino',
 

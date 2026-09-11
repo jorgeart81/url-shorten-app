@@ -126,6 +126,14 @@ export interface Translation {
   'shareLink.title': string;
   'shareLink.description': string;
 
+  // Link Analytics
+  'analytics.title': string;
+  'analytics.totalClicks': string;
+  'analytics.byDevice': string;
+  'analytics.byReferrer': string;
+  'analytics.byLocation': string;
+  'analytics.noData': string;
+
   // Code Errors
   'ACCESS_DENIED.description': string;
   'ACCESS_DENIED.title': string;

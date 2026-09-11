@@ -7,7 +7,6 @@ import { LinkDetails } from '../components/LinkDetails';
 import { ViewContainer } from '../components/ViewContainer';
 import { LinkService } from '../services/links/linkService';
 import { mapLinkDataToLink } from '../store/mappers/linkMapper';
-
 import type { Link } from '../store/types/link';
 
 export const LinkDetailsView = () => {

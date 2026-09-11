@@ -149,6 +149,14 @@ export const en: Translation = {
   'shareLink.title': 'Share link',
   'shareLink.description': 'Scan the QR code or copy the link to share it.',
 
+  // Link Analytics
+  'analytics.title': 'Click Analytics',
+  'analytics.totalClicks': 'Total clicks',
+  'analytics.byDevice': 'By device',
+  'analytics.byReferrer': 'By referrer',
+  'analytics.byLocation': 'By location',
+  'analytics.noData': 'No clicks yet.',
+
   // Code Errors
   'ACCESS_DENIED.description':
     'You do not have permission to access this resource.',

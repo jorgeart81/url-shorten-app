@@ -18,9 +18,9 @@ export const RedirectView = () => {
       controller
     );
 
-    if (!success || !value?.destination) return;
+    if (!success || !value?.data.destination) return;
 
-    return value.destination;
+    return value.data.destination;
   };
 
   return (

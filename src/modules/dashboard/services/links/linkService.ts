@@ -1,7 +1,7 @@
 import { errorHandler } from '@/config/errorHandler';
 import { Result } from '@/config/rop/result_T';
+import type { JsonPatchDocument } from '@/config/types/jsonPatchDocument';
 import { urlShortenApi } from '@/services/api/urlShortenApi';
-
 import type { CreateLinkRequest } from './dtos/createLinkRequest';
 import {
   type GetAllParams,
@@ -10,12 +10,11 @@ import {
 } from './dtos/getAllParams';
 import type {
   CreateLinkResponse,
-  DestinationData,
   DestinationLinkResponse,
   FindLinkResponse,
   GetLinksResponse,
+  LinkAnalyticsResponse,
 } from './dtos/linkResponse';
-import type { JsonPatchDocument } from '@/config/types/jsonPatchDocument';
 
 export class LinkService {
   static async createLink(
@@ -56,7 +55,7 @@ export class LinkService {
   static async getDestination(
     backHalf: string,
     controller?: AbortController
-  ): Promise<Result<DestinationData>> {
+  ): Promise<Result<DestinationLinkResponse>> {
     try {
       const { data, status } = await urlShortenApi.get<DestinationLinkResponse>(
         `/links/${backHalf}/destination`,
@@ -64,7 +63,24 @@ export class LinkService {
           signal: controller?.signal,
         }
       );
-      return Result.success(data.data, status);
+      return Result.success(data, status);
+    } catch (error: unknown) {
+      return errorHandler(error);
+    }
+  }
+
+  static async getAnalytics(
+    id: string,
+    controller?: AbortController
+  ): Promise<Result<LinkAnalyticsResponse>> {
+    try {
+      const { data, status } = await urlShortenApi.get<LinkAnalyticsResponse>(
+        `/links/${id}/click-analytics`,
+        {
+          signal: controller?.signal,
+        }
+      );
+      return Result.success(data, status);
     } catch (error: unknown) {
       return errorHandler(error);
     }
