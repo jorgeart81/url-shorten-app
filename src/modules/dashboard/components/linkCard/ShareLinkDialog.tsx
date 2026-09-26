@@ -81,7 +81,7 @@ export const ShareLinkDialog: FC<Props> = ({
           <DialogDescription>{t('shareLink.description')}</DialogDescription>
         </DialogHeader>
 
-        <div className='flex flex-col items-center gap-4'>
+        <div className='flex min-w-0 flex-col items-center gap-4'>
           <div
             ref={canvasContainerRef}
             className='rounded-lg border bg-white p-4'
