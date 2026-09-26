@@ -17,7 +17,7 @@ export const LinkCardTitle: FC<Props> = ({ goTo, title, variant }) => {
     <CardTitle
       className={clsx('text-xl', {
         'underline-offset-4 hover:underline mb-1': variant === 'link',
-        'text-4xl mb-4': variant === 'details',
+        'text-2xl md:text-3xl mb-4': variant === 'details',
       })}
     >
       {variant === 'link' ? (
