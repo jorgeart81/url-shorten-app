@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { FallbackView } from './components/FallbackView';
 import { AuthModuleRoutes } from './modules/auth/AuthModule';
+import { ProtectedRoute } from './modules/dashboard/components/ProtectedRoute';
 import { DashboardModule } from './modules/dashboard/DashboardModule';
 import { LandingLayout } from './modules/landing/components/LandingLayout';
 import { LandingView } from './modules/landing/views/LandingView';
@@ -25,7 +26,9 @@ function App() {
           <Route path={`${RoutePath.Auth}/*`} element={<AuthModuleRoutes />} />
 
           {/* region: Authenticated routes */}
-          <Route path='*' element={<DashboardModule />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path='*' element={<DashboardModule />} />
+          </Route>
           {/* end region*/}
         </Routes>
       </BrowserRouter>

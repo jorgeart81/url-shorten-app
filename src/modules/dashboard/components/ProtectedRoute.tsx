@@ -1,0 +1,97 @@
+import { LogOut, RotateCcw } from 'lucide-react';
+import { useEffect } from 'react';
+import { Navigate, Outlet, useLocation } from 'react-router';
+
+import { FallbackContent } from '@/components/FallbackContent ';
+import { useLanguage } from '@/components/hooks/useLanguage';
+import { useToast } from '@/components/hooks/useToast';
+import { PendingSpinner } from '@/components/status-indicators/PendingSpinner';
+import { Button } from '@/components/ui/button';
+import { RoutePath } from '@/shared/constants/routePath';
+import { useAuthStore } from '../../auth/store/authStore';
+import type { Status } from '../../auth/store/types/status.type';
+import { useDashboardStore } from '../store/dashboardStore';
+
+const allowedStatus: Status[] = ['checking', 'authenticated'];
+
+/**
+ * ProtectedRoute
+ *
+ * Guards all authenticated dashboard routes. It checks the user's
+ * authentication status and refreshes the token if needed.
+ * If the user is not authenticated, it redirects to the login page.
+ * While authentication is being checked, it shows a loading spinner.
+ * All child routes rendered inside <Outlet /> require authentication.
+ */
+export const ProtectedRoute = () => {
+  const { toastError } = useToast();
+  const { translate: t, getErrorTranslation } = useLanguage();
+  const location = useLocation();
+
+  const status = useAuthStore((state) => state.status);
+  const errorCode = useAuthStore((state) => state.errorCode);
+  const dashboardErrorCode = useDashboardStore((state) => state.errorCode);
+  const activeErrorCode = errorCode ?? dashboardErrorCode;
+  const user = useDashboardStore((state) => state.user);
+  const logout = useAuthStore.getState().logout;
+  const refreshToken = useAuthStore.getState().refreshToken;
+  const getAccount = useDashboardStore.getState().getAccount;
+
+  // Runs once on mount by design: this bootstraps the auth session for the
+  // whole dashboard shell, not on every render/navigation.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: run once on mount
+  useEffect(() => {
+    const init = async () => {
+      if (status === 'authenticated')
+        useAuthStore.setState((state) => ({ ...state, status: 'checking' }));
+
+      if (status == null || allowedStatus.includes(status)) {
+        const { isSuccess } = await refreshToken();
+        if (!isSuccess) {
+          toastError(getErrorTranslation('AUTH_ERROR').description);
+          return;
+        }
+        await getAccount();
+      }
+    };
+
+    init();
+  }, []);
+
+  if (status === 'unauthorized') {
+    return (
+      <Navigate
+        to={`${RoutePath.Login}?redirect=${location.pathname}`}
+        replace
+      />
+    );
+  }
+
+  if (status == null || !allowedStatus.includes(status)) {
+    return <Navigate to={RoutePath.Login} replace />;
+  }
+
+  if (
+    activeErrorCode === 'NETWORK_ERROR' ||
+    activeErrorCode === 'MAX_DEVICE_LIMIT_REACHED'
+  )
+    return (
+      <FallbackContent
+        title={t('errorBoundary.title')}
+        description={getErrorTranslation(activeErrorCode).description}
+      >
+        <Button variant='ghost' onClick={() => window.location.reload()}>
+          <RotateCcw /> {t('errorBoundary.reloadButton')}
+        </Button>
+        <Button variant='ghost' onClick={logout}>
+          <LogOut /> {t('logOut')}
+        </Button>
+      </FallbackContent>
+    );
+
+  if (status === 'checking' || !user) {
+    return <PendingSpinner fullScreen />;
+  }
+
+  return <Outlet />;
+};
