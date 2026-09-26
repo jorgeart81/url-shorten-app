@@ -70,7 +70,7 @@ export const ShareLinkDialog: FC<Props> = ({
 
   // Web Share API isn't available in every browser/context, so feature-detect
   // it and hide the Share button rather than let it fail silently on click.
-  const supportsShare =
+  const supportsShareApi =
     typeof navigator !== 'undefined' && typeof navigator.share === 'function';
 
   return (
@@ -112,7 +112,7 @@ export const ShareLinkDialog: FC<Props> = ({
             >
               <Download /> {t('download')}
             </Button>
-            {supportsShare && (
+            {supportsShareApi && (
               <Button className='flex-1' onClick={handleShare}>
                 <Share2 /> {t('share')}
               </Button>
