@@ -92,9 +92,9 @@ export const LinkCard = ({
 
         <div
           className={clsx(
-            'flex-1 flex flex-col max-w-full lg:max-w-[calc(100%-200px)]',
+            'flex-1 flex flex-col min-w-0 max-w-full lg:max-w-[calc(100%-200px)]',
             {
-              ' lg:max-w-[calc(100%-300px)]': variant === 'link',
+              'lg:max-w-[calc(100%-300px)]': variant === 'link',
             }
           )}
         >

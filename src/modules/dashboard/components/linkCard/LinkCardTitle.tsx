@@ -15,7 +15,7 @@ interface Props {
 export const LinkCardTitle: FC<Props> = ({ goTo, title, variant }) => {
   return (
     <CardTitle
-      className={clsx('text-xl', {
+      className={clsx('text-xl leading-tight break-words', {
         'underline-offset-4 hover:underline mb-1': variant === 'link',
         'text-2xl md:text-3xl mb-4': variant === 'details',
       })}
