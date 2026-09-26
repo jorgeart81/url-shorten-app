@@ -1,5 +1,5 @@
 import { LogOut, RotateCcw } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, ViewTransition } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router';
 
 import { FallbackContent } from '@/components/FallbackContent ';
@@ -93,5 +93,9 @@ export const ProtectedRoute = () => {
     return <PendingSpinner fullScreen />;
   }
 
-  return <Outlet />;
+  return (
+    <ViewTransition>
+      <Outlet />
+    </ViewTransition>
+  );
 };
