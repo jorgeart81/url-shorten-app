@@ -62,3 +62,10 @@ yarn install
 ## Tech Stack
 
 See [STACK.md](./STACK.md) for detailed information.
+
+## Security Notice / Environment Variables
+
+> [!WARNING]
+> **Never store secrets in client-side environment files (`.env`, `VITE_*`).**
+> All environment variables exposed to the frontend are bundled into the client-side JavaScript and are publicly accessible to anyone inspecting the page. For sensitive operations (private API keys, database credentials), use a server-side proxy or a secrets manager on your backend.
+
